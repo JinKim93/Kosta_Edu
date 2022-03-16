@@ -1,5 +1,5 @@
 # C언어(switch ~ case문)
-```c
+```
 #include <stdio.h>
 
 int main(void)
