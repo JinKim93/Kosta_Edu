@@ -58,4 +58,29 @@ int main()
 }
 ```
 
+# 사용자로부터 하나의 정수를 입력 받아 1부터 입력받은 정수까지 </br>합 계산 (do ~ while문 사용)
+
+```c
+#include <stdio.h>
+
+int main()
+{
+	int input = 0;
+	int sum = 0;
+	int i = 0;
+	printf("정수를 입력하시오 : ");
+	scanf_s("%d", &input);
+
+	do
+	{		
+		i++;
+		sum += i; //sum = sum + i;
+		
+	}while(i<input);
+	printf("누적된 합은 %d입니다\n", sum);
+	return 0;
+
+}
+```
+
 
