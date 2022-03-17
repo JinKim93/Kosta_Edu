@@ -31,3 +31,33 @@ int main()
 
 - 81 ~ 89 예외 되어 있음
 
+## 구구단을 출력하시오.<br>(짝수단 만 출력)
+
+```c
+#include <stdio.h>
+
+int main()
+{
+	int a;
+	int b;
+	
+	for (a = 2; a < 10; a++)
+	{
+		if ((a % 2) != 0)
+		{
+			continue;
+		}
+
+		for (b = 1; b < 10; b++)
+		{
+			
+			printf("%d * %d = %d\n", a, b, a * b);
+		
+		}
+		printf("\n");
+	}
+
+	return 0;
+
+}
+```
