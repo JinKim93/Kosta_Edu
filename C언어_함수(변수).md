@@ -86,3 +86,66 @@ void Add(int i, int j)
 - Heap(힙)
   - 전역변수,static
 - 데이터영역
+
+### static변수
+- 고정상태
+- 지역변수, 전역변수의 중간 느낌
+- 지역변수 처럼 중괄호 영역에 선언되지만, 중괄호를 벗어나도 메모리 상에 고정되어 소멸되지 않음
+- 프로그래밍시 메모리 상에 고정되게 해놓고 싶을때, 이용함
+
+### static 변수 사용 하는 이유 
+#### staic변수 사용 전
+```c
+#include <stdio.h>
+void func(void);
+int main(void)
+{
+	int i = 0;
+	while (i < 5)
+	{
+		func();
+		i++;
+	}
+	return 0;
+}
+void func(void)
+{
+	int value = 0;
+	value++;
+	printf("%d\n", value);
+	
+}
+```
+#### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/159196155-51734173-3720-450d-aa74-8c36e5fc855b.png)
+
+- 작성자 의도는 함수를 이용해서 1번 ~ 5번 부터 출력을 할려고 함
+- static변수를 사용하면 메모리 소멸이 안되서, 1번 ~ 5번 까지 출력 할수 있음
+
+#### staic변수 사용 후
+```c
+#include <stdio.h>
+void func(void);
+int main(void)
+{
+	int i = 0;
+	while (i < 5)
+	{
+		func();
+		i++;
+	}
+	return 0;
+}
+void func(void)
+{
+	static int value = 0; //처음 생성될때, 한번만 초기화를함, 그이후 value++ 부터 시작
+	value++;
+	printf("%d\n", value);
+	
+}
+```
+#### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/159196455-020023ae-1cde-472a-8d58-741270d598e7.png)
+
+
+
