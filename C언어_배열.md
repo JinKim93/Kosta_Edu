@@ -110,3 +110,48 @@ int main(void)
 	return 0;
 }
 ```
+### 두 변수의 값을 서로 바꾸시오.
+```c
+#include <stdio.h>
+
+int main(void)
+{
+	int a = 2;
+	int b = 3;
+	int temp = 0;
+
+	temp = a;
+	a = b;
+	b = temp;
+
+	printf("a:%d\nb:%d\n", a, b);
+
+	
+
+	return 0;
+}
+
+```
+### 함수사용해서작성
+```c
+#include <stdio.h>
+
+void Swap(int a, int b)
+{
+	int temp = a;
+	a = b;
+	b = temp;
+	printf("a:%d\nb:%d", a, b);
+}
+
+int main(void)
+{
+	int a = 2;
+	int b = 3;
+	
+	Swap(a, b);
+		
+
+	return 0;
+}
+```
