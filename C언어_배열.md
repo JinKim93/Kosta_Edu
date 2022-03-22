@@ -103,7 +103,7 @@ int main(void)
 	}
 	for(int j = 0; j < cnt; j++)
 	{
-		printf("지금까지 입력한 배열 요소 : %d\n", arr[j]);
+		printf("현재까지 입력한 배열 요소 : %d\n", arr[j]);
 	}
 	
 
