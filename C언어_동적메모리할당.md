@@ -83,3 +83,45 @@ int main(void)
 	return 0;
 } 
 ```
+### 메모리 재할당
+```c
+void* realloc(void* memblock,size_t size);
+```
+- 기존 동적 메모리의 값을 모두 가지면서 크기만 변경된 동적 메모리를 만듬
+- 기존 메모리와 새로 확장할 메모리를 모두 포함한 크기로 설정
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	int i;
+	int* arr = (int*)malloc(sizeof(int) * 5); //20바이트 할당
+	int* rearr;
+
+	for (i = 0; i < 5; i++)
+	{
+		arr[i] = i + 1;
+	}
+	
+	rearr = (int*)realloc(arr, sizeof(int) * 10);
+	for (i = 5; i < 10; i++)
+	{
+		rearr[i] = i + 1;
+	}
+	
+	for (i = 0; i < 10; i++)
+	{
+		printf("%d\n", rearr[i]);
+	}
+	free(rearr);
+
+	return 0;
+} 
+```
+
+### memset 함수
+- 메모리 블록에서 모든 바이트를 특정 값으로 설정할 때 사용하는 초기화 함수
+
+### memcpy 함수
+- 메모리를 복사하는 함수
