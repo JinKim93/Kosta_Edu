@@ -21,7 +21,7 @@ void free(void* memblock);
 - 메모리 사용 후 반드시 해제해주어야 한다.
 - 전달인자로 메모리를 가리키는 포인터를 대입한다.
 
-### 동적 메모리 할당_예제
+### 동적 메모리 할당_예제_1
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -48,6 +48,38 @@ int main(void)
 	free(student); //동적메모리해제
 
 		
+	return 0;
+} 
+```
+### 동적 메모리 할당_예제_2
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	int num, i, total = 0;
+	int* student;
+	fputs("학생수를 입력하세요 :", stdout);
+	scanf_s("%d", &num);
+	student = (int*)malloc(sizeof(int) * num);
+	if (student == NULL)
+	{
+		printf("메모리가 부족하여 메모리를 할당할 수 없습니다\n");
+		return 0;
+	}
+	for (i = 0; i < num; i++)
+	{
+		printf("%d번째 학생의 성적 입력 :", i + 1);
+		scanf_s("%d", &student[i]);
+	}
+	for (i = 0; i < num; i++)
+	{
+		total += student[i];
+	}
+	printf("총점 : %d, 평균 : %d\n", total, total / num);
+	free(student);
+
 	return 0;
 } 
 ```
