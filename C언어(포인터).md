@@ -22,5 +22,34 @@ int main(void)
 }
 ```
 
+### 배열과포인터
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
+int main(void)
+{
+	
+	int arr[] = { 1,2,3,4,5 };
+	int i;
+
+	printf("배열의 요소 출력 : "); //배열에 직접 접근
+	for (i = 0; i < 5; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+	printf("\n");
+
+	printf("배열 이름을 이용한 배열 요소 출력 : "); // 배열을 포인터처럼 사용
+	for (i = 0; i < 5; i++)
+	{
+		printf("배열의 값은 %d \n", *(arr + i));
+		printf("배열의 주소값은 %d\n", arr + i);
+	}
+	printf("\n\n");
+		
+	return 0;
+} 
+} 
+```
 
