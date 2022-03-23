@@ -23,6 +23,9 @@ int main(void)
 ```
 
 ### 배열과포인터
+- 배열의이름은 포인터상수
+- 배열의이름 == 포인터
+- 포인터를
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,3 +56,28 @@ int main(void)
 } 
 ```
 
+### 포인터를 배열의 이름처렁 사용
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	
+	int arr[] = { 1,2,3,4,5 };
+	int* pTemp;
+	int i;
+
+	pTemp = arr; //배열의이름은포인터 
+	printf("배열의 요소 출력 : ");   
+	for(i = 0; i < 5; i++)
+	{
+		printf("%d ", pTemp[i]);
+	}
+	printf("\n");
+
+		
+	return 0;
+} 
+```
