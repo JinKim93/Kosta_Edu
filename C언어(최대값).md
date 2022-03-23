@@ -35,11 +35,16 @@ int main(void)
 	int a[5] = {0,}; //5개 배열을 0으로 전부다 초기화
 	int i = 0;
 	int imax = 0;
-	printf("정수를 입력하시오\n");
+	for (i = 0; i < 5; i++)
+	{
+		printf("정수를 입력하시오\n");
+		scanf_s("%d", &a[i]);
+	}
+	
 	
 	for (i = 0; i< 5; i++)
 	{
-		scanf_s("%d", &a[i]);
+		
 		if (imax < a[i])
 		{
 			imax = a[i];
