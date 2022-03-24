@@ -198,6 +198,7 @@ void func(int* pArr)
 	}
 }
 ```
+```c
 #include <stdio.h>
 
 // func의 기능 - >  배열의 모든 요소의 합을 리턴
@@ -224,7 +225,93 @@ int func(int* pArr,int size)
 	}
 	return sum;
 }
+```
 	
+### 값 호출 방식(Call by Value)
+- 값 호출 방식이란  실인수으 ㅣ값이 형식 인수로 전달되는 방식
+- 실인수의 메모리와 형식인수의 메모리가 별도로 관리
+- 실인수의 값이 형식인수로 복사되는 형태
+
+
+```c
+#include <stdio.h>
+
+void callValue(int b);
+
+int main(void)
+{
+	
+	int a = 1;
+	callValue(a);
+	printf("실인수 a의 출력 : %d\n", a);
+
+	return 0;
+}
+
+void callValue(int b)
+{
+
+	b = b + 3;
+	printf("형식인수 b의 출력 : %d\n", b);
+}
+
+```
+
+```c
+#include <stdio.h>
+
+void Swap(int a, int b);
+
+int main(void)
+{
+	int x = 10, y = 20;
+	printf("초기값 x = %d, y = %d\n", x, y);
+	Swap(x, y);
+	printf("함수 밖에서 변경 후 x = %d, y = %d\n", x, y);
+	return 0;
+
+}
+
+void Swap(int a, int b)
+{
+	int temp;
+	temp = a;
+	a = b;
+	b = temp;
+	printf("함수 안에서 변경 후 a = %d , b = %d\n",a,b);
+
+}
+```
+![image](https://user-images.githubusercontent.com/82345970/159834774-638cab63-bf3c-4322-bf97-3aa6d4d86616.png)
+- 메모리를 공유 하지 않으므로 변경이 안된다
+- 값 만 복사한것이다
+
+### Call by reference(참조 호출 방식)
+- 함수 호출 시 전달인자로 메모리 접근에 사용되는 주소값을 전달
+
+```c
+#include <stdio.h>
+
+
+void callReference(int* b);
+
+int main(void)
+{
+	int a = 1;
+	callReference(&a);
+	printf("실인수 a의 출력 : %d\n", a);
+	
+	return 0;
+
+}
+void callReference(int* b) //선언 -> 주소값 전달하는 변수
+{ 
+	*b = *b + 3; // b가 가리키고있는 실제값
+	printf("형식인수 *b의 출력 : %d\n", *b); //b가 가리키고있는 실제값
+}
+```
+
+
 
 
 
