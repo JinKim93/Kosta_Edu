@@ -329,7 +329,7 @@ int main(void)
 void Swap(int *a, int *b)
 {
 	int temp;
-	temp = *a;
+	temp = *a; //*a가 가르키고 있는 실제 데이터 int x = 10
 	*a = *b;
 	*b = temp;
 	printf("함수 안에서 변경 후 a = %d , b = %d\n", a, b);
@@ -339,4 +339,167 @@ void Swap(int *a, int *b)
 ![image](https://user-images.githubusercontent.com/82345970/159843057-a28c3baf-d614-467b-8520-d6890542732c.png)
 
 
+### 사용자로 부터 두 수를 입력 받아 두 수의 합과 곱을 구하시오(call-by-reference)
+```c
+#include <stdio.h>
+
+void Sum_Mutiple(int a, int b, int* pSum, int* pMul);
+
+int main(void)
+{
+	int x;
+	int y;
+	int hap = 0; 
+	int gob = 0;
+	printf("두 수를 입력하시오\n");
+	scanf_s("%d %d", &x, &y);
+	Sum_Mutiple(x, y,&hap,&gob);
+	printf("합 : %d\n곱 : %d\n", hap, gob);
+
+	return 0;
+
+}
+
+void Sum_Mutiple(int a, int b,int *pSum,int *pMul)
+{
+
+	*pSum = a + b;
+	*pMul = a * b;
+	
+}
+
+```
+
+### 팩토리얼 문제
+- ex) 3! = 3 * 2 * 1
+```c
+#include <stdio.h>
+
+void Factorial(int a,int* pRet);
+
+void main()
+{
+	
+	int i = 5;
+	int result = 1;
+	printf("정수를 입력하세요\n");
+	scanf_s("%d", &i);
+	Factorial(i, &result);
+	printf("%d! = %d\n",i,result);
+
+
+}
+
+void Factorial(int a, int* pRet)
+{
+	for (int i = 1; i < a +1; i++)
+	{
+		*pRet = *pRet * i;
+	}
+	
+	
+}
+```
+
+### 함수 포인터의 선언
+- 자료형(*함수 포인터 이름)(인자목록)
+- int (*func)(int a);
+- 함수 포인터도 포인터이므로 주소값을 저장한다.
+
+```c
+#include <stdio.h>
+
+int Add(int a, int b);
+int Min(int a, int b);
+
+int main(void)
+{
+	int a, b, sel, result;
+	int (*fPtr)(int a, int b) = 0;
+
+	while (1)
+	{
+		printf("다음 중 선택하시오 (1.덧셈 2.뺄셈 3.종료) : ");
+		scanf_s("%d", &sel);
+
+		switch (sel)
+		{
+		case 1:
+			fPtr = Add;
+			break;
+		case 2:
+			fPtr = Min;
+			break;
+		case 3 :
+			return 0;
+		default:
+			break;
+
+		}
+		printf("두 정수를 입력하시오 : ");
+		scanf_s("%d %d", &a, &b);
+		result = fPtr(a,b);
+		printf("결과 : %d\n", result);
+	}
+	return 0;
+}
+int Add(int a, int b)
+{
+	return a + b;
+
+}
+
+int Min(int a, int b)
+{
+	return a - b;
+}
+```
+
+### 함수 포인터 사용 이유
+- 직접 함수 호출하면 되지 왜 복잡하게 함수 포인터를 사용하나 ?
+- 컴파일 타임 또는 런타임에 메모리 크기 및 위치가 결정된다
+- 컴파일 타임 -> 정적 바인딩, 런타임 -> 동적 바인딩
+- 함수 포인터의 사용은 프로그램의 확정성과 유용성을 위함이다.
+- VScode 사용시, 파이썬을 플러그인으로 설치를 한 이후, VScode(편집기)는 그대로 있고, 파이썬 처럼 플러그인으로 설치 할수 있는건 확장이 된다(동적 바인딩)
+
+### NULL 포인터
+- NULL 포인터란 아무것도 가리키지 않는 포인터
+- 아무것도 가리키지 않는다는 의미는 포인터 변수에 아무런 주소값도 저장되어 있지 않다는 의미이다.
+- 실전에서는 함수의 동작 에러 체크 용도로 사용한다
+```c
+char *p = Func();
+if(p == NULL)
+{
+	//에러 처리
+}
+else
+{
+	//수행처리
+}
+```
+### 포인터를 리턴하는 함수를 NULL 체크 해주는 문제
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+
+	char str[] = "Love";
+	char* p;
+
+	p = strchr(str, 'v');
+
+	if (p != NULL)
+	{
+		*p = 'b';
+		printf("변경 결과 : %s\n", str);
+	}
+	else
+	{
+		printf("NULL을 리턴하였습니다.\n");
+	}
+	return 0;
+}
+```
 
