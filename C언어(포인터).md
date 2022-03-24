@@ -311,8 +311,32 @@ void callReference(int* b) //선언 -> 주소값 전달하는 변수
 }
 ```
 
+```c
+#include <stdio.h>
 
+void Swap(int *a, int *b);
 
+int main(void)
+{
+	int x = 10, y = 20;
+	printf("초기값 x = %d, y = %d\n", x, y);
+	Swap(&x, &y);
+	printf("함수 밖에서 변경 후 x = %d, y = %d\n", x, y);
+	return 0;
+
+}
+
+void Swap(int *a, int *b)
+{
+	int temp;
+	temp = *a;
+	*a = *b;
+	*b = temp;
+	printf("함수 안에서 변경 후 a = %d , b = %d\n", a, b);
+
+}
+```
+![image](https://user-images.githubusercontent.com/82345970/159843057-a28c3baf-d614-467b-8520-d6890542732c.png)
 
 
 
