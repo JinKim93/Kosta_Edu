@@ -46,7 +46,7 @@ void main()
 }
 ```
 
-- 이분 검색
+### 이분 검색
   - 중간값과 키값의 대소를 구분하여 테이블을 절반씩 나눠가며 비교하는 방식
   - 한 번 비교할 때 마다 테이블의 길이가 절반씩 줄어들기 떄문에 검색 효율은 상당히 좋다
   - 테이블이 커도 속도가 느려지지 않는다
@@ -107,10 +107,19 @@ void main()
 }
 ```
 
-- 해시
-
 ### unsigned
 - 양수의 인수만 사용하고 싶을때 쓰인다.
 ```c
 unsigned char b
 ```
+### 해시
+![image](https://user-images.githubusercontent.com/82345970/160525766-970896b6-716b-4960-be02-c03696b0939f.png)
+
+### 해시 테이블
+- 2차원배열
+
+![image](https://user-images.githubusercontent.com/82345970/160526328-6883470d-1993-4764-9764-02c27c65b30a.png)
+
+### 해시 함수
+
+![image](https://user-images.githubusercontent.com/82345970/160526665-226839ab-6634-4391-8da0-a6c5552b8c89.png)
