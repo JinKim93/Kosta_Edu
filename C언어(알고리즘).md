@@ -123,3 +123,59 @@ unsigned char b
 ### 해시 함수
 
 ![image](https://user-images.githubusercontent.com/82345970/160526665-226839ab-6634-4391-8da0-a6c5552b8c89.png)
+
+### 해싱문제
+```c
+#include <stdio.h>
+#include <string.h>
+
+#define BK 10
+#define SL 1
+int hashtable[BK][SL];
+
+int hash(int key)
+{
+	return key % 10;
+
+}
+
+void Addkey(int key)
+{
+	int bucket;
+	bucket = hash(key);
+
+	if (hashtable[bucket][0] == 0)
+	{
+		hashtable[bucket][0] = key;
+	}
+}
+
+int Findkey(int key)
+{
+	int bucket;
+	bucket = hash(key);
+	return (hashtable[bucket][0] == key);
+}
+void main()
+{
+	int i, key;
+	memset(hashtable, 0, sizeof(hashtable));
+	for (i = 0 ; i < 5; i++)
+	{
+		printf("%d번째값을입력하세요", i + 1);
+		scanf_s("%d", &key);
+		Addkey(key);
+	}
+	printf("검색할키를입력하세요: ");
+	scanf_s("%d", &key);
+
+	if (Findkey(key))
+	{
+		puts("검색되었습니다.");
+	}
+	else
+	{
+		puts("입력하신값은 없습니다");
+	}
+}
+```
