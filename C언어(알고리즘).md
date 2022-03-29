@@ -124,7 +124,7 @@ unsigned char b
 
 ![image](https://user-images.githubusercontent.com/82345970/160526665-226839ab-6634-4391-8da0-a6c5552b8c89.png)
 
-### 해싱문제
+### 해싱
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -179,8 +179,12 @@ void main()
 	}
 }
 ```
+### 해싱의문제점
 
-### 해싱의문제점해결하는법(다중 슬롯)
+![image](https://user-images.githubusercontent.com/82345970/160545955-c57c5e0f-b79c-4ea4-a8fd-863394003449.png)
+
+
+### 해싱의문제점 해결하는법(다중 슬롯)
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -223,6 +227,78 @@ int Findkey(int key)
 		}
 	}
 	return 0;
+}
+
+void main()
+{
+	int i, key;
+	memset(hashtable, 0, sizeof(hashtable));
+	for (i = 0 ; i < 5; i++)
+	{
+		printf("%d번째값을입력하세요", i + 1);
+		scanf_s("%d", &key);
+		Addkey(key);
+	}
+	printf("검색할키를입력하세요: ");
+	scanf_s("%d", &key);
+
+	if (Findkey(key))
+	{
+		puts("검색되었습니다.");
+	}
+	else
+	{
+		puts("입력하신값은 없습니다");
+	}
+}
+```
+
+### 해싱의문제점 해결방법(선형탐색)
+- 선형탐색
+- 충돌이 발생할 경우 이 데이터를 버리지 않고, 다른 버킷에 대신 집어넣는 방법
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+#define BK 10
+#define SL 1
+int hashtable[BK][SL];
+
+int hash(int key)
+{
+	return key % 10;
+
+}
+
+void Addkey(int key)
+{
+	int bucket;
+	bucket = hash(key);
+	while (hashtable[bucket][0] != 0)
+	{
+		bucket = bucket + 1;
+	}
+	hashtable[bucket][0] = key;
+	
+}
+
+int Findkey(int key)
+{
+	int bucket;
+	bucket = hash(key);
+
+	while (hashtable[bucket][0] != 0)
+	{
+		if (hashtable[bucket][0] == key)
+		{
+			return 1;
+			
+		}
+		bucket = bucket + 1;
+	}
+	return 0;
+	
 }
 
 void main()
