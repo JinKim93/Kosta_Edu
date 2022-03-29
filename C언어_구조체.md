@@ -15,7 +15,7 @@ struct student {
 int main(void)
 {
 
-	strcpy_s(st1.name, "이창현");
+	strcpy_s(st1.name, "JinKim");
 	st1.age = 25;
 	st1.height = 178;
 	printf("이름 = %s, 나이 = %d, 키 = %d\n", st1.name, st1.age, st1.height);
