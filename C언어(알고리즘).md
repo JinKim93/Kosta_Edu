@@ -159,6 +159,75 @@ int Findkey(int key)
 void main()
 {
 	int i, key;
+	memset(hashtable, 0, sizeof(hashtable)); //(세팅할대상,0으로,hashtable크기만큼) -> 전체를 0으로 세팅
+	for (i = 0 ; i < 5; i++)
+	{
+		printf("%d번째값을입력하세요", i + 1);
+		scanf_s("%d", &key);
+		Addkey(key);
+	}
+	printf("검색할키를입력하세요: ");
+	scanf_s("%d", &key);
+
+	if (Findkey(key))
+	{
+		puts("검색되었습니다.");
+	}
+	else
+	{
+		puts("입력하신값은 없습니다");
+	}
+}
+```
+
+### 해싱의문제점해결하는법(다중 슬롯)
+```c
+#include <stdio.h>
+#include <string.h>
+
+#define BK 10
+#define SL 3
+int hashtable[BK][SL];
+
+int hash(int key)
+{
+	return key % 10;
+
+}
+
+void Addkey(int key)
+{
+	int bucket;
+	bucket = hash(key);
+	for (int i=0; i<SL; i++)
+	{
+		if (hashtable[bucket][i] == 0) // 슬롯이 비어있니?
+		{
+			hashtable[bucket][i] = key;
+			break;
+		}
+	}
+	
+}
+
+int Findkey(int key)
+{
+	int bucket;
+	bucket = hash(key);
+
+	for (int i = 0; i < SL; i++)
+	{
+		if (hashtable[bucket][i] == key)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+void main()
+{
+	int i, key;
 	memset(hashtable, 0, sizeof(hashtable));
 	for (i = 0 ; i < 5; i++)
 	{
