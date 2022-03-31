@@ -44,10 +44,10 @@ void main()
 
 	pObj = &pt;
 
-	cout << pt.GetX() << endl; // 직접 참조
+	cout << pt.GetX() << endl; // 직접 참조 연산자
 	cout << pt.GetY() << endl;
 
-	cout << pObj->GetX() << endl; // 간접 참조
+	cout << pObj->GetX() << endl; // 간접 참조 연산자
 	cout << pObj->GetY() << endl;
 }
 ```
