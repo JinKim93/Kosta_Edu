@@ -86,3 +86,40 @@ void main()
 
 }
 ```
+
+### 클래스 내 동적 메모리 할당
+```c
+#include <iostream>
+
+using namespace std;
+
+class String
+{
+public:
+	String(char ch, int nSize);
+	~String();
+private:
+	int nLength;
+	char* pBuffer;
+
+};
+String::String(char ch, int nSize)
+{
+	nLength = nSize;
+	pBuffer = new char[nLength + 1];
+	memset(pBuffer, ch, nLength);
+	pBuffer[nLength] = '\0';
+	cout << "pBuffer : " << pBuffer << endl;
+	cout << "nLength : " << nLength << endl;
+
+}
+String::~String()
+{
+	delete[] pBuffer;
+}
+
+void main()
+{
+	String str('A', 5);
+}
+```
