@@ -12,7 +12,7 @@ class Deposit
 public:
 		Deposit() //전달인자 없이 default 생성자 -> 오버로딩
 		{
-			nCount++;
+			nCount++; //static이기때문에 전체 개수를 알수있다.
 			cout << "객체 생성 개수 : " << nCount << endl;
 
 		}
