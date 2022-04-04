@@ -49,10 +49,11 @@ void main()
 	String str1('A', 3), str2('B', 5);
 	cout << "대입 전 str2";
 	str2.SetData();
-	str2 = str1;
+	str2 = str1; //str2.operator=(str1);
 	cout << "대입 후 str2";
 	str2.SetData();
 
 }
+
 
 ```
