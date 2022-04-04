@@ -95,7 +95,7 @@ void UnInitArray()
 void DumpArray(const char* sMark)
 {
 	unsigned i;
-	printf("%16s => 크기 = %02d : ", sMark, size, num);
+	printf("%16s => 크기=%02d,개수=%02d : ", sMark, size, num);
 	for (i = 0 ; i < num; i++)
 	{
 		printf("%2d", ar[i]);
@@ -116,11 +116,11 @@ void main()
 		Append(i);
 	}
 	DumpArray("8개 추가");
-	Insert(3, 10); 
+	Insert(3,10); 
 	DumpArray("10 삽입");
-	Insert(3, 11);
+	Insert(3,11);
 	DumpArray("11 삽입");
-	Insert(3, 12); 
+	Insert(3,12); 
 	DumpArray("12 삽입");
 	Delete(7); 
 	DumpArray("요소 7 삭제");
