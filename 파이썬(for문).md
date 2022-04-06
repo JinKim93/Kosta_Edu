@@ -70,6 +70,17 @@ for val in range(2,10,1):
     print()    
 ```
 
+### 별찍기
+```py
+star ='*'
+for row in range(1,6,1): #세로
+    for col in range(0,row,1): #가로
+        print(star, end='') #옆으로 출력 할려고 end를 사용함
+    print()        
+```
+
+![image](https://user-images.githubusercontent.com/82345970/161936853-042db1b7-55f8-4773-aa49-1bb1975a6a3a.png)
+
 
         
 
