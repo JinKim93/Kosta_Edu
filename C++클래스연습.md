@@ -197,8 +197,8 @@ void String::operator=(const String& s)
 
 	delete this->pBuffer; //this는 str1을 나타내줌
 	this->nLength = s.nLength;
-	pBuffer = new char[this->nLength + 1];
-	strcpy_s(this->pBuffer, this->nLength + 1, s.pBuffer);
+	this->pBuffer = new char[this->nLength + 1];
+	strcpy_s(this->pBuffer, this->nLength + 1, s.pBuffer); //s는 str2 나타내줌
 
 }
 
