@@ -81,7 +81,7 @@ void main()
 
 ### 힙영역 메모리 할당
 
-``c
+```c
 #include <iostream>
 using namespace std;
 
