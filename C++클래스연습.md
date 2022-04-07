@@ -267,7 +267,7 @@ public:
 	Shape() {}
 	~Shape() {}
 	Shape(double nx, double ny);
-	
+	virtual void Draw() = 0; //순수가상함수만듬 그림판보면 도형이 있는데, 어떤 도형을 그리고 해야하는지 너무 추상적이기 때문에 순수가상함수만듬
 protected:
 	double x, y;
 };
@@ -294,10 +294,10 @@ private:
 
 Rectangle::Rectangle(double nx, double ny, double nWidth, int nHeight)
 {
-	x = nx; //부모클래스한테 상속 받은거 
-	y = ny;
-	width = nWidth;
-	height = nHeight;
+	this->x = nx; //부모클래스한테 상속 받은거 
+	this->y = ny;
+	this->width = nWidth;
+	this->height = nHeight;
 }
 
 class Circle : public Shape
@@ -330,6 +330,12 @@ void main()
 
 	Circle* pCir = new Circle(10, 20, 5 );
 	pCir->Draw();
+
+	Shape* pSp1 = (Shape*)pRect; //Rectangle 객체가 출력함
+	pSp1->Draw();
+
+	Shape* pSp2 = (Shape*)pCir; //오버라이딩 형태
+	pSp2->Draw();
 }
 ```
 
