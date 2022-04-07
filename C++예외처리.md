@@ -103,5 +103,46 @@ void main()
 }
 ```
 
+### 예외처리 후 함수 이용(나누어야 할 수가 0인 경우, 나누어질 수가 음수인 경우)
+
+```c
+#include <iostream>
+
+using namespace std;
+
+
+void divide(int x, int y)
+{
+	if (y == 0)
+	{
+		throw y;
+	}
+	cout << "나누기 결과: " << x / y << endl;
+}
+
+
+
+void main()
+{
+	int a, b;
+	cout << "나누어질수 입력:";
+	cin >> a;
+	cout << "나누는수 입력:";
+	cin >> b;
+	try
+	{
+		divide(a, b);
+	}
+	catch (const char* msg)
+	{
+		cout << msg << endl;
+	}
+	catch (int exp)
+	{
+		cout << "b에" << exp << "이 입력 되었습니다" << endl;
+	}
+
+}
+```
 
 
