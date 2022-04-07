@@ -256,7 +256,7 @@ void main()
 }
 ```
 
-### shape클래스 상속받는 클래스들 
+### shape클래스 상속받는 Rectangle,Circle클래스들 
 ```c
 #include <iostream>
 using namespace std;
@@ -339,4 +339,102 @@ void main()
 }
 ```
 
+### shape클래스 상속받는 Rectangle,Circle클래스들 -> Rectangle상속받는 Square
+
+
+```c
+	#include <iostream>
+	using namespace std;
+
+	class Shape
+	{
+	public:
+		Shape() {}
+		~Shape() {}
+		Shape(double nx, double ny);
+		virtual void Draw() = 0; //순수가상함수만듬 그림판보면 도형이 있는데, 어떤 도형을 그리고 해야하는지 너무 추상적이기 때문에 순수가상함수만듬
+	protected:
+		double x, y;
+	};
+	Shape::Shape(double nx, double ny)
+	{
+		this->x = nx;
+		this->y = ny;
+	}
+	class Rectangle : public Shape
+	{
+	public:
+		Rectangle() {}
+		~Rectangle() {}
+		Rectangle(double nx, double ny, double nWidth, int nHeight);
+		void Draw()
+		{
+			cout << x << "," << y << "," << width << "" << height << endl;
+		}
+	
+	private:
+		int width, height;
+
+	};
+
+	Rectangle::Rectangle(double nx, double ny, double nWidth, int nHeight)
+	{
+		this->x = nx; //부모클래스한테 상속 받은거 
+		this->y = ny;
+		this->width = nWidth;
+		this->height = nHeight;
+	}
+
+	class Square : public Rectangle
+	{
+	public:
+		Square() {} //디폴트생성자
+		~Square() {} //디폴트소멸자
+		void Drwa()
+		{
+			cout << x << "," << y << "," << length << endl;
+		}
+	private:
+		int length;
+		
+	};
+	
+	class Circle : public Shape
+	{
+	public:
+		Circle() {}
+		~Circle() {}
+		Circle(double nX, double nY, double nR);
+		void Draw()
+		{
+			cout << x << "," << y << "," << r << endl;
+		}
+	private:
+		double r;
+
+	};
+	Circle::Circle(double nX, double nY, double nR)
+	{
+		x = nX;
+		y = nY;
+		r = nR;
+	
+	}
+
+	void main()
+	{
+	
+		Rectangle* pRect = new Rectangle(10, 20, 500, 600);
+		pRect->Draw();
+
+		Circle* pCir = new Circle(10, 20, 5 );
+		pCir->Draw();
+
+		Shape* pSp1 = (Shape*)pRect; //Rectangle 객체가 출력함
+		pSp1->Draw();
+
+		Shape* pSp2 = (Shape*)pCir;
+		pSp2->Draw();
+	}
+```
 
