@@ -63,6 +63,45 @@ void main()
 }
 ```
 
+### 예외처리 후(나누어야 할 수가 0인 경우, 나누어질 수가 음수인 경우)
+
+```c
+#include <iostream>
+
+using namespace std;
+
+
+
+void main()
+{
+	int a, b;
+	cout << "나누어질수 입력:";
+	cin >> a;
+	cout << "나누는수 입력:";
+	cin >> b;
+	try
+	{
+		if (a < 0)
+		{
+			throw "나누어질 수가 음수 입니다.";
+		}
+		if (b == 0)
+		{
+			throw b;
+		}
+		cout << "나누기 결과: " << a / b << endl;
+	}
+	catch (const char* msg)
+	{
+		cout << msg << endl;
+	}
+	catch (int exp)
+	{
+		cout << "b에" << exp << "이 입력 되었습니다" << endl;
+	}
+
+}
+```
 
 
 
