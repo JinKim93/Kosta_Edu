@@ -225,3 +225,35 @@ void main()
 	str1 = str2; //str1.operator(str2);
 }
 ```
+
+### shape클래스
+```c
+#include <iostream>
+using namespace std;
+
+class Shape
+{
+public:
+	Shape() {}
+	~Shape() {}
+	Shape(int nx, int ny);
+	
+private:
+	int x, y;
+};
+Shape::Shape(int nx, int ny)
+{
+	this->x = nx;
+	this->y = ny;
+}
+
+
+void main()
+{
+	//객체를 생성하는 2가지 방법
+	Shape sh(10, 20); //스택에 생성
+	Shape* pSh = new Shape(10, 20); //힙에 생성
+}
+```
+
+
