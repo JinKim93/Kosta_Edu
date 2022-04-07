@@ -256,4 +256,81 @@ void main()
 }
 ```
 
+### shape클래스 상속받는 클래스들 
+```c
+#include <iostream>
+using namespace std;
+
+class Shape
+{
+public:
+	Shape() {}
+	~Shape() {}
+	Shape(double nx, double ny);
+	
+protected:
+	double x, y;
+};
+Shape::Shape(double nx, double ny)
+{
+	this->x = nx;
+	this->y = ny;
+}
+class Rectangle : public Shape
+{
+public:
+	Rectangle() {}
+	~Rectangle() {}
+	Rectangle(double nx, double ny, double nWidth, int nHeight);
+	void Draw()
+	{
+		cout << x << "," << y << "," << width << "" << height << endl;
+	}
+	
+private:
+	int width, height;
+
+};
+
+Rectangle::Rectangle(double nx, double ny, double nWidth, int nHeight)
+{
+	x = nx; //부모클래스한테 상속 받은거 
+	y = ny;
+	width = nWidth;
+	height = nHeight;
+}
+
+class Circle : public Shape
+{
+public:
+	Circle() {}
+	~Circle() {}
+	Circle(double nX, double nY, double nR);
+	void Draw()
+	{
+		cout << x << "," << y << "," << r << endl;
+	}
+private:
+	double r;
+
+};
+Circle::Circle(double nX, double nY, double nR)
+{
+	x = nX;
+	y = nY;
+	r = nR;
+	
+}
+
+void main()
+{
+	
+	Rectangle* pRect = new Rectangle(10, 20, 500, 600);
+	pRect->Draw();
+
+	Circle* pCir = new Circle(10, 20, 5 );
+	pCir->Draw();
+}
+```
+
 
