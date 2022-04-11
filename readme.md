@@ -28,3 +28,10 @@
 * [순차검색](https://github.com/JinKim93/TIL/blob/master/%EC%88%9C%EC%B0%A8%EA%B2%80%EC%83%89.md)
 * [이분검색](https://github.com/JinKim93/TIL/blob/master/%EC%9D%B4%EB%B6%84%EA%B2%80%EC%83%89.md)
 * [해시](https://github.com/JinKim93/TIL/blob/master/%ED%95%B4%EC%8B%9C%ED%95%A8%EC%88%98.md)
+
+
+# 파이썬
+* [파이썬 기본문법](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC.md)
+* [파이썬 for문](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(for%EB%AC%B8).md)
+* [파이썬 while문](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(while%EB%AC%B8).md)
+* [파이썬 함수](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(%ED%95%A8%EC%88%98).md)
