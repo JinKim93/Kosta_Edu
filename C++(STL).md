@@ -169,6 +169,49 @@ void main()
 	}
 }
 ```
+### 셋(set) 이란
+- set이란 사전적의미로 '집합', 동일한 타입의 데이터를 모아놓은것
+- 데이터는 정렬된 위치에 삽입되므로 검색 속도가 빠르고, 키가 중복되지 않음
+
+### 셋(set)의 사용형태
+```c
+set<T> st;
+```
+
+### 셋 예제
+```c
+#include <iostream>
+#include <vector>
+#include <list>
+#include <set>
+using namespace std;
+
+void main()
+{
+
+	int arr[] = { 1,2,3,2,5,6,3 }; //각 데이터 중복된 값 있음
+	set<int> scon;
+	set<int>::iterator it;
+
+	for (int i = 0; i < sizeof(arr) / sizeof(int); i++)
+	{
+		scon.insert(arr[i]);
+	}
+
+	for (it = scon.begin(); it != scon.end(); it++)
+	{
+		cout << *it << " ";
+	}
+	cout << endl;
+
+}
+```
+### 셋 출력결과
+- 중복된 값 제거 및 자동정렬
+ 
+![image](https://user-images.githubusercontent.com/82345970/162670771-105262cd-8c73-40bc-84be-80e4aa4114d3.png)
+
+
 
 ### 정렬 연관 컨테이너
 - **맵 중요**
