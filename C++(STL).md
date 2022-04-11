@@ -169,6 +169,12 @@ void main()
 	}
 }
 ```
+
+### 정렬 연관 컨테이너
+- **맵 중요**
+- 키를 사용하여 데이터를 신속하게 찾아냄
+- 실행 시 크기를동적으로 변경할 수 있다
+
 ### 셋(set) 이란
 - set이란 사전적의미로 '집합', 동일한 타입의 데이터를 모아놓은것
 - 데이터는 정렬된 위치에 삽입되므로 검색 속도가 빠르고, 키가 중복되지 않음
@@ -178,7 +184,7 @@ void main()
 set<T> st;
 ```
 
-### 셋 예제
+### 셋(set) 예제_숫자
 ```c
 #include <iostream>
 #include <vector>
@@ -206,17 +212,35 @@ void main()
 
 }
 ```
-### 셋 출력결과
+### 셋(set) 출력결과
 - 중복된 값 제거 및 자동정렬
  
 ![image](https://user-images.githubusercontent.com/82345970/162670771-105262cd-8c73-40bc-84be-80e4aa4114d3.png)
 
+### 셋(set)예제_문자
+```c
+#include <iostream>
+#include <vector>
+#include <list>
+#include <set>
+using namespace std;
 
+void main()
+{
 
-### 정렬 연관 컨테이너
-- **맵 중요**
-- 키를 사용하여 데이터를 신속하게 찾아냄
-- 실행 시 크기를동적으로 변경할 수 있다
+	const char* strtemp = "fgdkabcafk"; // 각각 데이터 키가 될것이다
+	set<char> scon(&strtemp[0], &strtemp[10]);
+	set<char>::iterator it;
+
+	for (it = scon.begin(); it != scon.end(); it++)
+	{
+		cout << *it << "  ";
+
+	}
+	cout << endl;
+	
+}
+```
 
 ### 반복자
 - 컨테이너의 요소를 가리키는 객체, 컨테이너의 시작부터 끝까지 이동하면서 요소를 읽거나 쓰기 위해 사용
