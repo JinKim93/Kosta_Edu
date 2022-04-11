@@ -17,4 +17,4 @@
 * [포인터](https://github.com/JinKim93/TIL/blob/master/C%EC%96%B8%EC%96%B4(%ED%8F%AC%EC%9D%B8%ED%84%B0).md)
 * [동적메모리할당](https://github.com/JinKim93/TIL/blob/master/C%EC%96%B8%EC%96%B4_%EB%8F%99%EC%A0%81%EB%A9%94%EB%AA%A8%EB%A6%AC%ED%95%A0%EB%8B%B9.md)
 * [재귀함수(Factorial)](https://github.com/JinKim93/TIL/blob/master/C%EC%96%B8%EC%96%B4(%EC%9E%AC%EA%B7%80%ED%95%A8%EC%88%98).md)
-* [파일분할]https://github.com/JinKim93/TIL/blob/master/C%EC%96%B8%EC%96%B4_%ED%8C%8C%EC%9D%BC%EB%B6%84%ED%95%A0.md
+* [파일분할](https://github.com/JinKim93/TIL/blob/master/C%EC%96%B8%EC%96%B4_%ED%8C%8C%EC%9D%BC%EB%B6%84%ED%95%A0.md)
