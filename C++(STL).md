@@ -130,6 +130,46 @@ void main()
 }
 ```
 
+### 리스트
+- 이중 연결 리스트로 구현되어 있는 컨테이너
+- 연결 리스트는 노드라는 것이 붙어 있어서 데이터가 물리적으로 인접해있지 않고, 논리적인 순서를 기억하므로 데이터 삽입, 삭제의 속도가 상대적 빠름
+
+### 리스트 사용형태
+```c
+list<T> lst;
+```
+
+### 리스트 멤버함수
+- push_front 가장 앞에 요소 삽입
+- push_back 가장 뒤에 요소 삽입
+- pop_front 가장 앞에 요소 삭제
+- pop_back 가장 뒤에 요소 삭제
+
+### 리스트 예제
+```c
+#include <iostream>
+#include <vector>
+#include <list>
+using namespace std;
+
+void main()
+{
+	list<int> lst;
+	int i;
+	for (i = 0; i<5; i++)
+	{
+		lst.push_back(i);
+	}
+
+	list<int>::iterator it; //iterater -> 반복자를 통해 포인터로 데이터 접근해야함
+	for (it = lst.begin(); it != lst.end(); it++, i++)
+	{
+		cout << i << "번째 = " << *it << endl;
+
+	}
+}
+```
+
 ### 정렬 연관 컨테이너
 - **맵 중요**
 - 키를 사용하여 데이터를 신속하게 찾아냄
