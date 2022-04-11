@@ -1,6 +1,5 @@
 # C언어
 
-* [c언어연습문제](https://github.com/JinKim93/Kosta_Edu/blob/master/C%EC%96%B8%EC%96%B4%20swtich%20~%20case.md)  
 * [Switch ~case문](https://github.com/JinKim93/TIL/blob/master/C%EC%96%B8%EC%96%B4%20swtich%20~%20case.md)
 * [do ~ whie문](https://github.com/JinKim93/TIL/blob/master/C%EC%96%B8%EC%96%B4(do%20~%20while%EB%AC%B8).md)
 * [continue문](https://github.com/JinKim93/TIL/blob/master/C%EC%96%B8%EC%96%B4_continue%EB%AC%B8.md)
