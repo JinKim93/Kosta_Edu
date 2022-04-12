@@ -25,5 +25,30 @@ if 'e' in string:
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/162906150-1557c420-e4f7-4ee3-a2e5-b1299e1ffbe1.png)
 
+### kim으로 되 있는 문자열 제외 후 출력
+```py
+df_list = ["kim_a","kim_b","kim_c","kim_k","seo_a","seo_b","seo_c","seo_s"]
+for col in df_list:
+    if "kim" not in col:
+        print(col)
+```
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/162908899-fcc63444-5a94-4193-9639-ea2c9c4b4686.png)
+
+### 리스트 중 선택 안 할 리스트 제외 후 출력 
+```py
+df_list = ["kim_a","kim_b","kim_c","kim_k","seo_a","seo_b","seo_c","seo_s"]
+unselect_list = ["kim_a","seo_a"]
+
+for col in df_list:
+    if col not in unselect_list:
+        print(col)
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/162909464-e8c5c9a5-f71a-4fb7-a501-47fc39aa0c39.png)
+
+
+
 
     
