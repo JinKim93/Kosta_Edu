@@ -308,7 +308,7 @@ void main()
 
 	for (int i = 0; i < sizeof(arPerson) / sizeof(arPerson[0]); i++)
 	{
-		cout << person[arPerson[i].name] << endl;
+		cout << person[arPerson[i].name] << endl; //person이라는 맵의 키값(.name)을 이용해 data(나이)를 출력
 	}
 
 }
@@ -331,7 +331,7 @@ struct Age
 	{"구현준",123}, {"김성혁",345}, {"김진",567}, {"최성현",789}//key(구현준),value(21)
 };
 
-void main()
+int main()
 {
 
 	map<string, int> person;
@@ -345,7 +345,7 @@ void main()
 													// arPerson구조체에 있는 값 = nage -> 맵에서 데이터 값 가져옴
 
 	}
-	
+
 	for (;;)
 	{
 		cout << "이름 입력 : ";
