@@ -247,6 +247,7 @@ void main()
 - 대용량 데이터를 검색할 경우 유리, 데이터 삽입, 삭제 시 데이터의 이동이 발생하므로 상대적 느림
 - 셋은 key,value 안 나눔
 - 데이터 key,value 나눠서 사용
+- 검색할때 많이 사용함
 
 ### 맵(map)의 사용형태
 ```c
@@ -301,7 +302,7 @@ void main()
 	for (int i = 0; i < sizeof(arPerson) / sizeof(arPerson[0]); i++) //arPersion[0] 첫번째 인자로 나누면 데이터4개라서 4가 나옴
 	{
 		person[arPerson[i].name] = arPerson[i].nage; //person맵을 이용해서 arPerson구조체에 있는 값 = name -> 맵에서는 키 값 가져옴
-		  						// arPersion구조체에 있는 값 = nage -> 맵에서 데이터 값 가져옴
+		  						// arPerson구조체에 있는 값 = nage -> 맵에서 데이터 값 가져옴
 		
 	}
 
@@ -310,6 +311,61 @@ void main()
 		cout << person[arPerson[i].name] << endl;
 	}
 
+}
+```
+
+### 맵(map)을 이용한 전화번호 찾기
+```c
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+struct Age
+{
+	string name;
+	int phone;
+
+}arPerson[] = {
+	{"구현준",123}, {"김성혁",345}, {"김진",567}, {"최성현",789}//key(구현준),value(21)
+};
+
+void main()
+{
+
+	map<string, int> person;
+	map<string, int>::iterator it;
+
+	string name;
+	for (int i = 0; i < sizeof(arPerson) / sizeof(arPerson[0]); i++) //arPersion[0] 첫번째 인자로 나누면 데이터4개라서 4가 나옴
+	{
+
+		person[arPerson[i].name] = arPerson[i].phone; //person맵을 이용해서 arPerson구조체에 있는 값 = name -> 맵에서는 키 값 가져옴
+													// arPerson구조체에 있는 값 = nage -> 맵에서 데이터 값 가져옴
+
+	}
+	
+	for (;;)
+	{
+		cout << "이름 입력 : ";
+		cin >> name;
+
+		if (name == "q")  //q문자 들어오면 빠져나온다
+		{
+			break;
+		}
+		it = person.find(name); //find 이용해서 name을 찾아줌
+		if (it == person.end()) //찾는 사람 end 끝 부분
+		{
+			cout << "그런 사람 없습니다" << endl;
+		}
+		else
+		{
+			cout << name << "전화번호는 " << it->second << "입니다" << endl;
+		}
+
+	}
 }
 ```
 
