@@ -301,7 +301,7 @@ void main()
 	for (int i = 0; i < sizeof(arPerson) / sizeof(arPerson[0]); i++) //arPersion[0] 첫번째 인자로 나누면 데이터4개라서 4가 나옴
 	{
 		person[arPerson[i].name] = arPerson[i].nage; //person맵을 이용해서 arPerson구조체에 있는 값 = name -> 맵에서는 키 값 가져옴
-													// arPersion구조체에 있는 값 = nage -> 맵에서 데이터 값 가져옴
+		  						// arPersion구조체에 있는 값 = nage -> 맵에서 데이터 값 가져옴
 		
 	}
 
