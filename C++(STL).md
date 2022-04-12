@@ -356,7 +356,7 @@ int main()
 			break;
 		}
 		it = person.find(name); //find 이용해서 name을 찾아줌
-		if (it == person.end()) //찾는 사람 end 끝 부분
+		if (it == person.end()) //찾는 사람 end 마지막부분의 그 다음을 가
 		{
 			cout << "그런 사람 없습니다" << endl;
 		}
@@ -394,6 +394,123 @@ void main()
 
 	}
 	cout << endl;
+}
+```
+
+### 문자 배열을 읽어오는 예제(반복자 원리)
+```c
+#include <iostream>
+
+using namespace std;
+
+void main()
+{
+
+	char pArray[] = "Programming";
+	char* pAddr = pArray; //최초의 pAddr은 P를 가리키고 있다
+
+	while (*pAddr) //문자열의 값을 처음부터 끝 까지 읽는다
+	{
+		cout << *pAddr << " ";
+		pAddr++;
+	}
+	
+	
+}
+```
+
+### 반복자 형식
+```c
+vector<int>::iterator it;
+```
+- vetor 클래스 안에 iterator라는 반복자 타입이 정의됨
+- 변수 it를 선언하면 벡터의 한 요소를 가리키는 반복자가 됨
+
+### 반복자 사용
+- 반복자를 이용하여 벡터의 요소를 순회하는 형태
+```c
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+void main()
+{
+
+	int arr[] = { 1,2,3,4,5 };
+	vector<int> vi(&arr[0], &arr[5]);
+	vector<int>::iterator it;
+
+	for (it = vi.begin(); it != vi.end(); it++)
+	{
+		cout << *it << " ";
+	}
+	cout << endl;
+}
+```
+
+### 반복자 활용(백터)
+```c
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+void main()
+{
+
+	int num = 0;
+	cout << "배열의 크기를 입력하세요 :";
+	cin >> num;
+
+	vector<int>vArr(num); //백터는 내부적으로,  new int[num] <- 구조로 생성됨(동적할당됨)
+	vector<int>::iterator it;
+
+	for (int i = 0; i < num; i++)
+	{
+		vArr[i] = i + 1; //첫번째 인덱스에는 1,2 ~~ 이런식으로 백터 데이터 넣어줌
+		//vArr.push_back(i + 1);  vector<int>vArr  <- push_back 사용할려면 백터 크기 할당해주면 단됨 
+	}
+
+	for (it = vArr.begin(); it != vArr.end(); it++) //백터의 처음부터 끝까지 루프 돌음
+	{
+		cout << *it << endl;
+	}
+
+}
+```
+
+### 반복자 활용(리스트)
+```c
+#include <iostream>
+#include <vector>
+#include <string>
+#include <list>
+using namespace std;
+
+void main()
+{			
+	
+	int num = 0;
+	cout << "배열의 크기를 입력하세요 :";
+	cin >> num;
+
+	list<int>vArr; 
+	list<int>::iterator it;
+
+	for (int i = 0; i < num; i++)
+	{
+		vArr.push_back(i + 1);
+		
+	}
+
+	for (it = vArr.begin(); it != vArr.end(); it++) 
+	{
+		cout << *it << endl;
+	}
+
+	
+
 }
 ```
 
