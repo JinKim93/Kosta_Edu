@@ -242,6 +242,77 @@ void main()
 }
 ```
 
+### 맵(map)
+- 두 개의 데이터가 하나의 쌍을 이루어 저장하는 컨테이너, 정렬된 상태로 관리되고, 검색속도 빠름
+- 대용량 데이터를 검색할 경우 유리, 데이터 삽입, 삭제 시 데이터의 이동이 발생하므로 상대적 느림
+- 셋은 key,value 안 나눔
+- 데이터 key,value 나눠서 사용
+
+### 맵(map)의 사용형태
+```c
+map<key,data> mp;
+```
+- 첫 번째 전달인자 key에는 숫자,문자 타입 상관 없이 들어옴
+- 두 번째 전달인자 data는 key를 통해 가져올 데이터를 의미 -> 숫자, 문자 타입 상관 없이 들어옴
+```c
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+
+void main()
+{
+	map<string, int> person; //string타입 key값, 정수형타입 data값
+	person["김진"] = 20; //김진 key값, 20 data값
+	person["김성혁"] = 21;   // 하기 코드보면 person[arPerson[i].name] = arPerson[i].nage; 부분하고 같은표현이다. 
+	person["김형균"] = 24;
+	person["최성현"] = 22;
+
+
+
+}
+```
+
+### 맵(map)예제
+- 구조체형태를 맵을 이용해서, key값,data값 불러옴
+```c
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+struct Age
+{
+	string name;
+	int nage;
+
+}arPerson[] = { 
+	{"구현준",21}, {"김성혁",22}, {"김진",20}, {"최성현",23}//key(구현준),value(21)  
+};
+
+void main()
+{
+
+	map<string, int> person;
+	map<string, int>::iterator it;
+
+	string name;
+	for (int i = 0; i < sizeof(arPerson) / sizeof(arPerson[0]); i++) //arPersion[0] 첫번째 인자로 나누면 데이터4개라서 4가 나옴
+	{
+		person[arPerson[i].name] = arPerson[i].nage; //person맵을 이용해서 arPerson구조체에 있는 값 = name -> 맵에서는 키 값 가져옴
+													// arPersion구조체에 있는 값 = nage -> 맵에서 데이터 값 가져옴
+		
+	}
+
+	for (int i = 0; i < sizeof(arPerson) / sizeof(arPerson[0]); i++)
+	{
+		cout << person[arPerson[i].name] << endl;
+	}
+
+}
+```
+
 ### 반복자
 - 컨테이너의 요소를 가리키는 객체, 컨테이너의 시작부터 끝까지 이동하면서 요소를 읽거나 쓰기 위해 사용
 - 컴파일러의 내부 알고리즘은 컴파일러 제작 회사마다 다름
