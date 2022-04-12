@@ -48,6 +48,16 @@ for col in df_list:
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/162909464-e8c5c9a5-f71a-4fb7-a501-47fc39aa0c39.png)
 
+### 특정 문자열 포함되있지 않은 문자열 찾기 조건
+```py
+df_list = ['c programming','python programming','mysql','html','jquery']
+for col in df_list:
+    if 'pro' not in col: # 특정 문자열 포함되있지 않은 문자열 찾기 조건
+        print(col)
+```        
+
+### 출력결과 
+![image](https://user-images.githubusercontent.com/82345970/162910031-d1402894-e967-4bc9-aa10-c8a4f578765c.png)
 
 
 
