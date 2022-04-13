@@ -41,6 +41,17 @@
 * [static 멤버함수](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(static%20%EB%A9%A4%EB%B2%84%ED%95%A8%EC%88%98).md)
 * [객체 포인터](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(%EA%B0%9D%EC%B2%B4%20%ED%8F%AC%EC%9D%B8%ED%84%B0).md)
 * [객체배열](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(%EA%B0%9D%EC%B2%B4%EB%B0%B0%EC%97%B4).md)
+* [객체 포인터 배열](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(%EA%B0%9D%EC%B2%B4%ED%8F%AC%EC%9D%B8%ED%84%B0%EB%B0%B0%EC%97%B4).md)
+* [복사생성자](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(%EB%B3%B5%EC%82%AC%EC%83%9D%EC%84%B1%EC%9E%90).md)
+* [상속](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(%EC%83%81%EC%86%8D).md)
+* [오버로딩 멤버함수](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(%EC%98%A4%EB%B2%84%EB%A1%9C%EB%94%A9%20%EB%A9%A4%EB%B2%84%ED%95%A8%EC%88%98).md)
+* [프렌드](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(%ED%94%84%EB%A0%8C%EB%93%9C).md)
+* [hash_map](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B_hash_map.md)
+* [알고리즘 함수](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%20%ED%95%A8%EC%88%98.md)
+* [예외처리](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B%EC%98%88%EC%99%B8%EC%B2%98%EB%A6%AC.md)
+* [클래스 연습](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%B0%EC%8A%B5.md)
+* [템플릿](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B%ED%85%9C%ED%94%8C%EB%A6%BF.md)
+* [싱글톤패턴](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/%EC%8B%B1%EA%B8%80%ED%86%A4%ED%8C%A8%ED%84%B4.md)
 
 # 파이썬
 * [파이썬 기본문법](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC.md)
