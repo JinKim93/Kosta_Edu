@@ -52,6 +52,7 @@
 * [클래스 연습](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%B0%EC%8A%B5.md)
 * [템플릿](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B%ED%85%9C%ED%94%8C%EB%A6%BF.md)
 * [싱글톤 패턴](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/%EC%8B%B1%EA%B8%80%ED%86%A4%ED%8C%A8%ED%84%B4.md)
+* [스마트 포인터](https://github.com/JinKim93/TIL/blob/master/C++/%EC%8A%A4%EB%A7%88%ED%8A%B8%ED%8F%AC%EC%9D%B8%ED%84%B0.md)
 
 # 파이썬
 * [파이썬 기본문법](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC.md)
