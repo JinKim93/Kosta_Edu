@@ -29,13 +29,6 @@
 * [이분검색](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9D%B4%EB%B6%84%EA%B2%80%EC%83%89.md)
 * [해시](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%ED%95%B4%EC%8B%9C%ED%95%A8%EC%88%98.md)
 
-
-# 파이썬
-* [파이썬 기본문법](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC.md)
-* [파이썬 for문](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(for%EB%AC%B8).md)
-* [파이썬 while문](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(while%EB%AC%B8).md)
-* [파이썬 함수](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(%ED%95%A8%EC%88%98).md)
-
 # C++
 * [기본문법 및 구조](https://github.com/JinKim93/TIL/blob/master/C++/C++(%EA%B8%B0%EB%B3%B8%EB%AC%B8%EB%B2%95%20%EB%B0%8F%20%EA%B5%AC%EC%A1%B0).md)
 * [인라인 함수](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/%EC%9D%B8%EB%9D%BC%EC%9D%B8%ED%95%A8%EC%88%98.md)
@@ -48,3 +41,11 @@
 * [static 멤버함수](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(static%20%EB%A9%A4%EB%B2%84%ED%95%A8%EC%88%98).md)
 * [객체 포인터](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(%EA%B0%9D%EC%B2%B4%20%ED%8F%AC%EC%9D%B8%ED%84%B0).md)
 * [객체배열](https://github.com/JinKim93/TIL/blob/master/C%2B%2B/C%2B%2B(%EA%B0%9D%EC%B2%B4%EB%B0%B0%EC%97%B4).md)
+
+# 파이썬
+* [파이썬 기본문법](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC.md)
+* [파이썬 for문](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(for%EB%AC%B8).md)
+* [파이썬 while문](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(while%EB%AC%B8).md)
+* [파이썬 함수](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(%ED%95%A8%EC%88%98).md)
+
+
