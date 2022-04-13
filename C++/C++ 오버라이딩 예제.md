@@ -1,5 +1,7 @@
+# 오버라이딩(회사 직원 임금)
+
 ```c
-//Emplayee : 이름, 주소
+//Employee : 이름, 주소
 
 #include<iostream>
 
