@@ -12,7 +12,6 @@
 * [배열](https://github.com/JinKim93/TIL/blob/master/C/C%EC%96%B8%EC%96%B4_%EB%B0%B0%EC%97%B4.md)
 * [Function](https://github.com/JinKim93/TIL/blob/master/C/C%EC%96%B8%EC%96%B4_Function.md)
 * [지역변수,전역변수,static변수](https://github.com/JinKim93/TIL/blob/master/C/C%EC%96%B8%EC%96%B4_%ED%95%A8%EC%88%98(%EB%B3%80%EC%88%98).md)
-* [static변수 활용](https://github.com/JinKim93/TIL/blob/master/C%EC%96%B8%EC%96%B4_%ED%95%A8%EC%88%98_%EC%9D%91%EC%9A%A9(%EB%B0%98%EB%B3%B5%EB%AC%B8).md)
 * [구조체](https://github.com/JinKim93/TIL/blob/master/C/C%EC%96%B8%EC%96%B4_%EA%B5%AC%EC%A1%B0%EC%B2%B4.md)
 * [포인터](https://github.com/JinKim93/TIL/blob/master/C/C%EC%96%B8%EC%96%B4(%ED%8F%AC%EC%9D%B8%ED%84%B0).md)
 * [동적메모리할당](https://github.com/JinKim93/TIL/blob/master/C/C%EC%96%B8%EC%96%B4_%EB%8F%99%EC%A0%81%EB%A9%94%EB%AA%A8%EB%A6%AC%ED%95%A0%EB%8B%B9.md)
