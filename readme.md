@@ -21,13 +21,13 @@
 
 # C언어 알고리즘
 
-* [스택](https://github.com/JinKim93/TIL/blob/master/%EC%8A%A4%ED%83%9D.md)
-* [큐](https://github.com/JinKim93/TIL/blob/master/%ED%81%90.md)
-* [연결리스트](https://github.com/JinKim93/TIL/blob/master/%EC%97%B0%EA%B2%B0%20%EB%A6%AC%EC%8A%A4%ED%8A%B8.md)
-* [동적배열](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98_%EB%8F%99%EC%A0%81%EB%B0%B0%EC%97%B4.md)
-* [순차검색](https://github.com/JinKim93/TIL/blob/master/%EC%88%9C%EC%B0%A8%EA%B2%80%EC%83%89.md)
-* [이분검색](https://github.com/JinKim93/TIL/blob/master/%EC%9D%B4%EB%B6%84%EA%B2%80%EC%83%89.md)
-* [해시](https://github.com/JinKim93/TIL/blob/master/%ED%95%B4%EC%8B%9C%ED%95%A8%EC%88%98.md)
+* [스택](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%8A%A4%ED%83%9D.md)
+* [큐](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%ED%81%90.md)
+* [연결리스트](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%97%B0%EA%B2%B0%20%EB%A6%AC%EC%8A%A4%ED%8A%B8.md)
+* [동적배열](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EB%8F%99%EC%A0%81%EB%B0%B0%EC%97%B4.md)
+* [순차검색](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%88%9C%EC%B0%A8%EA%B2%80%EC%83%89.md)
+* [이분검색](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%EC%9D%B4%EB%B6%84%EA%B2%80%EC%83%89.md)
+* [해시](https://github.com/JinKim93/TIL/blob/master/C%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/%ED%95%B4%EC%8B%9C%ED%95%A8%EC%88%98.md)
 
 
 # 파이썬
