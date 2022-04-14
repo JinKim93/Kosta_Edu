@@ -164,3 +164,71 @@
 
 ![image](https://user-images.githubusercontent.com/82345970/163319878-7a2d7701-5579-4e84-8c43-ef2ec375313c.png)
 
+### \<Marquee> 태그
+- 텍스트 상하좌우로 움직이는 태그
+```html
+<html>
+    <head>
+        <meta content = "text/html"; charset="utf-8"/>
+    </head>
+
+    <body>
+     <Marquee>세월은 오른쪽에서 왼쪽으로 흘러간다</Marquee>  
+     
+    </body>
+
+</html>
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163325031-c8f29ee2-b004-4e75-bb3b-145245b5f5dc.png)
+
+### \<p> 태그
+- 단락을 띄어줌
+- 문단과 문단을 띄어줌
+
+```html
+<html>
+    <head>
+        <meta content = "text/html"; charset="utf-8"/>
+    </head>
+
+    <body>
+        그리고 나한테 주어진 길을 걸어가야겠다<p>
+        오늘밤에도 별이 바람에 스치운다</p>  
+     
+    </body>
+
+</html>
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163325651-7526fc63-078c-48d8-a96b-8680e83d9410.png)
+
+### \<br> 태그
+- 개행문자
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163325795-9ec4ee25-fab3-4ce9-8694-8e2cca9e83ac.png)
+
+### &nbsp
+- 띄어쓰기(스페이스바 한번 클릭)
+- 5칸 띄어쓰기 하고 싶으면 5번 작성하면된다
+
+```html
+<html>
+    <head>
+        <meta content = "text/html"; charset="utf-8"/>
+    </head>
+
+    <body>
+        HTML과 CSS &nbsp&nbsp&nbsp자바스크립트
+     
+    </body>
+
+</html>
+```
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163326456-45239b96-076d-4de9-8dbd-db7bcddc2299.png)
+
+
