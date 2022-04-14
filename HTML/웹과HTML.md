@@ -53,7 +53,7 @@
 <body> ~ </body> HTML 문서로 보면 실제 문서상에 보여지는 모든 기능들을 처리 -> 실제로 수많은 태그들이 사용 
 ```
 
-### <i></i> 태그
+### \<i> 태그
 - 이탤릭체
 
 ```html
@@ -71,13 +71,13 @@
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/163318218-29b2eb08-63fc-4cfd-aee3-b4badbe6ba75.png)
 
-### <u></u> 태그
+### \<u> 태그
 - 밑줄
 
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/163318679-0f457e37-f14e-4858-abc1-db21f4e31706.png)
 
-### <mark></mark> 태그
+### \<mark> 태그
 - 형광표시
 
 ### 출력결과
@@ -99,7 +99,7 @@
 </html>
 ```
 
-### <sub></sub> 태그
+### \<sub> 태그
 - 아래첨자
 
 ```html
@@ -119,7 +119,7 @@
 ![image](https://user-images.githubusercontent.com/82345970/163319491-df5fb8ab-43c9-4dcb-9732-9384d65d026d.png)
 
 
-### <sup></sup> 태그
+### \<sup> 태그
 - 위 첨자
 
 ```html
@@ -138,3 +138,29 @@
 
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/163319577-ad4c6efb-709d-4871-b4ec-b89c670edd4c.png)
+
+### \<blockquote> 태그
+- 인용구
+
+```html
+<html>
+    <head>
+        <meta content = "text/html"; charset="utf-8"/>
+    </head>
+
+    <body>
+       
+        나는 직원들에게 말했다.
+
+        <blockquote>"안녕히 계세요 여러분, 저는 이제 굴와 속박에서 벗어나 자유를 찾아 떠납니다"
+        </blockquote>  
+        그리고 떠났다.
+    </body>
+
+</html>
+```
+
+### 출력결과
+
+![image](https://user-images.githubusercontent.com/82345970/163319878-7a2d7701-5579-4e84-8c43-ef2ec375313c.png)
+
