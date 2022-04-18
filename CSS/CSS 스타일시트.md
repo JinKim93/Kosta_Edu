@@ -171,7 +171,95 @@ s1{
 p{
     colored:red;
 }
+```
 - p라는 요소의 선택자에 스타일을 지정하되, 색상을 red로 설정하라는 것
 - color 가 속성이고, red가 속성값 의미
 
+### 요소선택자 예제
+```html
+<html>
+    <head>
+        <meta content = "text/html"; charset = "utf-8"/>
+        <style type = "text/css">
+            p{
+                font-size:16pt;
+                font-family:궁서;
+                color:blueviolet
+            }
+        </style>
+    </head>
+    <body>
+        
+        별 헤는 밤<br<>
+            윤동주
+            <p>별 하나에 추억과</p>
+            <p>별 하나에 사랑과</p>
+            <p>별 하나에 쓸쓸함</p>
+            <p>별 하나에 동경과</p>
+            <p>별 하나에 시와</p>
+            <p>별 하나에 어머니</p>
+            
 
+                                                                
+    </body>
+</html>
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163758419-ad7bcd9a-f172-4777-93c6-b08f7acabff7.png)
+
+### 클래스 선택자
+- 특정 문단에만 스타일이 적용되도록 하고 싶을때 사용
+- 클래스 선택자는 클래스 이름 앞에 .을 붙여셔 표현
+```html
+jamsuham
+    color:rest;
+    width:300;
+    fornt-sizeL:14pt;
+```
+
+### 클래스 선택자 예제
+- 필요한 영역에 클래스 선택자 이용함
+```html
+<html>
+    <head>
+        <meta content = "text/html"; charset = "utf-8"/>
+        <style type = "text/css">
+            .star{
+                
+                font-family:궁서;
+                color:blueviolet;
+                width:300;
+            }
+        </style>
+    </head>
+    <body>
+        
+        
+            <h1 clss = "star"> 별 헤는 밥</h1>
+            <h2 class = "star">윤동주</h2>
+            <p class = "star">별 하나에 사랑과</p>
+            <p>별 하나에 쓸쓸함</p>
+            <p>별 하나에 동경과</p>
+            <p >별 하나에 어머니</p>
+            <p class = "star">별 하나에 시와</p>
+            
+
+                                                                
+    </body>
+</html>
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163759293-59f5550b-ba17-4a7b-8580-ee94ab550566.png)
+
+
+## 배경 색상 및 이미지 처리 관련 속성
+### 배경 색상
+
+- 배경에 색상을 설정하는 속성
+```html
+div{
+    background-color:속성값;
+}
+```
