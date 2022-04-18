@@ -213,6 +213,48 @@
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/163743393-5efad2f4-740a-4eb7-aea2-7d8501501535.png)
  
- 
+ ### image태그
+ ```html
+ <html>
+    <head>
+        <meta content = "text/html"; charset="utf-8"/>
+    </head>
+
+    <body>
+        <form method="post" action="../hello.html">
+            아이디 : 
+            <input type = "text" name = "my_id" size = "30" maxlength="8"
+                value="이름을 입력하세요"><p>
+            비밀번호 : 
+            <input type = "password" name = "my_pwd" size = "30" maxlength="15"
+                value="1111"><p>
+            
+            * 평소에 선호하는 언어의 종류를 고르시오 <p>
+            <input type = "checkbox" name = "cb1" value= "C++" >C++
+            <input type = "checkbox" name = "cb2" value= "자바" >자바
+            <input type = "checkbox" name = "cb3" value= "아랍어" >아랍어
+            <input type = "checkbox" name = "cb4" value= "자바스크립트" >자바스크립트
+            <input type = "checkbox" name = "cb5" value= "파이썬" checked>파이썬        
+            <P>
+            * 현재 당신의 PC를 포맷하시겠습니까?<p>
+            <input type = "radio" name = "my_radio" value="yes" checked>예,포맷하겠습니다
+            <input type = "radio" name = "my_radio" value="no">아니오
+            <p>
+            
+            <input type = "submit" value = "전송1"><p>
+            <input type = "image"  src = "../btn.png" width ="50" height="50">  
+            
+        </form>
+
+
+    </body>
+
+</html>
+```
+  
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163744579-b74ea7a9-022f-4928-8c54-459b587c2d90.png)
+  
+  
 
 
