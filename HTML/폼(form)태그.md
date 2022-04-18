@@ -123,7 +123,96 @@
 </html>
  ```
  
- ### 출력결과
+### 출력결과
  ![image](https://user-images.githubusercontent.com/82345970/163742250-30bf5ead-569d-47ac-bb7b-d4e38d1f2b5e.png)
+
+### submit태그 VS button태그
+- 전송1은 submit get방식으로 처리하게 만들어준거고
+- 전송2 button은 클릭에 대해서 처리 -> 버튼을 클릭하면 클릭에 대한 이벤트 핸들러
+```html
+<html>
+    <head>
+        <meta content = "text/html"; charset="utf-8"/>
+    </head>
+
+    <body>
+        <form method="get" action="">
+            아이디 : 
+            <input type = "text" name = "my_id" size = "30" maxlength="8"
+                value="이름을 입력하세요"><p>
+            비밀번호 : 
+            <input type = "password" name = "my_pwd" size = "30" maxlength="15"
+                value="1111"><p>
+            
+            * 평소에 선호하는 언어의 종류를 고르시오 <p>
+            <input type = "checkbox" name = "cb1" value= "C++" >C++
+            <input type = "checkbox" name = "cb2" value= "자바" >자바
+            <input type = "checkbox" name = "cb3" value= "아랍어" >아랍어
+            <input type = "checkbox" name = "cb4" value= "자바스크립트" >자바스크립트
+            <input type = "checkbox" name = "cb5" value= "파이썬" checked>파이썬        
+            <P>
+            * 현재 당신의 PC를 포맷하시겠습니까?<p>
+            <input type = "radio" name = "my_radio" value="yes" checked>예,포맷하겠습니다
+            <input type = "radio" name = "my_radio" value="no">아니오
+            <p>
+            <!--
+                 전송1은 submit get방식으로 처리하게 만들어준거고
+                 전송2 button은 클릭에 대해서 처리 -> 버튼을 클릭하면 클릭에 대한 이벤트 핸들러
+            -->    
+            <input type = "submit" value = "전송1"><p>
+            <input type = "button" value = "전송2">
+        </form>
+
+
+    </body>
+
+</html>
+```
+### 출력결과 
+![image](https://user-images.githubusercontent.com/82345970/163742989-15d57b9e-d577-4f65-bb91-7ffe6afa3130.png)
+ 
+### 전송버튼 누를시 get방식으로 action예제
+- <form method="get" action="../hello.html"> 전에 작성한 hello.html 불러옴
+ 
+```html
+<html>
+    <head>
+        <meta content = "text/html"; charset="utf-8"/>
+    </head>
+
+    <body>
+        <form method="get" action="../hello.html">
+            아이디 : 
+            <input type = "text" name = "my_id" size = "30" maxlength="8"
+                value="이름을 입력하세요"><p>
+            비밀번호 : 
+            <input type = "password" name = "my_pwd" size = "30" maxlength="15"
+                value="1111"><p>
+            
+            * 평소에 선호하는 언어의 종류를 고르시오 <p>
+            <input type = "checkbox" name = "cb1" value= "C++" >C++
+            <input type = "checkbox" name = "cb2" value= "자바" >자바
+            <input type = "checkbox" name = "cb3" value= "아랍어" >아랍어
+            <input type = "checkbox" name = "cb4" value= "자바스크립트" >자바스크립트
+            <input type = "checkbox" name = "cb5" value= "파이썬" checked>파이썬        
+            <P>
+            * 현재 당신의 PC를 포맷하시겠습니까?<p>
+            <input type = "radio" name = "my_radio" value="yes" checked>예,포맷하겠습니다
+            <input type = "radio" name = "my_radio" value="no">아니오
+            <p>
+            
+            <input type = "submit" value = "전송1"><p>
+            
+        </form>
+
+
+    </body>
+
+</html>
+``` 
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163743393-5efad2f4-740a-4eb7-aea2-7d8501501535.png)
+ 
+ 
 
 
