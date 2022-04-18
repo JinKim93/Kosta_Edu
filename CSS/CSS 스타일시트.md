@@ -88,7 +88,7 @@
 ![image](https://user-images.githubusercontent.com/82345970/163749073-8f31dffb-5c29-4861-b5f9-c9bd5cfb2a3d.png)
 
 ### CSS사용방법2
-- **내부스타일시트(Internal style sheet)**
+- **내부 스타일시트(Internal style sheet)**
 - HTML문서내에서 <head>와 </head>사이에 스타일을 정의하는 방법
 - s1(필자가 직접만듬)이라는 스타일시트로 인해서 내부가 적용이 됨 -> 특정스타일에 대한 이름을 정해줌(s1)
 
@@ -124,4 +124,5 @@
 ![image](https://user-images.githubusercontent.com/82345970/163749481-7416218e-175f-4483-80bc-e7188601df47.png)
 
 ### CSS사용방법3
-- **외부스타일시트(External style sheet)**
+- **외부 스타일시트(External style sheet)**
+
