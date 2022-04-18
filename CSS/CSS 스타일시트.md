@@ -125,4 +125,50 @@
 
 ### CSS사용방법3
 - **외부 스타일시트(External style sheet)**
+- css라는 확장자를 가진 스타일 시트 파일을 만들고 이 파일을 HTML 문서에 연결하여 사용하는 방법
 
+### 외부 스타일 시트 만들기
+1. style.css 라는 파일 생성
+```css
+s1{
+    font-size: 20pt;
+    font-family: 궁서;
+    color : royalblue;
+}
+```
+2. exfont.html에 적용하기
+- exont.html
+```html
+<html>
+    <head>
+        <meta content = "text/html"; charset = "utf-8"/>
+        <link rel = "stylesheet" type ="text/css" href="style.css">
+    </head>
+    <body>
+        
+        <s1>
+            <p>별 하나에 추억과</p>
+            <p>별 하나에 사랑과</p>
+            <p>별 하나에 쓸쓸함</p>
+            <p>별 하나에 동경과</p>
+            <p>별 하나에 시와</p>
+            <p>별 하나에 어머니</p>
+        </s1>    
+
+                                                                
+    </body>
+</html>
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163757379-df68d048-2701-4c82-b868-d9dfd4613142.png)
+
+## 선택자(seletor)
+### 요소 선택자
+- HTML의 태그 요소들을 선택자로 사용한다 -> h1,p,img 등의 태그 요소를 사용한 선택자이다
+```html
+p{
+    colored:red;
+}
+- p라는 요소의 선택자에 스타일을 지정하되, 색상을 red로 설정하라는 것
+- color 가 속성이고, red가 속성값 의미
