@@ -295,7 +295,13 @@ div{
         <meta content = "text/html"; charset = "utf-8"/>
         <style type = "text/css">
             div{
-               background-image: url(bk.jpg)
+               
+                background-image: url(bk.jpg)
+                /*이미지 반복 출력 안되게 하는 법
+                background-repeat: no-repeat;
+                */
+                        
+               
             }
         </style>
     </head>
