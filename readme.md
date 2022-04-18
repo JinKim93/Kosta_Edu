@@ -59,5 +59,14 @@
 * [파이썬 for문](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(for%EB%AC%B8).md)
 * [파이썬 while문](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(while%EB%AC%B8).md)
 * [파이썬 함수](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(%ED%95%A8%EC%88%98).md)
+* [파이썬 if ~ in / if ~ not in](https://github.com/JinKim93/TIL/blob/master/Phython/if%20~%20in%2C%20if%20~%20not%20in.md)
+* [파이썬 dictionary](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(dictionary).md)
+* [파이썬 객체지향](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5).md)
+* [파이썬 리스트](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(%EB%A6%AC%EC%8A%A4%ED%8A%B8).md)
+* [파이썬 문자열](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(%EB%AC%B8%EC%9E%90%EC%97%B4).md)
+* [파이썬 튜플](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%AC(%ED%8A%9C%ED%94%8C).md)
+* [파이썬 파일입출력](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%BC%EC%9E%85%EC%B6%9C%EB%A0%A5.md)
+* [파이썬 SQLite](https://github.com/JinKim93/TIL/blob/master/Phython/%ED%8C%8C%EC%9D%B4%EC%8D%ACDB(SQLite).md)
+* [파이썬 count()](https://github.com/JinKim93/TIL/blob/master/Phython/count()%20%ED%95%A8%EC%88%98.md)
 
 
