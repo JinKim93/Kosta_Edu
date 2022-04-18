@@ -163,8 +163,9 @@ s1{
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/163757379-df68d048-2701-4c82-b868-d9dfd4613142.png)
 
-## 선택자(seletor)
-### 요소 선택자
+## CSS 구성요소
+### 선택자(selector),속성(property),속성값(property value)
+### 요소선택자
 - HTML의 태그 요소들을 선택자로 사용한다 -> h1,p,img 등의 태그 요소를 사용한 선택자이다
 ```html
 p{
@@ -172,3 +173,5 @@ p{
 }
 - p라는 요소의 선택자에 스타일을 지정하되, 색상을 red로 설정하라는 것
 - color 가 속성이고, red가 속성값 의미
+
+
