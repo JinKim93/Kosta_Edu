@@ -67,3 +67,32 @@ cv2.imwrite('test2.png',img1)
 ### 출력결과
 - 사진 복사됨
 ![image](https://user-images.githubusercontent.com/82345970/163939098-22b8cb16-c91f-4cad-b115-646649d21c2e.png)
+
+## 카메라 영상 처리
+![image](https://user-images.githubusercontent.com/82345970/163939427-efdbd10b-b457-44e9-849e-ebab88ecb94d.png)
+
+### 카메라 영상처리 예제
+```py
+import cv2
+
+cap = cv2.VideoCapture(0) # cap = new cv2.VideoCapture(0) 첫번재 카메라 객체 받음
+
+while cap.isOpened():
+    #카메라 프레임 읽기
+    success, frame = cap.read() # cap이라는 객체를 통해서 frame을 읽음
+                                # success, frame 리턴값 2개 받음
+    if success:
+        #프레임 출력
+        cv2.imshow('Camera Window', frame)
+
+        #ESC 종료
+        key = cv2.waitKey(1) & 0xFF 
+        if(key == 27): #ESC 아스키코드
+            break                              
+
+cap.release()
+cv2.destroyAllWindows()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/163941950-5036e01f-5854-4238-93e5-c4f1171c5196.png)
