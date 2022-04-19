@@ -96,3 +96,42 @@ cv2.destroyAllWindows()
 
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/163941950-5036e01f-5854-4238-93e5-c4f1171c5196.png)
+
+### 동영상 저장하기 
+```py
+import cv2
+
+cap = cv2.VideoCapture(0) 
+
+width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+print("size: {0} * {1}".format(width,height))
+
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+writer = cv2.VideoWriter('test.avi',fourcc,24, (int(width), int(height)))
+
+while cap.isOpened():
+    #카메라 프레임 읽기
+    success, frame = cap.read() # cap이라는 객체를 통해서 frame을 읽음
+                                # success, frame 리턴값 2개 받음
+    if success:
+        #프레임 출력
+        writer.write(frame)
+        cv2.imshow('Camera Window', frame)
+        
+
+        #ESC 종료
+        key = cv2.waitKey(1) & 0xFF 
+        if(key == 27): #ESC 아스키코드
+            break                              
+
+cap.release()
+cv2.destroyAllWindows()
+```
+
+### 출력결과
+- 동영상 저장 확인
+
+![image](https://user-images.githubusercontent.com/82345970/163946388-3a777d7d-d3cd-4339-91fc-7249b416c417.png)
+
+
