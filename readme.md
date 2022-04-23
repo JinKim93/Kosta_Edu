@@ -70,6 +70,8 @@
 * [파이썬 객체지향](https://github.com/JinKim93/TIL/blob/master/Python/%ED%8C%8C%EC%9D%B4%EC%8D%AC(%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5).md)
 * [크롤링](https://github.com/JinKim93/TIL/blob/master/Python/%ED%81%AC%EB%A1%A4%EB%A7%81.md)
 * [OpenCV](https://github.com/JinKim93/TIL/blob/master/Python/OpenCV.md)
+* [빅데이터](https://github.com/JinKim93/TIL/blob/master/Python/%EB%B9%85%EB%8D%B0%EC%9D%B4%ED%84%B0.md)
+* [pandas](https://github.com/JinKim93/TIL/blob/master/Python/pandas.md)
  
 # HTML
 * [웹과HTML](https://github.com/JinKim93/TIL/blob/master/HTML/%EC%9B%B9%EA%B3%BCHTML.md)
