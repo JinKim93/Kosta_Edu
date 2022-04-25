@@ -29,6 +29,6 @@ var myAdd = new Function('x,y','return(x+y)');
 ```html
 var objNum = new Number("1234");
 ```
-- Number 객체의 전달인자인 ""안에 숫잠ㄴ 들어와야 하고, 그 이외의 문자가 들어가면 숫자가 아니므로 NAN이 출력된다
+- Number 객체의 전달인자인 ""안에 숫잠ㄴ 들어와야 하고, 그 이외의 문자가 들어가면 숫자가 아니므로 NAN이 출력된다<br> -> 표현할수 없는 데이터는 NAN 으로 표시
 
 
