@@ -192,3 +192,148 @@
 
 ### link 객체 
 ![image](https://user-images.githubusercontent.com/82345970/165670069-c988e456-79e1-4e04-ac8b-55cc601f7a5f.png)
+
+### link 객체 예제
+```html
+<html>
+    <head>
+        <meta charset = "utf-8">
+    </head>
+        <body>
+            <a href = "https://www.youtube.com/premium" target = "_blank">유튜브</a><br>
+            <a href = "https://gyoogle.dev/blog/" target = "_blank">기술블로그</a><br>
+            <a href = "https://www.nate.com/" target = "_blank">네이트</a><br>
+            <hr>
+            <script type = "text/javascript">
+                for(var i =0; i < document.links.length; i++)
+                {
+                    document.write("<h1>href : " + document.links[i].href  + "<br><hr>");
+                    document.write("pathname : " + document.links[i].pathname  + "<br><hr>");
+                    document.write("target : " + document.links[i].target  + "<br><hr></h1>");
+                }
+                
+            </script>
+           
+        </body>
+    
+</html>
+ ```
+ 
+ ### 출력결과
+ ![image](https://user-images.githubusercontent.com/82345970/165678417-9cc67e1c-b04c-4fe7-ac79-ed48523bd064.png)
+
+### image 객체 속성
+- **image 객체를 사용하는 형태**
+  - image 객체는 \<img> 태그와 같은 이미지 요소들과 연관
+  - \<img> 태그와 같이 문서 상에 삽입된 이미지를 모두 탐색
+  - image 정보는 배열 형태로 저장 
+
+![image](https://user-images.githubusercontent.com/82345970/165678731-d5f088dd-194f-4613-a66d-321bdf0fe8b5.png)
+
+### image 객체 속성
+![image](https://user-images.githubusercontent.com/82345970/165678771-7719eadb-3e8a-45e9-81a7-91cd0b35bc42.png)
+
+### image 객체 속성 예제
+```html
+<html>
+    <head>
+        <meta charset = "utf-8">
+    </head>
+        <body>
+          <h1><center>베스트셀러</center></h1>
+          <hr>
+
+          <img src = "cake.jpg">
+          <img src = "bread.jpg">
+          <img src = "contact.png">
+          <hr>
+            <script type = "text/javascript">
+                document.write("image 개수 : " + document.images.length + "<br>");
+
+                for(var i = 0; i < document.images.length; i++)
+                {
+                    document.images[i].border = 10;
+                    document.images[i].width = "210";
+                    document.images[i].height = "300";
+
+                }
+                for(var i =0; i < document.images.length; i++)
+                {
+                    document.write("파일 경로 : " + document.images[i].src + "<br>");
+                    document.write("넓이 : " + document.images[i].width + "<br>");
+                    document.write("높이 : " + document.images[i].height + "<br>");
+                }
+
+               
+
+            </script>
+           
+        </body>
+    
+</html>
+```
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/165679706-073d67e1-aeb1-46f8-8e80-b1974956cd86.png)
+
+### 폼 객체 
+- 폼 형태는 대표적으로 회원 가입 페이지를 보면 됨
+- 자바스크립트를 이용하여 각 필드의 요소들을 제어할 수 있다.
+
+### 폼 객체
+- 폼 객체는 document 객체의 하위에 있는 내장 객체로써 기존 \<form> 태그를 자바스크립트로 정의 한것
+```html
+document.폼 이름.속성(메소드)
+```
+
+###  폼 객체의 계층 구조도
+![image](https://user-images.githubusercontent.com/82345970/165680308-a2dda2d0-9a0f-4fa1-995e-ba0ec361d4f2.png)
+
+### 폼 객체의 속성
+![image](https://user-images.githubusercontent.com/82345970/165680490-8e2fe009-7a5d-49fd-97d9-717b061ca027.png)
+
+### 폼 객체 예제
+```html
+<html>
+    <head>
+        <meta charset = "utf-8">
+    </head>
+        <body>
+            <form name ="test" method="get">
+                <input type = "text" name = "text1" size = "20" value="첫 번쨰 입력"><p>
+                <input type = "text" name = "text2" size = "10" value="두 번쨰 입력"><p>
+                <input type = "button" name = "btn1" value="첫 번째 버튼">
+                <input type = "button" name = "btn2" value="두 번째 버튼">
+            </form>
+         
+            <script type = "text/javascript">
+                           
+                document.write("name : " + document.test.name + "<p>");
+                document.write("method : " + document.test.method + "<p>");
+                document.write("length : " + document.test.length + "<p>");
+                 
+                    for(var i =0; i < document.test.length; i++)
+                    {
+                        document.write("elements[x].name : " + document.test.elements[i].name + "<p>");
+                        document.write("elements[x].value : " + document.test.elements[i].value + "<p>");
+                    }
+                
+
+         
+            </script>
+           
+        </body>
+    
+</html>
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/165682235-877449f7-6ca8-4d8b-8395-20cb5432c364.png)
+
+### 폼 객체의 메소드
+- 폼 양식을 보면 '등록' 버튼과 '다시작성' 버튼이 배치 됨
+- 등록은 \<submit> 다시작성은 \<reset> 태그를 사용함
+
+![image](https://user-images.githubusercontent.com/82345970/165682532-54070224-c203-492d-9f15-28e69852f1eb.png)
+
+- 이벤트 핸들러를 직접 작성하여 submit() 메소드를 호출
+- action으로 지정한 루팅이 없기 때문에 실제 등록처리를 하지는 않는다
