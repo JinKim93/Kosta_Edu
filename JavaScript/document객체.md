@@ -337,3 +337,73 @@ document.폼 이름.속성(메소드)
 
 - 이벤트 핸들러를 직접 작성하여 submit() 메소드를 호출
 - action으로 지정한 루팅이 없기 때문에 실제 등록처리를 하지는 않는다
+
+### 폼객체 예제
+```html
+<html>
+    <head>
+        <meta charset = "utf-8">
+    </head>
+        <body>
+            <form name ="test" method="get" action="test.html">
+                아이디 : <input type = "text" name = "id" size = "20" value=""><p>
+                패스워드 : <input type = "password" name = "pwd" size = "10" value=""><p>
+                <input type = "submit" name = "btn1" value="등록하기" onclick="register()">
+                <input type = "reset" name = "btn2" value="다시작성" onclick="reWrite()">
+            </form>
+         
+            <script type = "text/javascript">
+                           
+                function register()
+                {
+                    document.test.submit();
+                    alert("회원 가입을 축하합니다.");
+                }
+                function reWrite()
+                {
+                    document.test.reset();
+                    alert("다시 입력하세요.")
+                }
+         
+            </script>
+           
+        </body>
+    
+</html>
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/165693349-94ce06f0-330d-423a-8c74-9f331d304e90.png)
+
+### 폼 객체의 이벤트 예제
+```html<html>
+    <head>
+        <meta charset = "utf-8">
+    </head>
+        <body>
+            <form name ="test" method="get" action="test.html" onsubmit="register()" onreset="reWrite">
+                아이디 : <input type = "text" name = "id" size = "20" value=""><p>
+                패스워드 : <input type = "password" name = "pwd" size = "10" value=""><p>
+                <input type = "submit" name = "btn1" value="등록하기" onclick="등록하기">
+                <input type = "reset" name = "btn2" value="다시작성" onclick="다시작성">
+            </form>
+         
+            <script type = "text/javascript">
+                           
+                function register()
+                {
+                    document.test.submit();
+                    alert("회원 가입을 축하합니다.");
+                }
+                function reWrite()
+                {
+                    document.test.reset();
+                    alert("다시 입력하세요.")
+                }
+         
+            </script>
+           
+        </body>
+    
+</html>
+```
