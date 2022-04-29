@@ -134,4 +134,18 @@ cv2.destroyAllWindows()
 
 ![image](https://user-images.githubusercontent.com/82345970/163946388-3a777d7d-d3cd-4339-91fc-7249b416c417.png)
 
+### opencv,matplotlib 예제
+```py
+import cv2 
+from matplotlib import pyplot as plt # opencv 라이브러리
+
+img = cv2.imread('sea.jpg',1)
+img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+plt.imshow(img)
+plt.show()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/165897610-9d0197e2-63b1-4012-990e-b5a5ed9f90a8.png)
+
 
