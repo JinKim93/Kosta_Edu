@@ -149,3 +149,41 @@
 
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/165886753-bf511e86-c0f4-4239-b96a-2eecee78d6eb.png)
+
+
+### 간단한 온라인시험문제 만들기
+```html
+<html>
+    <head>
+        <meta charset="utf-8"/>
+    </head>
+    <body onload = 'init()'> 
+        <form name="test" onsubmit="register()" onReset="rewrite()">
+            <h2>* 메모리 주소값을 저장하는 변수는 무엇이라고 하는가?</h2>
+            <input type = "radio" name = "exam" value="1" onclick="result()">약수터<p>
+            <input type = "radio" name = "exam" value="2" onclick="result()">화개장터<p>
+            <input type = "radio" name = "exam" value="3" onclick="result()">포인터<p>
+            <input type = "radio" name = "exam" value="4" onclick="result()">놀이터<p>
+        
+                
+        </form>
+        <script type="text/javascript">
+            function result()
+            {
+                    if(document.test.exam[2].checked == true)
+                    {
+                        alert("정답입니다.")
+                    }
+                    else
+                    {
+                        alert("꽝 다음 기회에........")
+                    }
+            }
+
+        </script>
+    </body>
+</html>
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/165887692-a85067e9-d5ef-434c-9ab4-809b61651483.png)
