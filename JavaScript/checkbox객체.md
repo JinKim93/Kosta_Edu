@@ -97,7 +97,7 @@
                     }
                     else
                     {
-                        if(check1&check2&check3)
+                        if(check1&&check2&&check3)
                         {
                             alert("회원 가입을 축하합니다.");     
                         }
