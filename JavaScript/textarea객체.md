@@ -25,7 +25,7 @@
             패스워드:<input type="password" name="password" size="10" value="">
             (8자 이상 12자 이하)
             <p>
-            하고 싶은 말 : <P><textarea name ="diary" rows ="7" cols = "50"></textarea></P> 
+            하고 싶은 말 : <p><textarea name ="diary" rows ="7" cols = "50"></textarea></p> 
             <input type="submit" name="btn1" value="등록하기">
             <input type="reset" name="btn2" value="다시작성">
             <input type="button" name = "btn3" value="전체선택" onclick="selectAll()">
