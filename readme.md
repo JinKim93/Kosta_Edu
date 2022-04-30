@@ -72,6 +72,7 @@
 * [OpenCV](https://github.com/JinKim93/TIL/blob/master/Python/OpenCV.md)
 * [빅데이터](https://github.com/JinKim93/TIL/blob/master/Python/%EB%B9%85%EB%8D%B0%EC%9D%B4%ED%84%B0.md)
 * [pandas](https://github.com/JinKim93/TIL/blob/master/Python/pandas.md)
+* [타이타닉 데이터분석](https://github.com/JinKim93/TIL/blob/master/Python/%ED%83%80%EC%9D%B4%ED%83%80%EB%8B%89%EB%B6%84%EC%84%9D.md)
  
 # HTML
 * [웹과HTML](https://github.com/JinKim93/TIL/blob/master/HTML/%EC%9B%B9%EA%B3%BCHTML.md)
