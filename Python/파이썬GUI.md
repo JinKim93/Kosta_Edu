@@ -87,16 +87,149 @@ btn1 = Button(root, text = "나버튼인가?") # btn1 = new Button()
 btn1.pack()
 
 
-btn2 = Button(root, padx = 20, pady = 20, text = "아무튼")
+btn2 = Button(root, padx = 20, pady = 50, text = "아무튼")
 btn2.pack()
+
+btn3 = Button(root,width = 10, height = 5, text = "튼튼", fg = "white", bg = "red")
+btn3.pack()
+
+root.mainloop() 
+
+
+
+
+```
+
+### 출력결과
+- 빨간색배경, 흰색 글씨
+
+![image](https://user-images.githubusercontent.com/82345970/166205283-e3627744-91b3-4e46-9f3c-efacd436bcaa.png)
+
+
+### 버튼 이미지 넣기, 버튼 눌렀을때 이벤트
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python Button")
+root.geometry('800x600+200+100')
+
+def btncmd():
+    print("좋아요를 꾸~욱 눌러주세요")
+
+photo = PhotoImage(file = "jamsuham.png")
+btn = Button(root, image = photo, command= btncmd)
+btn.pack()
+
+root.mainloop() 
+
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166206699-1202d3fe-0318-4f7c-8db2-25f997a778fe.png)
+
+### 레이블 예제
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python Button")
+root.geometry('800x600+200+100')
+
+label = Label(root, text = "누구인가?")
+label.pack()
 
 root.mainloop() 
 ```
 
 ### 출력결과
-- padding 설정(버튼, 버튼 사이)
+![image](https://user-images.githubusercontent.com/82345970/166207516-2d742c3b-81dd-4001-adba-3c8c4c603a9b.png)
 
-![image](https://user-images.githubusercontent.com/82345970/166202485-6d035edf-57a9-4b71-bcb0-4bda102f912b.png)
+### 레이블 이미지 넣기
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python Button")
+root.geometry('800x600+200+100')
+
+photo = PhotoImage(file = "jamsuham.png")
+label = Label(root, image=photo)
+label.pack()
+
+root.mainloop() 
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166207653-904b9656-f2cd-4d7a-af01-fc9b5b6ab395.png)
+
+
+### 버튼,레이블 조합 예제
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python Button")
+root.geometry('800x600+200+100')
+
+
+label = Label(root, text = "최선을 다하자")
+label.pack()
+
+def change():
+    label.config(text = "아자아자 화이팅") # config -> label text 변경해준다
+btn = Button(root, text = "클릭", command = change)
+btn.pack()
+root.mainloop() 
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166208317-48d06562-7dec-44e9-ba74-b9ece16c83ce.png)
+
+
+### 버튼 클릭시, 이미지 변경
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python Button")
+root.geometry('800x600+200+100')
+
+
+label = Label(root, text = "최선을 다하자")
+label.pack()
+
+def change():
+    global photo #photo 전역변수로 만들어줌, 지역변수로 하면, 클릭시 지역변수라서 유지가 안됨
+    photo = PhotoImage(file = "jamsuham.png")
+    label.config(image=photo)
+btn = Button(root, text = "클릭", command = change)
+btn.pack()
+root.mainloop() 
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166208793-9eaa3fe0-1765-40e5-96bd-af7ff44d71dd.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
