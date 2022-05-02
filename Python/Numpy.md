@@ -50,4 +50,84 @@ print(array.dtype)
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/165913070-d71f8a01-f5b4-4340-aeba-2cb5ad33410d.png)
 
+### 제곱근
+```html
+import numpy as np
+print(np.sqrt(2))
+```
+
+### pi, sin 값
+```html
+import numpy as np
+
+print(np.pi)
+print(np.sin(0))
+```
+
+### 랜덤한 수
+```html
+import numpy as np
+
+print(np.random.choice(6, 10)) # 0부터6까지, 10개의 숫자를 랜덤하게 출력
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166197661-c61ad710-67cc-4096-a01c-41cbc8629ca6.png)
+
+### 랜덤한 수(로또)
+```html
+import numpy as np
+
+print(np.random.choice(46, 6, replace = False)) # 0부터45까지, 6개의 숫자를 랜덤하게 출력, replace = False 중복방지
+
+
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166197890-542a22ae-c6d1-423e-90b5-715a8dd129c1.png)
+
+### 랜덤한 수
+- 0 ~ 5 까지 확률 정하기 0.1 -> 10%로 확률
+```html
+import numpy as np
+
+print(np.random.choice(6, 6, p=[0.1,0.2,0.3,0.2,0.1,0.1] )) #0 ~ 5 까지 확률 정하기 0.1 -> 10%로 확률
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166198263-647be50a-3821-47d5-bb4b-d1a440c0ee11.png)
+
+###  0부터 5까지 나온수 히스토그램으로 표현
+```html
+import matplotlib.pyplot as plt
+import numpy as np
+
+dice = np.random.choice(6,10)
+
+plt.hist(dice)
+plt.show()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166198634-b01a7473-7e05-4f21-bb41-d137f1e62b2c.png)
+
+### 상기코드 Numpy 사용 안 할경우
+```html
+import matplotlib.pyplot as plt
+import random
+
+dice = []
+for i in range(10):
+  dice.append(random.randint(1,6)) # 1부터 5까지
+
+plt.hist(dice)
+plt.show()
+  
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166198896-07eeda7b-4bae-4094-91fb-bc1b0b5ac3b7.png)
+
+
+
 
