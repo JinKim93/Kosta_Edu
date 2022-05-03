@@ -72,6 +72,9 @@
 * [OpenCV](https://github.com/JinKim93/TIL/blob/master/Python/OpenCV.md)
 * [빅데이터](https://github.com/JinKim93/TIL/blob/master/Python/%EB%B9%85%EB%8D%B0%EC%9D%B4%ED%84%B0.md)
 * [pandas](https://github.com/JinKim93/TIL/blob/master/Python/pandas.md)
+* [math함수](https://github.com/JinKim93/TIL/blob/master/Python/math%ED%95%A8%EC%88%98.md)
+* [random함수](https://github.com/JinKim93/TIL/blob/master/Python/random%ED%95%A8%EC%88%98.md)
+* [Machine learning](https://github.com/JinKim93/TIL/blob/master/Python/%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D.md)
 * [타이타닉 데이터분석](https://github.com/JinKim93/TIL/blob/master/Python/%ED%83%80%EC%9D%B4%ED%83%80%EB%8B%89%EB%B6%84%EC%84%9D.md)
 * [Numpy](https://github.com/JinKim93/TIL/blob/master/Python/Numpy.md)
  
