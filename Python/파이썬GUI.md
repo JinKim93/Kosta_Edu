@@ -344,10 +344,194 @@ root.mainloop()
 ![image](https://user-images.githubusercontent.com/82345970/166641386-76cded3e-89eb-4e11-93ab-a80fc27cbba7.png)
 
 
+### 리스트 삭제
+```py
+from tkinter import *
 
 
+root = Tk() 
+root.title("Python listbox")
+root.geometry('800x600+200+100')
+
+listbox = Listbox(root,selectmode = "single", height = 10) 
+
+listbox.insert(0, "파이썬")
+listbox.insert(1, "C#")
+listbox.insert(2, "HTML5")
+
+listbox.insert(END, "자바")
+listbox.insert(END, "Node")
+listbox.pack()
+
+def btncmd():
+    listbox.delete(END)
+
+btn = Button(root, text = "삭제", command = btncmd)
+btn.pack()
+
+root.mainloop()
+```
+
+### 리스트 -> 튜플형태로 가져오기
+```py
+from tkinter import *
 
 
+root = Tk() 
+root.title("Python listbox")
+root.geometry('800x600+200+100')
+
+listbox = Listbox(root,selectmode = "single", height = 10) 
+
+listbox.insert(0, "파이썬")
+listbox.insert(1, "C#")
+listbox.insert(2, "HTML5")
+
+listbox.insert(END, "자바")
+listbox.insert(END, "Node")
+listbox.pack()
+
+def btncmd():
+    listbox.delete(END)
+
+def btnfetch():
+    print(listbox.get(0,2)) # 튜플형태로 가져온다
+
+
+btn = Button(root, text = "삭제", command = btncmd)
+btn.pack()
+
+btn = Button(root, text = "가져오기", command = btnfetch)
+btn.pack()
+
+root.mainloop()
+```
+
+### 출력결과
+- 0부터 2까지 리스트박스항목, 튜플로 가져옴
+
+![image](https://user-images.githubusercontent.com/82345970/166644012-037467b4-8980-42ed-ad26-50166b6f43a9.png)
+
+### 리스트박스 선택한 항목 및 개수 구하기
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python listbox")
+root.geometry('800x600+200+100')
+
+listbox = Listbox(root,selectmode = "extended", height = 10) 
+
+listbox.insert(0, "파이썬")
+listbox.insert(1, "C#")
+listbox.insert(2, "HTML5")
+
+listbox.insert(END, "자바")
+listbox.insert(END, "Node")
+listbox.pack()
+
+def btncmd():
+    listbox.delete(END)
+
+def btnfetch():
+    print(listbox.get(0,2)) # 튜플형태로 가져온다
+
+
+def btnselect():
+    print("선택한 항목 : ", listbox.curselection())
+    print('항목개수 : ', listbox.size())
+btn = Button(root, text = "삭제", command = btncmd)
+btn.pack()
+
+btn = Button(root, text = "가져오기", command = btnfetch)
+btn.pack()
+
+btn = Button(root, text = "선택항목", command = btnselect)
+btn.pack()
+
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166644432-87f2a075-79ba-413f-8255-28f2c9a4cc66.png)
+
+### 체크박스 위젯
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python listbox")
+root.geometry('800x600+200+100')
+
+chkclick = IntVar()
+chkbox = Checkbutton(root, text = "오늘 하루 그만 보기", variable = chkclick)
+chkbox.pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166644943-9be86a73-8d67-4ab4-aa83-fb784329a793.png)
+
+### 체크박스 체크확인 하기
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python listbox")
+root.geometry('800x600+200+100')
+
+chkclick = IntVar()
+chkbox = Checkbutton(root, text = "오늘 하루 그만 보기", variable = chkclick)
+chkbox.pack()
+
+def btncmd():
+    print("체크 상태 : ", chkclick.get())
+
+btn = Button(root, text = "확인", command = btncmd)
+btn.pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166645391-b9be2e9d-7a67-49b7-a25f-ed7ee173181b.png)
+
+
+### 햄버거를 선택하세요 
+```py
+from tkinter import *
+
+root = Tk()
+root.title('Python listBox')
+root.geometry('800x600+200+100')
+
+Label(root, text="햄버거를 선택하세요").pack()
+
+burger_var = StringVar() #객체생성
+btn_burger1 = Radiobutton(root, text="불고기버거", value="불고기버거", variable=burger_var)
+btn_burger1.select() #선택되어있는 Radiobutton
+btn_burger2 = Radiobutton(root, text="치즈버거", value="치즈버거", variable=burger_var)
+btn_burger3 = Radiobutton(root, text="새우버거", value="새우버거", variable=burger_var)
+
+btn_burger1.pack()
+btn_burger2.pack()
+btn_burger3.pack()
+
+def btncmd():
+    print(burger_var.get() + '를 선택하셨습니다.')
+btn=Button(root, text="주문", command=btncmd)
+btn.pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166648576-641540ba-54ea-4f14-9d2c-613c412b805f.png)
 
 
 
