@@ -216,9 +216,132 @@ root.mainloop()
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/166208793-9eaa3fe0-1765-40e5-96bd-af7ff44d71dd.png)
 
+### TEXT 입력창 만들기
+```py
+from tkinter import *
 
 
+root = Tk() 
+root.title("Python Button")
+root.geometry('800x600+200+100')
 
+txt = Text(root, width = 40, height = 20)
+txt.pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166637991-93cb297a-680a-4e71-aabb-603757f9647c.png)
+
+### TEXT 입력창 만들기
+- **입력창에 미리 글자 입력하는 방법**
+
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python Button")
+root.geometry('800x600+200+100')
+
+txt = Text(root, width = 40, height = 20)
+txt.insert(END, "글자를 입력하세요")
+txt.pack()
+
+root.mainloop()
+```
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166638197-824b88b5-3a15-4858-9a32-35274e9260e9.png)
+
+### Entry를 이용한 로그인창 만들기
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python Button")
+root.geometry('800x600+200+100')
+
+ent1 = Entry(root, width = 30)
+ent1.insert(END, "ID를 입력하세요")
+ent1.pack()
+
+ent2 = Entry(root, width = 30)
+ent2.insert(END, "비밀번호를 입력하세요")
+ent2.pack()
+
+def btncmd():
+    print(ent1.get())
+    print(ent2.get())
+
+def btndelete():
+    ent1.delete(0,END)
+    ent2.delete(0,END)
+btn = Button(root, text = "로그인", command = btncmd)
+btn.pack()
+
+btn2 = Button(root, text = "삭제", command = btndelete)
+btn2.pack()
+
+root.mainloop()
+
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166639990-aa5567d5-70ee-4035-a809-a39e2bd6e9ad.png)
+
+### Listbox 예제
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python listbox")
+root.geometry('800x600+200+100')
+
+listbox = Listbox(root,selectmode = "extended", height = 5)
+
+listbox.insert(0, "파이썬")
+listbox.insert(1, "C#")
+listbox.insert(2, "HTML5")
+
+listbox.insert(END, "자바")
+listbox.insert(END, "Node")
+listbox.pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166640731-b453787d-2269-487e-8bbb-209afecc6f1a.png)
+
+### Listbox 예제
+- **selectmode = single로 바꾸면 리스트에 있는 항목들 shift(키보드)눌렀을때 여러항목 선택 안 됨**
+- **height =10 리스트항목 10개 생김**
+```py
+from tkinter import *
+
+
+root = Tk() 
+root.title("Python listbox")
+root.geometry('800x600+200+100')
+
+listbox = Listbox(root,selectmode = "single", height = 10) 
+
+listbox.insert(0, "파이썬")
+listbox.insert(1, "C#")
+listbox.insert(2, "HTML5")
+
+listbox.insert(END, "자바")
+listbox.insert(END, "Node")
+listbox.pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/166641386-76cded3e-89eb-4e11-93ab-a80fc27cbba7.png)
 
 
 
