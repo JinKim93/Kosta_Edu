@@ -787,5 +787,55 @@ root.mainloop()
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/167367566-e25e18ae-0776-49dd-8c2b-d9fdb5e8c78e.png)
 
+### 그리드
+- 격자인데 보통 바둑판에 비유되고, 바둑판 격자 하나하나에 삽입될 다양한 것들을 디자인할 때 유용하게 사용
+
+![image](https://user-images.githubusercontent.com/82345970/167370319-2790f7ea-c2a5-401f-8b6e-2f402c85245b.png)
+
+### 그리드 pack과 grid를 적용한 버튼 실행결과 비교
+- 그리드는 위치를 지정해서 원하는 버튼을 넣을 수 있는 장점이 있다
+
+![image](https://user-images.githubusercontent.com/82345970/167370521-24a17e7e-545d-470f-a96e-6497eee98740.png)
 
 
+### 그리드 실습
+```py
+import time
+import tkinter. ttk as ttk
+from tkinter import *
+
+root = Tk()
+root.title("GUI Test")
+root.geometry("600x400")
+
+Button(root, text = "F16", width = 8, height = 2).grid(row = 0, column = 0, sticky = N + E + W + S, padx = 3, pady =3) 
+Button(root, text = "F17", width = 8, height = 2).grid(row = 0, column = 1, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "F18", width = 8, height = 2).grid(row = 0, column = 2, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "F19", width = 8, height = 2).grid(row = 0, column = 3, sticky = N + E + W + S, padx = 3, pady =3)
+
+Button(root, text = "clear", width = 8, height = 2).grid(row = 1, column = 0, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "=", width = 8, height = 2).grid(row = 1, column = 1, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "/", width = 8, height = 2).grid(row = 1, column = 2, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "*", width = 8, height = 2).grid(row = 1, column = 3, sticky = N + E + W + S, padx = 3, pady =3)
+
+Button(root, text = "7", width = 8, height = 2).grid(row = 2, column = 0, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "8", width = 8, height = 2).grid(row = 2, column = 1, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "9", width = 8, height = 2).grid(row = 2, column = 2, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "-", width = 8, height = 2).grid(row = 2, column = 3, sticky = N + E + W + S, padx = 3, pady =3)
+
+Button(root, text = "4", width = 8, height = 2).grid(row = 3, column = 0, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "5", width = 8, height = 2).grid(row = 3, column = 1, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "6", width = 8, height = 2).grid(row = 3, column = 2, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "+", width = 8, height = 2).grid(row = 3, column = 3, sticky = N + E + W + S, padx = 3, pady =3)
+
+Button(root, text = "1", width = 8, height = 2).grid(row = 4, column = 0, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "2", width = 8, height = 2).grid(row = 4, column = 1, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "3", width = 8, height = 2).grid(row = 4, column = 2, sticky = N + E + W + S, padx = 3, pady =3)
+Button(root, text = "enter", width = 8, height = 2).grid(row = 4, column = 3, sticky = N + E + W + S, padx = 3, pady =3)
+
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/167373997-6a91d636-2a0b-4d0c-a31c-94248075b4d7.png)
