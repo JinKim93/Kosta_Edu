@@ -533,18 +533,259 @@ root.mainloop()
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/166648576-641540ba-54ea-4f14-9d2c-613c412b805f.png)
 
+### 콤보박스 만들기
+- 콤보박스는 모듈이 다른 곳에 있어 모듈 선언을 해주어야 한다.
+- import tkinter.ttk as ttk
+- height : 콤보박스를 클릭했을 때 화면에 나오는 목록 개수(height = 5 지정하면 5개가 기본으로 화면에 보임)
+- width : 콤보박스 너비 설정
+- values : 콤보 박스 내에 어떤 값을 넣을지 정의
+- coobobox.set() : 최초 목록 제목을 설정할 때, 값 설정할때 사용
+
+### 콤보박스 예제
+```py
+import tkinter. ttk as ttk
+from tkinter import *
+
+root = Tk()
+root.title("GUI Test")
+root.geometry("600x400")
+
+dateVal = [str(i) + "일" for i in range(1,32)] # 1부터 31까지 숫자
+combobox = ttk.Combobox(root, height = 5, values = dateVal, state = "readonly")
+combobox.current(0)
+combobox.pack()
+combobox.set("통장은거들뿐")
+
+def btncmd():
+    print(combobox.get())
+
+btn = Button(root, text = "Select", command = btncmd)
+btn.pack()
+
+root.mainloop()
+
+
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/167353427-8829ac9e-b2e5-4e83-ad19-952a92bb0e52.png)
 
 
 
+### 진행표시줄(ProgressBar)
+```py
+import tkinter. ttk as ttk
+from tkinter import *
+
+root = Tk()
+root.title("GUI Test")
+root.geometry("600x400")
+
+progressbar1 = ttk.Progressbar(root, maximum = 100, mode = "indeterminate")
+progressbar1.pack()
+
+progressbar2 = ttk.Progressbar(root, maximum = 100, mode = "determinate")
+progressbar2.pack()
+
+def btnStart():
+    progressbar1.start(10);
+    progressbar2.start(10);
+
+btn1 = Button(root, text = "start", command = btnStart)
+btn1.pack()
+
+def btnStop():
+    progressbar1.stop();
+    progressbar2.stop();
+
+btn2 = Button(root, text = "stop", command = btnStop)
+btn2.pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/167355320-d1b376a6-18c9-47b0-a7c1-b2d80218df2d.png)
+
+
+### send progress
+```py
+import time
+import tkinter. ttk as ttk
+from tkinter import *
+
+root = Tk()
+root.title("GUI Test")
+root.geometry("600x400")
+
+p_var = DoubleVar()
+progressbar1 = ttk.Progressbar(root, maximum = 100, length = 200, variable = p_var)
+progressbar1.pack()
 
 
 
+def btnStart():
+    for i in range(1, 101):
+        time.sleep(0.01)
+        p_var.set(i)
+        progressbar1.update()
+        print(p_var.get())
+              
+
+btn1 = Button(root, text = "send", command = btnStart)
+btn1.pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/167357203-534ef186-70e6-4896-9f51-56ae51423918.png)
+
+### 메뉴 만들기
+- **기본 틀에 메뉴선언**
+  - mymenu = Menu(root)
+  - root.config(menu = mymenu)
+
+- **File 메뉴에 서브메뉴 New File 삽입**
+  - add_cascade() : File 메뉴에 포함된 모든 서브 메뉴를 연결하는 기능
+
+### 메뉴만들기 실습
+```py
+import time
+import tkinter. ttk as ttk
+from tkinter import *
+
+root = Tk()
+root.title("GUI Test")
+root.geometry("600x400")
+
+def btncmd():
+    print("New File")
+
+mymenu = Menu(root)
+menu_file = Menu(mymenu, tearoff = 0)
+menu_file.add_command(label = "New File", command = btncmd)
+menu_file.add_command(label = "New Window")
+menu_file.add_separator()
+menu_file.add_command(label = "Open File")
+menu_file.add_separator()
+menu_file.add_command(label = "Save All")
+menu_file.add_separator()
+menu_file.add_command(label = "Exit", command = root.destroy)
+mymenu.add_cascade(label = "File", menu = menu_file)
 
 
+mymenu.add_cascade(label = "Edit")
+
+menu_view = Menu(mymenu, tearoff = 0)
+menu_view.add_checkbutton(label = "show minimap")
+menu_view.add_checkbutton(label = "show maxmap")
+mymenu.add_cascade(label = "view", menu = menu_view)
+
+root.config(menu = mymenu)
+
+Button(root, text = "Quit", command = root.destroy).pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/167364634-18e3cad5-f37a-4282-80a6-0f800c72381d.png)
+
+### 메시지 박스
+```py
+import time
+import tkinter. ttk as ttk
+from tkinter import *
+import tkinter .messagebox as msgbox
+
+root = Tk()
+root.title("GUI Test")
+root.geometry("600x400")
+
+def info():
+    msgbox.showinfo("알림", "정상적으로 예매 완료되었습니다.")
+
+Button(root, command = info, text = "알림").pack()
 
 
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/167365636-eb22932b-66b7-4fcb-9de7-a216c3ac7f46.png)
+
+### 메시지 박스(알림,경고,에러)
+```py
+import time
+import tkinter. ttk as ttk
+from tkinter import *
+import tkinter .messagebox as msgbox
+
+root = Tk()
+root.title("GUI Test")
+root.geometry("600x400")
+
+def info():
+    msgbox.showinfo("알림", "정상적으로 예매 완료되었습니다.")
+    
+def warn():
+    msgbox.showwarning("경고", "해당 좌석은 매진되었습니다")
+
+def error():
+    msgbox.showerror("에러", "결재 오류가 발생했습니다.")
+
+Button(root, command = info, text = "알림").pack()
+Button(root, command = warn, text = "경고").pack()
+Button(root, command = error, text = "에러").pack()
 
 
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/167366725-e341e2d4-446a-423d-a3be-4a9b939febf0.png)
+
+
+### 메시지 박스(확인/취소)
+```py
+import time
+import tkinter. ttk as ttk
+from tkinter import *
+import tkinter .messagebox as msgbox
+
+root = Tk()
+root.title("GUI Test")
+root.geometry("600x400")
+
+def info():
+    msgbox.showinfo("알림", "정상적으로 예매 완료되었습니다.")
+    
+def warn():
+    msgbox.showwarning("경고", "해당 좌석은 매진되었습니다")
+
+def error():
+    msgbox.showerror("에러", "결재 오류가 발생했습니다.")
+
+def okcancel():
+    res = msgbox.askokcancel("확인/취소", "해당 좌석은 유아동반석입니다. 예매하시겠습니까?")
+    if res == 1:
+        print("예")
+    elif res == 0:
+        print("아니오")
+    else:
+        print("취소")        
+
+Button(root, command = info, text = "알림").pack()
+Button(root, command = warn, text = "경고").pack()
+Button(root, command = error, text = "에러").pack()
+Button(root, command = okcancel, text = "확인/취소").pack()
+
+root.mainloop()
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/167367566-e25e18ae-0776-49dd-8c2b-d9fdb5e8c78e.png)
 
 
 
