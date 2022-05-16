@@ -48,5 +48,42 @@
 - **제이쿼리 관점** : 나는 밥을 먹으면서 TV를 보았다
 - **자바스크립트 관점** : 나는 밥을 먹는다. 나는 TV를 본다
 
+## 탐색이란
+- chain의 대상을 바꿔서 체인을 계속 연장시킬 수 있는 방법
+- 너무 복잡한 chain은 코드의 가독성을 떨어뜨릴 수 있다
+
+### 탐색 예제
+```html
+<html>
+    <head>
+        <title>Traverse</title>
+        
+         
+    </head>
+    <body>
+        <ul class = "first">
+            <li class = 'foo'>list item 1</li>
+            <li>list item 2</li>
+            <li class = "bar">list item 3</li>
+        </ul>
+
+        <ul class = "second">
+            <li class = 'foo'>list item 1</li>
+            <li>list item 2</li>
+            <li class = "bar">list item 3</li>
+        </ul>
+
+        <script src = "http://code.jquery.com/jquery-latest.min.js"></script>
+        <script type = "text/javascript">
+            $('ul.first').find('.foo').css('background-color', 'red').end().find('.bar').css('background-color', 'green');
+            
+            
+        </script>
+    </body>
+</html>
+```
+
+### 출력결과
+![image](https://user-images.githubusercontent.com/82345970/168507958-cebd4a0b-4b78-483e-9856-21155cf0a98a.png)
 
 
