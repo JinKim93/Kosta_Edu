@@ -19,4 +19,9 @@ npm install -g create-react-app
   
 ![image](https://user-images.githubusercontent.com/82345970/168710831-ddccfe14-285c-4b96-a877-3920717b8667.png)
 
+4. react 실행 -> npm run start
+ 
+![image](https://user-images.githubusercontent.com/82345970/168714941-8e92cae0-9476-4f02-9f7e-f4ed1de76f02.png)
+
+
  
