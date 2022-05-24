@@ -118,4 +118,6 @@
 * [이벤트](https://github.com/JinKim93/TIL/blob/master/jQuery/%EC%9D%B4%EB%B2%A4%ED%8A%B8.md)
 * [애니메이션](https://github.com/JinKim93/TIL/blob/master/jQuery/%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98.md)
 * [폼](https://github.com/JinKim93/TIL/blob/master/jQuery/%ED%8F%BC.md)
+* [chain](https://github.com/JinKim93/TIL/blob/master/jQuery/chain.md)
+* [레퍼](https://github.com/JinKim93/TIL/blob/master/jQuery/%EB%A0%88%ED%8D%BC.md)
  
