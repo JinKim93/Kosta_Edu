@@ -112,6 +112,7 @@
 * [textarea객체](https://github.com/JinKim93/TIL/blob/master/JavaScript/textarea%EA%B0%9D%EC%B2%B4.md)
 * [text객체](https://github.com/JinKim93/TIL/blob/master/JavaScript/text%EA%B0%9D%EC%B2%B4.md)
 * [버튼객체](https://github.com/JinKim93/TIL/blob/master/JavaScript/%EB%B2%84%ED%8A%BC%EA%B0%9D%EC%B2%B4.md)
+* [배열함수](https://github.com/JinKim93/TIL/blob/master/JavaScript/%EB%B0%B0%EC%97%B4%ED%95%A8%EC%88%98.md)
 
 # jQuery
 * [jQuery란](https://github.com/JinKim93/TIL/blob/master/jQuery/%EC%A0%9C%EC%9D%B4%EC%BF%BC%EB%A6%AC.md)
