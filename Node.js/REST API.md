@@ -1,4 +1,4 @@
-## REST API(Rep
+## REST API
 - **서버에 요청을 보낼 때는 주소를 통해 요청의 내용을 표현**
 - /index.html이면 index.html을 보내달라는 뜻
 - 항상 html을 욕할 필요는 없음
