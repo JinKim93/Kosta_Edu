@@ -483,6 +483,8 @@ module.exports = () => {
 };
 ```
 
+### passport폴더 하위에 kakaoStrategy.js파일생성
+
 ### passport폴더 하위에 localStrategy.js파일생성
 - 패스포트는 전략을 사용함
 - 로그인을 어찌할지 적어놓은 로직이다(전략)
@@ -606,7 +608,222 @@ router.get('/logout', isLoggedIn, (req, res) => {
   });
 ```  
 
-### passport폴더 하위에 kakaoStrategy.js파일생성
+### 로그인 후 요청 동작 설정
+1. app.js에 const passport = require('passport'); 소스코드 추가
 
+![image](https://user-images.githubusercontent.com/82345970/177081438-b940a4b6-f601-49a3-89cc-f8c4d335c5cf.png)
+
+2. 미들웨어 2개 연결 해줘야함 
+- express세션 아래에 위치해 있어야하고, pageRouter 위에 위치해야함
+- 하기 코드 추가
+```js
+app.use(passport.initialize());
+app.use(passport.session());
+```
+![image](https://user-images.githubusercontent.com/82345970/177081592-ca6e655e-e969-47bd-a744-361dbe97e880.png)
+
+
+### routes 폴더하위에 middlewares.js
+- 미들웨어 2개 직접 만들거다.
+- req, res, next가 있는 함수 -> 미들웨어
+```js
+exports.isLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      res.status(403).send('로그인 필요');
+    }
+  };
+  
+  exports.isNotLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      next();
+    } else {
+      const message = encodeURIComponent('로그인한 상태입니다.');
+      res.redirect(`/?error=${message}`);
+    }
+  };
+```
+3. auth.js 파일에 소스코드 추가 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+- 미들웨어 가져다 쓰기 위해서 작성 
+- 실제로 미들웨어로 검사할수 있다 -> 로그인인것도 로그인 안한사람들만 하게 할수있게 검사(isNotLoggedIn)
+- 로그아웃은 로그인 한사람만 할수있게 검사(isLoggedIn)
+
+![image](https://user-images.githubusercontent.com/82345970/177082532-a6086ea6-98de-4c68-b849-2b6034215dc3.png)
+
+![image](https://user-images.githubusercontent.com/82345970/177082815-f4c6ea70-61c2-4036-aa73-8939e5f0d47e.png)
+
+
+- app.js 소스코드
+```js
+const express = require('express');
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
+const passport = require('../passport');
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const router = express.Router();
+
+router.post('/join', isNotLoggedIn, async (req, res, next) => {
+  const { email, nick, password } = req.body; //프론트에서 이메일,닉,비번 보내줌
+  try {
+    const exUser = await User.findOne({ where: { email } }); //기존이메일로가입한사람있나?
+    if (exUser) {
+      return res.redirect('/join?error=exist');//있으면 프론트에 알려줌(서버에존재한다)
+    }
+    //해시화 해준다
+    const hash = await bcrypt.hash(password, 12); //12얼마나 복잡하게 해시할건지 나타냄
+    await User.create({
+      email,
+      nick,
+      password: hash,
+    });
+    return res.redirect('/');
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+});
+
+
+router.post('/login', isNotLoggedIn, (req, res, next) => {
+    passport.authenticate('local', (authError, user, info) => {
+      if (authError) {
+        console.error(authError);
+        return next(authError);
+      }
+      if (!user) {
+        return res.redirect(`/?loginError=${info.message}`);
+      }
+      return req.login(user, (loginError) => {
+        if (loginError) {
+          console.error(loginError);
+          return next(loginError);
+        }
+        return res.redirect('/');
+      });
+    })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
+  });
+
+router.get('/logout', isLoggedIn, (req, res) => {
+  
+    req.logout();
+    req.session.destroy();
+    res.redirect('/');
+  });
+
+
+module.exports = router;
+```
+
+### 카카오로 로그인하기
+- kakaoStrategy.js
+```js
+const passport = require('passport');
+const KakaoStrategy = require('passport-kakao').Strategy;
+
+const User = require('../models/user');
+
+module.exports = () => {
+  passport.use(new KakaoStrategy({
+    clientID: process.env.KAKAO_ID,
+    callbackURL: '/auth/kakao/callback',
+  }, async (accessToken, refreshToken, profile, done) => {
+    console.log('kakao profile', profile);
+    try {
+      const exUser = await User.findOne({
+        where: { snsId: profile.id, provider: 'kakao' },
+      });
+      if (exUser) {
+        done(null, exUser);
+      } else {
+        const newUser = await User.create({
+          email: profile._json && profile._json.kakao_account_email,
+          nick: profile.displayName,
+          snsId: profile.id,
+          provider: 'kakao',
+        });
+        done(null, newUser);
+      }
+    } catch (error) {
+      console.error(error);
+      done(error);
+    }
+  }));
+};
+```
+
+### 카카오를 위한 서버쪽 라우터만들기(auth.js)
+- routes폴더 하위 auth.js에 소스추가
+```js
+router.get('/kakao', passport.authenticate('kakao'));
+
+router.get('/kakao/callback', passport.authenticate('kakao', {
+  failureRedirect: '/',
+}), (req, res) => {
+  res.redirect('/');
+});
+```
+- https://developers.kakao.com/ 접속해서 설정해줘야함
+- 접속 후 로그인하기
+- 내 애플리케이션 -> 애플리케이션 추가하기
+- 플랫폿 -> web 플랫폼등록
+
+![image](https://user-images.githubusercontent.com/82345970/177083957-b5d79dac-a2b1-4d62-9897-50ef61f87692.png)
+
+- 실제 도메인도 여기서 등록 해주자
+- 제품설정 -> 카카오로그인 -> 활성화설정 ON으로 해주자
+- RedirectURL 등록하기
+![image](https://user-images.githubusercontent.com/82345970/177084201-0f55d324-9cf6-4925-8690-339d6ce7b189.png)
+
+- auth/kakao/callback은 kakaoStrategy.js파일에 있는 callbackURL 적은것이다
+- 제품설정 -> 동의항목 들어감 -> 내가 받을것을 설정해주면 된다.
+
+![image](https://user-images.githubusercontent.com/82345970/177084454-6fc3a83b-302e-452c-a21a-0e3e60143a6d.png)
+
+- 앱설정 -> 앱키 -> REST API키 복사
+- 복사한키 들고 .env파일로 가서 하기 사진 처럼 적어주기
+
+![image](https://user-images.githubusercontent.com/82345970/177084757-04c9d43a-dce9-4512-82b3-ada9282e19d9.png)
+
+
+### 오류발생
+![image](https://user-images.githubusercontent.com/82345970/177085259-cb1b0340-1b89-4577-8540-238ad92dedcc.png)
+
+- passport폴더 -> index.js파일 안에 있는 하기 부분함수를 실행 안해줌 -> app.js랑 연결을 해야함
+
+![image](https://user-images.githubusercontent.com/82345970/177085320-86f091ad-3e6e-4446-a83a-01f8c421017b.png)
+
+- app.js파일로 가서 하기 사진 처럼 작성
+- const passportConfig = require('./passport');
+- pssportConfig();
+![image](https://user-images.githubusercontent.com/82345970/177085444-8d23be0d-3df0-4c6c-b7d1-c5258837540f.png)
+![image](https://user-images.githubusercontent.com/82345970/177085553-5f464290-6160-4e0c-b28b-ed581854cc2f.png)
+
+### 오류발생2
+- 로그인 했는대 아무 반응이 없음
+![image](https://user-images.githubusercontent.com/82345970/177086151-5f707d18-dafc-4e96-9c4b-e3a9f04f829a.png)
+
+- routes폴더 -> page.js 
+- user: req.user 코드추가
+
+![image](https://user-images.githubusercontent.com/82345970/177086337-2b896bae-f35f-43b8-8b50-8ef15cf3413b.png)
+
+- 하기 처럼 소스코드를 추가하면, main.html {% if user %} user가 있으면 저 부분으로 감
+![image](https://user-images.githubusercontent.com/82345970/177086474-6c2a165f-d677-4336-83be-1b6468cb72c2.png)
+
+- layout.html에서도 {% if user and user.id %} 유저가 존재할경우 하기사진 부분 보여줌
+
+![image](https://user-images.githubusercontent.com/82345970/177086554-603e5efb-703a-44c3-87d5-7b5630dd7f69.png)
+
+- user가 존재하지 않으면 하기사진 부분을 화면에서 보여줌
+![image](https://user-images.githubusercontent.com/82345970/177086675-cd69f55a-cb70-49bb-af8b-bcf7d841af7f.png)
+
+
+
+
+
+
+
+  
 
 
