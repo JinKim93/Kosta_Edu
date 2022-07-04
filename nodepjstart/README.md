@@ -118,7 +118,7 @@ module.exports = router;
 
 11. public 폴더에 main.css파일 생성
 ### database생성
-1. npx sequelize db::create 명령어 입력하자
+1. npx sequelize db:create 명령어 입력하자
 2. 입력하기 전에 하기 방법을 이용해 수정하자
 - **lecture폴더 아래, config폴더에 config.json에 있는대로 생성됨**
 
@@ -132,7 +132,7 @@ module.exports = router;
 ### config폴더, config.json 설명
 ![image](https://user-images.githubusercontent.com/82345970/177073744-187a4d97-4a53-45fe-bebd-30b1c23dbf92.png)
 
-3. npx sequelize db::create 입력 -> 스키마생성 됨
+3. npx sequelize db:create 입력 -> 스키마생성 됨
 4. 이제 테이블 생성하면 됨
 5. models폴더 아래, index.js랑 관련있음(시퀄라이즈)
 6. 기존 생성되있는거 맘에 안드므로, 제로초님이 한 방식으로 변경
