@@ -1342,7 +1342,10 @@ app.listen(app.get('port'), () => {
 
 ![image](https://user-images.githubusercontent.com/82345970/177285470-db229c5a-2665-4ae8-885c-a9db9699f385.png)
 
-### 34. 오류발생이유(로그인을했는대, 로그인했다고 표시가 안됨)
+### 34. 오류이유(로그인을했는대, 로그인했다고 표시가 안됨)
+- routes폴더하위 page.js에 user: req.user 추가해줘야함
+
+### 34. 오류해결(로그인을했는대, 로그인했다고 표시가 안됨)
 - main페이지를 보여줄때(routes폴더하위 page.js)
 
 - routes폴더 -> page.js 
@@ -1350,17 +1353,117 @@ app.listen(app.get('port'), () => {
 
 ![image](https://user-images.githubusercontent.com/82345970/177286265-4e46ad48-399e-405a-ba1e-e8be0888803f.png)
 
-**- 하기 처럼 소스코드를 추가하면, main.html {% if user %} user가 있으면 저 부분으로 감
+- **하기 처럼 소스코드를 추가하면, main.html {% if user %} user가 있으면 저 부분으로 감
 ![image](https://user-images.githubusercontent.com/82345970/177086474-6c2a165f-d677-4336-83be-1b6468cb72c2.png)
 
-**- layout.html에서도 {% if user and user.id %} 유저가 존재할경우 하기사진 부분 보여줌
+- **layout.html에서도 {% if user and user.id %} 유저가 존재할경우 하기사진 부분 보여줌
 
 ![image](https://user-images.githubusercontent.com/82345970/177086554-603e5efb-703a-44c3-87d5-7b5630dd7f69.png)
 
-**- user가 존재하지 않으면 하기사진 부분을 화면에서 보여줌
+- **user가 존재하지 않으면 하기사진 부분을 화면에서 보여줌
 ![image](https://user-images.githubusercontent.com/82345970/177086675-cd69f55a-cb70-49bb-af8b-bcf7d841af7f.png)
 
+### 35. 오류발생(로그인후 로그아웃 안됨)
+![image](https://user-images.githubusercontent.com/82345970/177289335-bd7048dc-849e-4762-8019-c544f1c6b279.png)
 
+### 35. 오류발생 (로그인후 로그아웃 안됨)auth.js 소스코드
+- routes폴더하위 auth.js 부분 수정
+
+![image](https://user-images.githubusercontent.com/82345970/177289747-7889a84d-442c-4ef5-9f8d-4e075a4c0118.png)
+
+
+### 35. 오류이유(로그인후 로그아웃 안됨)
+passport@0.6 버전 출시로 req.logout에 문제가 생김
+
+### 35. 오류해결(로그인후 로그아웃 안됨)
+- 콜백 함수를 제공하고 그 안에서 응답
+ 
+![image](https://user-images.githubusercontent.com/82345970/177290017-45f3ba94-18ec-4976-ac9d-7571691cc25c.png)
+
+### 35. 오류발생해결 후(로그인후 로그아웃 안됨) auth.js 소스코드
+```js
+const express = require('express');
+const passport = require('passport');
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+
+const router = express.Router();
+
+//로그인한 사람이 회원가입하면 안되니까 isNotLoggedIn써주자
+//즉 로그인 안한사람들만 접근할수있게 추가해주자
+router.post('/join',isNotLoggedIn, async (req, res, next) => {
+ 
+  const { email, nick, password } = req.body;
+ 
+  try {
+    const exUser = await User.findOne({ where: { email } });
+    if (exUser) {
+      return res.redirect('/join?error=exist'); //있으면 프론트에서 알림해줘야함 -> 이미가입한 이메일입니다 이런식으로
+    }
+    const hash = await bcrypt.hash(password, 12); //12는 얼마나 복잡하게 해시할건지를 나타냄 -> 숫자클수록 오래걸림 -> 해킹위험적음
+    await User.create({
+      email,
+      nick,
+      password: hash,
+    });
+    return res.redirect('/');
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+});
+
+//미들웨어 확장하는 패턴
+//프론트에서 서버로 로그인요청을 보낼때 하기코드 라우터에 걸린다
+// post -> authlogin을 하게 되면, 하기코드 실행됨
+// passport.authenticate('local' -> 이부분 로컬이 실행되면, passport가 localStrategy를 찾는다
+// passport폴더 -> index.js에 local();로 등록해줌
+// local(); 등록을 해줘서 하기코드 router.post ~~~ 실행됨
+// 프론트에서 로그인을 누를때, 이메일과비밀번호 같이보내줌
+
+//로그인라우터도, 로그인 안한사람들만 할수있게 해줌
+router.post('/login',isNotLoggedIn, (req, res, next) => {
+    passport.authenticate('local', (authError, user, info) => {
+      if (authError) {
+        console.error(authError);
+        return next(authError);
+      }
+      if (!user) {
+        return res.redirect(`/?loginError=${info.message}`);
+      }
+ 
+      return req.login(user, (loginError) => {
+        if (loginError) {
+          console.error(loginError);
+          return next(loginError);
+        }
+        
+        return res.redirect('/');
+      });
+    })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
+  });
+
+router.get('/logout',isLoggedIn, (req, res) => {
+    req.logout(()=>{
+      req.session.destroy();
+      res.redirect('/');
+    }); 
+  });
+
+  
+//카카오 누르기하면, passport.authenticate('kakao')실행됨 -> 실행되면 kakaoStrategy.js로 이동
+router.get('/kakao', passport.authenticate('kakao'));
+
+router.get('/kakao/callback', passport.authenticate('kakao', {
+  failureRedirect: '/',
+}), (req, res) => {
+  res.redirect('/');
+});
+
+
+module.exports = router;
+```
 
 
 
