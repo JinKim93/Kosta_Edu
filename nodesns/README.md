@@ -466,7 +466,7 @@ app.listen(app.get('port'), () => {
 
 ![image](https://user-images.githubusercontent.com/82345970/177236209-0c2660bc-be24-4147-bc2d-bcd7267c1db3.png)
 
-### 22. 회원가입 부분 소스코드(auth.js)
+### 22-1. 회원가입 부분 소스코드(auth.js)
 ```js
 const express = require('express');
 const bcrypt = require('bcrypt');
@@ -499,13 +499,17 @@ router.post('/join', async (req, res, next) => {
 
 module.exports = router;
 ```
+### 22-2에서 auth라우터를 만들었으니까 app.js에서 쓰여야함
+- app.js 표시한 부분추가 
+![image](https://user-images.githubusercontent.com/82345970/177258962-048c8ed5-74aa-4c40-a418-2659a64d243f.png)
 
-### 23. 로그인은 로직을 깔끔하게 하기위해 passport라는 라이브러리사용함
+
+### 23. 로그인은 로직을 깔끔하게 하기위해 passport라는 라이브러리사용함(로그인구현)
 
 ### 24. lecture하위에 passport 폴더생성
 - passport는 전략을 사용함
 - 로그인 어찌할지 적어놓은파일 -> 전략
-### 25. passport폴더 하위에 index.js, localStrategy.js(기본 아이디,비번로그인방식), kakaoStrategy.js(카카오연동 로그인방식) 파일생성
+### 25. passport폴더 하위에 index.js, localStrategy.js(이메일,비번로그인방식), kakaoStrategy.js(카카오연동 로그인방식) 파일생성
 
 ### 26. index.js(초기 소스코드)
 ```js
@@ -568,4 +572,543 @@ module.exports = () => {
 - done(null,false,{meesage: `가입되지 않은 회원입니다`});
 - done(null, exUser)
 - 첫번째 -> 서버에러, 두번째 -> 로그인성공했을때 유저객체, 세번째 -> 로그인실패했을때 메시지
+
+### 29-1. 로그인구현소스코드(routes폴더 하위 auth.js)
+```js
+const express = require('express');
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
+
+const router = express.Router();
+
+//회원가입 라우터
+router.post('/join', async (req, res, next) => {
+  //프론트에서 email.nick password 보내주면됨  
+  const { email, nick, password } = req.body;
+  //먼저 검사를 해봄, 기존에 email로 가입한 사람이 있는지
+  try {
+    const exUser = await User.findOne({ where: { email } });
+    if (exUser) {
+      return res.redirect('/join?error=exist'); //있으면 프론트에서 알림해줘야함 -> 이미가입한 이메일입니다 이런식으로
+    }
+    const hash = await bcrypt.hash(password, 12); //12는 얼마나 복잡하게 해시할건지를 나타냄 -> 숫자클수록 오래걸림 -> 해킹위험적음
+    await User.create({
+      email,
+      nick,
+      password: hash,
+    });
+    return res.redirect('/');
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+});
+
+//미들웨어 확장하는 패턴
+//프론트에서 서버로 로그인요청을 보낼때 하기코드 라우터에 걸린다
+// post -> authlogin을 하게 되면, 하기코드 실행됨
+// passport.authenticate('local' -> 이부분 로컬이 실행되면, passport가 localStrategy를 찾는다
+// passport폴더 -> index.js에 local();로 등록해줌
+// local(); 등록을 해줘서 하기코드 router.post ~~~ 실행됨
+// 프론트에서 로그인을 누를때, 이메일과비밀번호 같이보내줌
+router.post('/login',(req, res, next) => {
+    passport.authenticate('local', (authError, user, info) => {
+      if (authError) {
+        console.error(authError);
+        return next(authError);
+      }
+      if (!user) {
+        return res.redirect(`/?loginError=${info.message}`);
+      }
+      //로그인성공했을때 req.login을쓴다
+      //req.login하는 순간 passport -> index.js로 간다
+      //passport -> index.js -> passport.serializeUser 실행됨
+      return req.login(user, (loginError) => {
+        if (loginError) {
+          console.error(loginError);
+          return next(loginError);
+        }
+        //세션쿠키를 브라우저로 보내줌
+        return res.redirect('/');
+      });
+    })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
+  });
+
+module.exports = router;
+```
+
+### 29-2. 로그인구현소스코드(passport폴더 하위 index.js)
+```js
+const passport = require('passport');
+const local = require('./localStrategy');
+const kakao = require('./kakaoStrategy');
+const User = require('../models/user');
+
+module.exports = () => {
+  passport.serializeUser((user, done) => {
+    done(null, user.id);//세션에 user의 id만 저장 
+
+
+
+    
+  });
+  //세션에 id를 저장해야하는이유
+  //{id: 3, 'connect.sid': s%3189203810391280 } -> connect.sid(세션쿠키)
+  //세션쿠키는 브라우저로감
+  //브라우저에서 요청을 보낼때마다 쿠키를 같이 넣어서 보내줌
+  //서버가 s%3189203810391280 쿠키를 보고, 이 id는 3번id사용자의 쿠키구나 인지
+  passport.deserializeUser((id, done) => {
+    User.findOne({ where: { id } })
+      .then(user => done(null, user))
+      .catch(err => done(err));
+  });
+  //3번 id사용자를 deserializeUser에서 복구를 해줌 
+
+  local();
+  kakao();
+};
+```
+### 29-3. 로그인구현소스코드(passport폴더 하위 localStrategy.js)
+```js
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+
+const User = require('../models/user');
+
+module.exports = () => {
+  passport.use(new LocalStrategy({
+    usernameField: 'email', //req.body.email가 되야함 -> 프론트에서 요청을해 이메일, 패스워드 보내줘야함
+    passwordField: 'password', //req.body.password가 되야함 passwordField: 'password', //req.body.password password부분 같아야함
+  }, async (email, password, done) => {
+    try {
+      const exUser = await User.findOne({ where: { email } });
+      if (exUser) {
+        const result = await bcrypt.compare(password, exUser.password);
+        if (result) {
+          done(null, exUser);
+        } else {
+          done(null, false, { message: '비밀번호가 일치하지 않습니다.' });
+        }
+      } else {
+        done(null, false, { message: '가입되지 않은 회원입니다.' });
+      }
+    } catch (error) {
+      console.error(error);
+      done(error);
+    }
+  }));
+};
+```
+
+### 29-4. 로그인구현소스코드(app.js)
+```js
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
+const path = require('path');
+const session = require('express-session');
+const nunjucks = require('nunjucks');
+const dotenv = require('dotenv');
+dotenv.config();
+const pageRouter = require('./routes/page');
+const authRouter = require('./routes/auth');
+const { sequelize } = require('./models');
+const app = express();
+app.set('port', process.env.PORT || 8001);
+app.set('view engine', 'html');
+nunjucks.configure('views', {
+  express: app,
+  watch: true,
+});
+//시퀄라이즈 연결 -> sequelize.sync -> promise -> then,catch 붙이는게 좋음
+sequelize.sync({ force: false }) //force: true -> 테이블지워졌다가 다시생성됨 -> 데이터 날라감
+  .then(() => {
+    console.log('데이터베이스 연결 성공');
+  })
+  .catch((err) => {
+    console.error(err);
+  }); 
+
+app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+}));
+
+app.use('/', pageRouter); 
+app.use('/auth', authRouter);
+app.use((req, res, next) => {
+  const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+  error.status = 404;
+  next(error);
+});
+
+app.use((err, req, res, next) => {
+  res.locals.message = err.message;
+  res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+app.listen(app.get('port'), () => {
+  console.log(app.get('port'), '번 포트에서 대기중');
+});
+```
+
+### passport 과정(로그인)
+- passport폴더하위 index.js 
+
+![image](https://user-images.githubusercontent.com/82345970/177261047-e2b58d5f-4d3d-4c74-a68f-a81baa844a50.png)
+
+1. serializeUser가 done 되는 순간
+2. routes폴더하위 auth.js에 있는 하기소스코드 실행됨 -> 에러가 있으면 에러표시해주고, 없으면 return res.redirect('/'); (로그인성공)
+
+![image](https://user-images.githubusercontent.com/82345970/177261521-1e3482ec-20ea-453a-877e-a726fb863f1e.png)
+
+
+### passport 전체과정
+1. routes폴더하위 auth.js 회원가입을 함
+
+![image](https://user-images.githubusercontent.com/82345970/177261720-66931226-177d-4724-86d0-dc66d7434885.png)
+
+2. 로그인요청이 들어오면 표시한 부분 local까지 실행되고
+
+![image](https://user-images.githubusercontent.com/82345970/177262140-5f80dd10-baf6-450f-9de0-c073c0c8dba1.png)
+
+3. passport폴더하위 localStrategy.js로가서 가입되지않은회원인지,비밀번호가 일치하지 않은지, 로그인성공인지 판별을 함
+- 하기사진 로그인성공인지판별하는코드
+
+![image](https://user-images.githubusercontent.com/82345970/177262454-f9167f5a-b828-46de-bccf-7d964d182d4d.png)
+
+4. done실행되는 순간 routes폴더하위 auth.js로감
+5. autherror부분 콜백함수가 실행됨
+
+![image](https://user-images.githubusercontent.com/82345970/177262751-a1316c33-87b4-418c-86e5-2cf28710f94f.png)
+
+6. 로그인성공하는순간(req.login)
+
+![image](https://user-images.githubusercontent.com/82345970/177263123-e836bd62-6d16-4d7c-865b-9431caefbd65.png)
+
+7. passport하위폴더 index.js로 감
+- serializeUser로가서 user중에서 id만 {id: 3, 'connect.sid': s%3189203810391280 } 세션쿠키랑 id매칭되게 메모리에 들고있고
+
+![image](https://user-images.githubusercontent.com/82345970/177263312-6c626064-52e7-493d-b5d0-4dc2150d6742.png)
+
+8. 다시 done하는순간
+
+![image](https://user-images.githubusercontent.com/82345970/177263634-f4ca368f-7095-4a0a-bd78-d43c943b764b.png)
+
+9. routes폴더하위 auth.js에 있는 로그인에러가서 최종적으로 로그인에러있나 확인함
+
+![image](https://user-images.githubusercontent.com/82345970/177263861-01096085-0b3f-4df9-93ad-51ebfa2f911d.png)
+
+10. 로그인성공하면 다시 메인페이지로 돌려보내줌
+
+![image](https://user-images.githubusercontent.com/82345970/177263927-10b8bbd8-66a5-44ee-a062-3ba796d5b054.png)
+
+11. 여기서 req.login 하면서 숨겨져있는게 세션쿠키를 브라우저로 보내줌</br>
+s%3189203810391280 } 이 쿠키를 브라우저로 보내줘서 res.redirect('/') 브라우저로 들어가는순간</br>
+세션쿠키가 브라우저로 들어가게되고 그다음 요청부터는 세션쿠키가 보내줘서</br> 
+서버가 그 요청을 누가 보냈는지 알수있게 됨  -> 즉 로그인된 상태가 됨 
+
+### 30. 로그아웃구현(auth.js)
+- routes하위폴더 auth.js로 이동
+- 하키코드추가
+
+![image](https://user-images.githubusercontent.com/82345970/177264948-3312ef3d-58c4-409d-8787-83a19da04922.png)
+
+- auth.js소스코드
+```js
+const express = require('express');
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
+
+const router = express.Router();
+
+
+router.post('/join', async (req, res, next) => {
+ 
+  const { email, nick, password } = req.body;
+ 
+  try {
+    const exUser = await User.findOne({ where: { email } });
+    if (exUser) {
+      return res.redirect('/join?error=exist'); //있으면 프론트에서 알림해줘야함 -> 이미가입한 이메일입니다 이런식으로
+    }
+    const hash = await bcrypt.hash(password, 12); //12는 얼마나 복잡하게 해시할건지를 나타냄 -> 숫자클수록 오래걸림 -> 해킹위험적음
+    await User.create({
+      email,
+      nick,
+      password: hash,
+    });
+    return res.redirect('/');
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+});
+
+//미들웨어 확장하는 패턴
+//프론트에서 서버로 로그인요청을 보낼때 하기코드 라우터에 걸린다
+// post -> authlogin을 하게 되면, 하기코드 실행됨
+// passport.authenticate('local' -> 이부분 로컬이 실행되면, passport가 localStrategy를 찾는다
+// passport폴더 -> index.js에 local();로 등록해줌
+// local(); 등록을 해줘서 하기코드 router.post ~~~ 실행됨
+// 프론트에서 로그인을 누를때, 이메일과비밀번호 같이보내줌
+router.post('/login',(req, res, next) => {
+    passport.authenticate('local', (authError, user, info) => {
+      if (authError) {
+        console.error(authError);
+        return next(authError);
+      }
+      if (!user) {
+        return res.redirect(`/?loginError=${info.message}`);
+      }
+ 
+      return req.login(user, (loginError) => {
+        if (loginError) {
+          console.error(loginError);
+          return next(loginError);
+        }
+        
+        return res.redirect('/');
+      });
+    })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
+  });
+
+//라우터생성  
+router.get('/logout', (req, res) => {
+    req.logout(); //세션쿠키가 사라짐 -> 서버에서 세션쿠키지움 { id: 3, 'connect.sid': s%312312312312 }
+    //서버에서 세션쿠키가 지워지면 로그아웃이 풀린거다
+    //로그인이 풀렸는지 볼려면, 세션에 세션쿠키(s%312312312312)가 들어있나 확인하면 됨
+    req.session.destroy();
+    res.redirect('/');
+  });  
+
+module.exports = router;
+```
+
+### 31. 로그인 후 그다음 요청이 어찌되는지 확인
+- 로그인을 해서, Strategy.js로 갔다가,   passport.serializeUser로 갔다가 결국 로그인해서 브라우저로 돌아감(return res.redirect('/');
+- 그러면 브라우저에서 다음요청을 보낼것이다 -> 예를들어 게시글쓸래요, 팔로우할래요 등등
+- 이런 요청들을 보낼때 app.js로 가서, 표시한 부분 추가 -> 즉 미들웨어 2개를 연결해줘야함
+
+![image](https://user-images.githubusercontent.com/82345970/177265900-c0a723f0-8bfe-485a-a82d-7103f92b943c.png)
+
+- router에 가기전에 미들웨어 2개를 연결해줘야함
+
+![image](https://user-images.githubusercontent.com/82345970/177266353-f3c03597-70aa-4c59-a13b-72810c426d10.png)
+
+- 또한 express세션보다 아래있어야함 -> express세션에 session을 저장했기때문에 
+
+![image](https://user-images.githubusercontent.com/82345970/177266501-77c0479f-7fd1-4721-97bb-efc2ca8b2eac.png)
+
+- 미들웨어 2개가 express세션보다 아래에 위치하므로써, 얻을수있는역할은, 로그인후 그다음요청부터 -> passport.session()이 실행될때
+- passport폴더하위 index.js에 있는부분이 실행됨(하기사진참고)
+
+![image](https://user-images.githubusercontent.com/82345970/177267089-3c361f18-de7c-4e9f-9258-61c9c706d881.png)
+
+- 지금까지 app.js 소스코드
+```js
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan');
+const path = require('path');
+const session = require('express-session');
+const nunjucks = require('nunjucks');
+const dotenv = require('dotenv');
+const passport = require('passport');
+
+dotenv.config();
+const pageRouter = require('./routes/page');
+const authRouter = require('./routes/auth');
+const { sequelize } = require('./models');
+const app = express();
+app.set('port', process.env.PORT || 8001);
+app.set('view engine', 'html');
+nunjucks.configure('views', {
+  express: app,
+  watch: true,
+});
+//시퀄라이즈 연결 -> sequelize.sync -> promise -> then,catch 붙이는게 좋음
+sequelize.sync({ force: false }) //force: true -> 테이블지워졌다가 다시생성됨 -> 데이터 날라감
+  .then(() => {
+    console.log('데이터베이스 연결 성공');
+  })
+  .catch((err) => {
+    console.error(err);
+  }); 
+
+app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/', pageRouter); 
+app.use('/auth', authRouter);
+
+app.use((req, res, next) => {
+  const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
+  error.status = 404;
+  next(error);
+});
+
+app.use((err, req, res, next) => {
+  res.locals.message = err.message;
+  res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+app.listen(app.get('port'), () => {
+  console.log(app.get('port'), '번 포트에서 대기중');
+});
+```
+
+### 32-1. routes폴더하위에 middlewares.js파일생성
+- 미들웨어 2개 직접만들거다.
+- 미들웨어는 req, res, next가 있는함수
+- 로그인되있나 판단하는(isLoggedIn)함수, 로그인안했나판단하는(isNotLoggedIn)함수
+- middlewares.js 소스코드
+```js
+exports.isLoggedIn = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      res.status(403).send('로그인 필요');
+    }
+  };
+  
+  exports.isNotLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      next();
+    } else {
+      const message = encodeURIComponent('로그인한 상태입니다.');
+      res.redirect(`/?error=${message}`);
+    }
+  };
+```
+
+### 32-2 middleware.js에 만든 함수를 routes폴더하위 auth.js에 즉 다른라우터들에 만들어놓은 미들웨어를 가져다쓰자
+- auth.js에 부분에 소스코드 추가하자
+
+![image](https://user-images.githubusercontent.com/82345970/177268563-44d7d3e6-5e1f-4dd4-873a-aa76e818c489.png)
+
+![image](https://user-images.githubusercontent.com/82345970/177268856-1616a8dc-b89e-4cdf-80c7-26d2975538d4.png)
+
+![image](https://user-images.githubusercontent.com/82345970/177269113-a04abdc9-7350-446d-bbec-52f9b09f768b.png)
+
+![image](https://user-images.githubusercontent.com/82345970/177269361-24a244e7-f010-4a0d-bf12-4aee325a431f.png)
+
+### 32-2 auth.js소스코드
+```js
+const express = require('express');
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
+const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+
+const router = express.Router();
+
+//로그인한 사람이 회원가입하면 안되니까 isNotLoggedIn써주자
+//즉 로그인 안한사람들만 접근할수있게 추가해주자
+router.post('/join',isNotLoggedIn, async (req, res, next) => {
+ 
+  const { email, nick, password } = req.body;
+ 
+  try {
+    const exUser = await User.findOne({ where: { email } });
+    if (exUser) {
+      return res.redirect('/join?error=exist'); //있으면 프론트에서 알림해줘야함 -> 이미가입한 이메일입니다 이런식으로
+    }
+    const hash = await bcrypt.hash(password, 12); //12는 얼마나 복잡하게 해시할건지를 나타냄 -> 숫자클수록 오래걸림 -> 해킹위험적음
+    await User.create({
+      email,
+      nick,
+      password: hash,
+    });
+    return res.redirect('/');
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+});
+
+//미들웨어 확장하는 패턴
+//프론트에서 서버로 로그인요청을 보낼때 하기코드 라우터에 걸린다
+// post -> authlogin을 하게 되면, 하기코드 실행됨
+// passport.authenticate('local' -> 이부분 로컬이 실행되면, passport가 localStrategy를 찾는다
+// passport폴더 -> index.js에 local();로 등록해줌
+// local(); 등록을 해줘서 하기코드 router.post ~~~ 실행됨
+// 프론트에서 로그인을 누를때, 이메일과비밀번호 같이보내줌
+
+//로그인라우터도, 로그인 안한사람들만 할수있게 해줌
+router.post('/login',isNotLoggedIn, (req, res, next) => {
+    passport.authenticate('local', (authError, user, info) => {
+      if (authError) {
+        console.error(authError);
+        return next(authError);
+      }
+      if (!user) {
+        return res.redirect(`/?loginError=${info.message}`);
+      }
+ 
+      return req.login(user, (loginError) => {
+        if (loginError) {
+          console.error(loginError);
+          return next(loginError);
+        }
+        
+        return res.redirect('/');
+      });
+    })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
+  });
+
+//로그아웃 라우터생성
+//로그아웃은 로그인 한 사람만 로그아웃되게 검사
+router.get('/logout',isLoggedIn, (req, res) => {
+    req.logout(); 
+    req.session.destroy();
+    res.redirect('/');
+  });  
+
+module.exports = router;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
