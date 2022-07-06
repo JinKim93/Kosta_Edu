@@ -1773,7 +1773,40 @@ module.exports = router;
 
 ![image](https://user-images.githubusercontent.com/82345970/177463675-8ac4111f-3b70-4220-b7b5-463cfc1ccd47.png)
 
+### 37.5 팔로우,팔로잉 한 숫자 증가기능 코드(passport하위 index.js)
+```js
+const passport = require('passport');
+const local = require('./localStrategy');
+const kakao = require('./kakaoStrategy');
+const User = require('../models/user');
 
+module.exports = () => {
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    User.findOne({
+      where: { id },
+      include: [{
+        //둘다 model: User라서, as로 구별을 해줘야함
+        model: User,
+        attributes: ['id', 'nick'],
+        as: 'Followers',
+      }, {
+        model: User,
+        attributes: ['id', 'nick'],
+        as: 'Followings',
+      }],
+    })
+      .then(user => done(null, user))
+      .catch(err => done(err));
+  });
+
+  local();
+  kakao();
+};
+```
 
 
 
