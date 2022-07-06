@@ -1768,7 +1768,7 @@ module.exports = router;
 
 ![image](https://user-images.githubusercontent.com/82345970/177463264-c447520b-e5ff-48c8-9ff3-833d7f1a32cc.png)
 
-- ** 결론 req.user는 deserializeUser에서 생성됨 **
+- 결론 req.user는 deserializeUser에서 생성됨
 - 게시글을 가지고 오고 싶으면 하기사진처럼 추가해주면 됨
 
 ![image](https://user-images.githubusercontent.com/82345970/177463675-8ac4111f-3b70-4220-b7b5-463cfc1ccd47.png)
