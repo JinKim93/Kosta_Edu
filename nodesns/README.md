@@ -1807,7 +1807,53 @@ module.exports = () => {
   kakao();
 };
 ```
+### 37.6 팔로우,팔로잉 한 숫자 증가기능 코드(routes하위 auth.js)
+```js
+const express = require('express');
+const { Post, User } = require('../models');
+const router = express.Router();
 
+router.use((req, res, next) => {
+  res.locals.user = req.user; //로그인했는지, 안했는지는 user변수는 모든라우터에 쓰일거라서 뺴놓음(중복제거해줌)
+  res.locals.followerCount = req.user ? req.user.Followers.length : 0;
+  res.locals.followingCount = req.user ? req.user.Followings.length : 0;
+  res.locals.followerIdList = req.user ? req.user.Followings.map(f => f.id) : [];
+  
+  next();
+});
 
+//app.js pageRouter에 /이기떄문에, router.get 앞에 /profile 이런식으로 작성
+router.get('/profile', (req, res) => {
+  res.render('profile', { title: '내 정보 - NodeBird' });
+});
+
+router.get('/join', (req, res) => {
+  res.render('join', { title: '회원가입 - NodeBird' });
+});
+
+router.get('/', async (req, res, next) => {
+  try {
+      
+    const posts = await Post.findAll({
+      include: {
+        model: User,
+        attributes: ['id', 'nick'],
+      },
+      order: [['createdAt', 'DESC']],
+    });
+    //render에 넣는 변수들 res.locals로 뺄수있다 
+    res.render('main', {
+      title: 'NodeBird',
+      twits: posts,
+      //user: req.user,  -> res.locals.user = req.user;
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
+module.exports = router;
+```
 
 
