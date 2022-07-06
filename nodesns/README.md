@@ -1465,10 +1465,16 @@ router.get('/kakao/callback', passport.authenticate('kakao', {
 module.exports = router;
 ```
 
+### 36.이미지 업로드 
 
+![image](https://user-images.githubusercontent.com/82345970/177438984-7071cc2a-3a74-4075-89dc-ad51f01d8254.png)
 
+- 로그인, 회원가입 formdata전송이 되긴하는대, app.js에서 보면 urlencoded라서 body-parser가 해석할수 있음
+- main.html에 있는 enctype="multipart/form-data"는 body-parser로는 요청본문을 해석할 수 없음
+- 해석을 하기위해서 **multer패키지** 필요
 
-
-
+### 36. 이미지 업로드 라우터구현
+- routes폴더하위에 post.js파일생성(게시글작성한 라우터들을 모아놓음)
+- app.js에 소스코드 추가
 
 
