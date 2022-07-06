@@ -1465,7 +1465,7 @@ router.get('/kakao/callback', passport.authenticate('kakao', {
 module.exports = router;
 ```
 
-### 36.이미지 업로드 
+### 36.1 이미지 업로드 
 
 ![image](https://user-images.githubusercontent.com/82345970/177438984-7071cc2a-3a74-4075-89dc-ad51f01d8254.png)
 
@@ -1473,8 +1473,308 @@ module.exports = router;
 - main.html에 있는 enctype="multipart/form-data"는 body-parser로는 요청본문을 해석할 수 없음
 - 해석을 하기위해서 **multer패키지** 필요
 
-### 36. 이미지 업로드 라우터구현
+### 36.2 이미지 업로드 라우터구현
 - routes폴더하위에 post.js파일생성(게시글작성한 라우터들을 모아놓음)
-- app.js에 소스코드 추가
+- **app.js에 소스코드 추가
+
+![image](https://user-images.githubusercontent.com/82345970/177441296-36029242-696f-4a59-bfc1-4f1190e63834.png)
+
+![image](https://user-images.githubusercontent.com/82345970/177441455-e2356150-a41a-4ef7-bed0-72781d5a14c8.png)
+
+### 36.3 이미지 업로드 라우터구현(post.js 초기소스코드)
+```js
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const { Post, Hashtag } = require('../models');
+const { isLoggedIn } = require('./middlewares');
+
+const router = express.Router();
+
+try {
+  fs.readdirSync('uploads');
+} catch (error) {
+  console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+  fs.mkdirSync('uploads');
+}
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename(req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+
+router.post('/img', isLoggedIn, upload.single('img'), (req, res) => {
+  console.log(req.file);
+  res.json({ url: `/img/${req.file.filename}` });
+});
+
+module.exports = router;
+```
+### 36.3 express.static역할(post.js, app.js)
+- app.js 부분 
+![image](https://user-images.githubusercontent.com/82345970/177442561-a0928665-4bf2-4e68-865e-a89eba642db8.png)
+
+- post.js 부분
+![image](https://user-images.githubusercontent.com/82345970/177443159-5b56ca1a-d3d0-4d22-a60b-b4c3fa095d4d.png)
+
+### 36.4 post.js코드수정
+- 코드 수정전 **npm i multer 패키지설치**
+- 코드 수정 후 **npm start**
+
+![image](https://user-images.githubusercontent.com/82345970/177448059-de0923b4-1be4-4a64-9e15-6664d287406d.png)
+
+```js
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const { Post, Hashtag } = require('../models');
+const { isLoggedIn } = require('./middlewares');
+const { nextTick } = require('process');
+
+const router = express.Router();
+
+//업로드 폴더 만들어줌
+try {
+  fs.readdirSync('uploads');
+} catch (error) {
+  console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+  fs.mkdirSync('uploads');
+}
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, 'uploads/');
+    },
+    filename(req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
+//img는 upload폴더에 들어있는대, 요청주소는 img가 된다. 
+//요청과 실제파일주소가 다름 -> 이런역할을 해주는게 app.js에있는 express.static이다
+router.post('/img', isLoggedIn, upload.single('img'), (req, res) => {
+  console.log(req.file);
+  res.json({ url: `/img/${req.file.filename}` });
+});
+
+router.post ('/', isLoggedIn, upload.none(), async (req, res, next)=> {
+    try {
+        const post = await Post.create({
+            content: req.body.content,
+            img: req.body.url,
+            UserId: req.user.id,
+        });
+        res.redirect('/');
+      } catch (error) {
+        console.error(error);
+        next(error);
+      }
+});
+
+module.exports = router;
+
+
+```
+
+### 36.5 업로드폴더생성코드
+
+![image](https://user-images.githubusercontent.com/82345970/177447597-1cd8d3db-0698-4cdf-8aef-f4baafae686d.png)
+
+- post.js코드 보면 업로드폴더 만들어줌
+
+![image](https://user-images.githubusercontent.com/82345970/177447611-269939fb-a289-4583-ba5d-ca105f69efab.png)
+
+
+### 36.6 사진 업로드 후 메인에 업로드 안됨현상(오류)
+- 상기오류랑 같다 -> 로그인 후 유저 정보 안뜸현상
+
+![image](https://user-images.githubusercontent.com/82345970/177448540-5e5802be-1990-4beb-b584-88d460d632f7.png)
+
+
+### 오류해결 전 소스코드(route폴더하위 page.js)
+
+![image](https://user-images.githubusercontent.com/82345970/177448663-5217d7db-687e-4466-94f9-09550075b28c.png)
+
+### 오류해결 소스코드(route폴더하위 page.js)
+- 오류해결 소스코드는 user: req.user, 추가만해줬는대, render에 넣는 변수들은 res.locals로 뺌
+
+![image](https://user-images.githubusercontent.com/82345970/177449268-c7b17562-a631-40cb-9acf-0af8e3b69ebc.png)
+
+- 또한 로그인했는지, 안했는지는 user변수는 모든라우터에 쓰일거라서 뺴놓음(중복제거해줌)
+
+![image](https://user-images.githubusercontent.com/82345970/177449403-6a4db802-15d0-4ece-a5a9-527d4bf534e2.png)
+
+### 상기문제 오류해결 소스코드 (route폴더하위 page.js)
+```js
+const express = require('express');
+
+const router = express.Router();
+
+router.use((req, res, next) => {
+  res.locals.user = req.user; //로그인했는지, 안했는지는 user변수는 모든라우터에 쓰일거라서 뺴놓음(중복제거해줌)
+  next();
+});
+
+//app.js pageRouter에 /이기떄문에, router.get 앞에 /profile 이런식으로 작성
+router.get('/profile', (req, res) => {
+  res.render('profile', { title: '내 정보 - NodeBird' });
+});
+
+router.get('/join', (req, res) => {
+  res.render('join', { title: '회원가입 - NodeBird' });
+});
+
+router.get('/', async (req, res, next) => {
+  try {
+      
+    const posts = await Post.findAll({
+      include: {
+        model: User,
+        attributes: ['id', 'nick'],
+      },
+      order: [['createdAt', 'DESC']],
+    });
+    //render에 넣는 변수들 res.locals로 뺄수있다 
+    res.render('main', {
+      title: 'NodeBird',
+      twits: posts,
+      //user: req.user,  -> res.locals.user = req.user;
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+});
+
+module.exports = router;
+```
+
+### 오류발생(Post is not defined)
+
+![image](https://user-images.githubusercontent.com/82345970/177449619-bbd0eeeb-9286-4ebe-901b-82400bc63e82.png)
+
+### 오류해결(Post is not defined)
+- routes폴더하위 page.js에 소스코드 추가
+
+![image](https://user-images.githubusercontent.com/82345970/177450160-d9db2833-f7d1-422b-b385-125aba3296c6.png)
+
+### 오류발생(user is not defined)
+
+![image](https://user-images.githubusercontent.com/82345970/177450207-e77449db-9750-4d0b-92e9-6c166c744549.png)
+
+### 오류해결(user is not defined)
+- routes폴더하위 page.js에 소스코드 추가
+
+![image](https://user-images.githubusercontent.com/82345970/177450385-37927d96-7c98-4814-b2ec-54e75a02a3f2.png)
+
+
+### 오류발생((D:\nodejs-book-master\ch9\lecture\views\main.html) [Line 32, Column 45] Error: Unable to call `followerIdList["includes"]`, which is undefined or falsey
+
+![image](https://user-images.githubusercontent.com/82345970/177450417-93c11ad4-1cd0-4248-bfbe-8aee661aa511.png)
+
+### 오류이유((D:\nodejs-book-master\ch9\lecture\views\main.html) [Line 32, Column 45] Error: Unable to call `followerIdList["includes"]`, which is undefined or falsey
+- 프론트쪽코드는 완성되코드에, 팔로우,팔로잉기능을 넣어줬는대, 아직 백엔드쪽에서는 구현을 안해줬서 오류발생
+
+### 오류해결((D:\nodejs-book-master\ch9\lecture\views\main.html) [Line 32, Column 45] Error: Unable to call `followerIdList["includes"]`, which is undefined or falsey
+- 소스코드 추가(routes폴더하위 page.js)
+
+![image](https://user-images.githubusercontent.com/82345970/177450835-45266375-f725-43e0-b949-327683451d36.png)
+
+### 37.1 팔로잉 기능 구현
+1. routes폴더하위 user.js파일생성
+
+2. app.js에 user와연결할 라우터 추가 및 require 추가 
+
+![image](https://user-images.githubusercontent.com/82345970/177456819-e75274f8-79b5-49b1-ac40-15071d930a95.png)
+
+![image](https://user-images.githubusercontent.com/82345970/177457030-32fedef5-5849-43f0-b8f9-ede592c2e85b.png)
+
+### 37.2 팔로잉 기능구현(user.js)소스코드
+```js
+const express = require('express');
+
+//팔로우는 로그인한사람만 해야하니까 isLoggedIn
+const { isLoggedIn } = require('./middlewares');
+const User = require('../models/user');
+
+const router = express.Router();
+
+// POST /user/1/follow -> restapi를 따름
+router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
+  try {
+    const user = await User.findOne({ where: { id: req.user.id } });
+    if (user) {                                               //getFollowings -> 팔로잉가져오기
+      await user.addFollowings([parseInt(req.params.id, 10)]); // setFollowings -> 수정할수있음 
+      //addFollowings가 복수기 때문에 배열쓴다 []
+      res.send('success');
+    } else {
+      res.status(404).send('no user');
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+}); 
+
+module.exports = router;
+```
+
+### 37.3 팔로우,팔로잉 한 숫자 증가 기능
+
+![image](https://user-images.githubusercontent.com/82345970/177458485-bcbc5453-2592-490e-9c14-2cd8207ebe24.png)
+
+- views하위 layout.html소스코드랑 관련있음
+
+![image](https://user-images.githubusercontent.com/82345970/177458634-8b135268-7166-4d7e-9f5d-88c5ebc79638.png)
+
+- routes하위 page.js에서 작성한, 부분에 추가를 해줘야함
+- 사진에서 보이는부분에 추가를 해도 되지만,
+
+![image](https://user-images.githubusercontent.com/82345970/177458933-63f3c1da-9849-4273-8c26-036a07db432b.png)
+
+- user를 넣은것 처럼 위에 올려서 넣을수도 있다
+- 하지만 사진처럼 followerCount=0, 그부분이 0으로 되어있어서, 정보가 안들어가 있다 
+![image](https://user-images.githubusercontent.com/82345970/177459028-6eacc403-51c8-47d9-86d4-243f1670b5ce.png)
+
+- 하기사진처럼 page.js 부분 수정하자
+
+![image](https://user-images.githubusercontent.com/82345970/177460007-618e6cd5-3b39-4bb5-8655-6852e00d107d.png)
+
+### 37.4 팔로우,팔로잉 한 숫자 증가기능 코드설명
+
+![image](https://user-images.githubusercontent.com/82345970/177460007-618e6cd5-3b39-4bb5-8655-6852e00d107d.png)
+
+- 로그인한경우(req.user), 팔로우,팔로잉 수를 알려줌
+- followerIdList -> followingIdList가 변수명이 적합함
+- 팔로잉한사람들 리스트를 가져야하는 이유는, 팔로우하기버튼은 이미팔로우한사람은 안보여줘도 됨 -> 오히려 unfollow를 보여줘야함
+- 이런 경우가 있어서 followerIdList를 가지고 있어야함
+- req.user 어디서나왔을까? passport폴더하위 index.js에 있는 deserializeUser에서 나온다
+- passport폴더하위 index.js 수정해주자
+
+![image](https://user-images.githubusercontent.com/82345970/177463264-c447520b-e5ff-48c8-9ff3-833d7f1a32cc.png)
+
+- ** 결론 req.user는 deserializeUser에서 생성됨 **
+- 게시글을 가지고 오고 싶으면 하기사진처럼 추가해주면 됨
+
+![image](https://user-images.githubusercontent.com/82345970/177463675-8ac4111f-3b70-4220-b7b5-463cfc1ccd47.png)
+
+
+
+
 
 
