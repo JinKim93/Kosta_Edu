@@ -429,7 +429,161 @@ router.get('/test', async (req, res, next) => { // 토큰 테스트 라우터
 module.exports = router;
 ```
 
-### 14.9 토큰 재발급 받기
+### 14.9 토큰 재발급 받기(nodebird데이터 보내주는 라우터 코딩)
+- nodebird-api/v1.js 파일
+```js
+const express = require('express');
+const jwt = require('jsonwebtoken');
+
+const { verifyToken } = require('./middlewares');
+const { Domain, User, Post, Hashtag } = require('../models');
+
+const router = express.Router();
+
+router.post('/token', async (req, res) => {
+  const { clientSecret } = req.body;
+  try {
+    const domain = await Domain.findOne({
+      where: { clientSecret },
+      include: {
+        model: User,
+        attribute: ['nick', 'id'],
+      },
+    });
+    if (!domain) {
+      return res.status(401).json({
+        code: 401,
+        message: '등록되지 않은 도메인입니다. 먼저 도메인을 등록하세요',
+      });
+    }
+    const token = jwt.sign({
+      id: domain.User.id,
+      nick: domain.User.nick,
+    }, process.env.JWT_SECRET, {
+      expiresIn: '1m', // 1분
+      issuer: 'nodebird',
+    });
+    return res.json({
+      code: 200,
+      message: '토큰이 발급되었습니다',
+      token,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      code: 500,
+      message: '서버 에러',
+    });
+  }
+});
+
+router.get('/test', verifyToken, (req, res) => {
+  res.json(req.decoded);
+});
+
+router.get('/posts/my', verifyToken, (req, res) => {
+  Post.findAll({ where: { userId: req.decoded.id } })
+    .then((posts) => {
+      console.log(posts);
+      res.json({
+        code: 200,
+        payload: posts,
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({
+        code: 500,
+        message: '서버 에러',
+      });
+    });
+});
+
+router.get('/posts/hashtag/:title', verifyToken, async (req, res) => {
+  try {
+    const hashtag = await Hashtag.findOne({ where: { title: req.params.title } });
+    if (!hashtag) {
+      return res.status(404).json({
+        code: 404,
+        message: '검색 결과가 없습니다',
+      });
+    }
+    const posts = await hashtag.getPosts();
+    return res.json({
+      code: 200,
+      payload: posts,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      code: 500,
+      message: '서버 에러',
+    });
+  }
+});
+
+module.exports = router;
+```
+
+### 14.10 토큰 재발급 받기(nodecat/index.js)
+```js
+const express = require('express');
+const axios = require('axios');
+
+const router = express.Router();
+const URL = 'http://localhost:8002/v1';
+
+axios.defaults.headers.origin = 'http://localhost:4000'; // origin 헤더 추가
+const request = async (req, api) => {
+  try {
+    if (!req.session.jwt) { // 세션에 토큰이 없으면
+      const tokenResult = await axios.post(`${URL}/token`, {
+        clientSecret: process.env.CLIENT_SECRET,
+      });
+      req.session.jwt = tokenResult.data.token; // 세션에 토큰 저장
+    }
+    return await axios.get(`${URL}${api}`, {
+      headers: { authorization: req.session.jwt },
+    }); // API 요청
+  } catch (error) {
+    if (error.response.status === 419) { // 토큰 만료시 토큰 재발급 받기
+      delete req.session.jwt;
+      return request(req, api);
+    } // 419 외의 다른 에러면
+    return error.response;
+  }
+};
+
+router.get('/mypost', async (req, res, next) => {
+  try {
+    const result = await request(req, '/posts/my');
+    res.json(result.data);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.get('/search/:hashtag', async (req, res, next) => {
+  try {
+    const result = await request(
+      req, `/posts/hashtag/${encodeURIComponent(req.params.hashtag)}`,
+    );
+    res.json(result.data);
+  } catch (error) {
+    if (error.code) {
+      console.error(error);
+      next(error);
+    }
+  }
+});
+
+module.exports = router;
+```
+
+### 사용량 제한
+
+ 
 
 
 
