@@ -124,6 +124,331 @@ export default App;
 
 ### 21.3 AXOIS 라이브러리 설치 npm install axios --save (client 폴더 이동후 설치하자)
 
+### 22. requet를 서버에 임의로 보내기 test(componets/views/LandingPage.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178130268-c0534539-205b-4589-a9c5-3f51144e4a69.png)
+
+```js
+import React, { useEffect } from 'react';
+import axios from 'axios';
+
+
+function LandingPage() {
+
+    useEffect(() =>{
+        axios.get('/api/hello')//get request 서버에 보냄, endpoint/api.hello
+        //서버쪽 index.js에서 cleint에서 보낸거 받아줌
+        .then(response => console.log(response.data))//서버에서 response오는거 콘솔창으로 띄움
+    }, []) 
+
+  return (
+    <div>
+        LandingPage
+    </div>
+  )
+}
+
+export default LandingPage
+```
+
+
+### 22.2 cleint에서 requet한거 서버에받기 위한 소스코드작성(서버폴더이동(boiler)/index.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178130311-9082a5a0-fbd5-4e50-beaf-f907393264e5.png)
+
+```index.js
+const express = require('express');
+const app = express();
+
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const config = require('./config/key');
+const { auth } = require('./middleware/auth');
+const { User } = require('./models/User');
+
+
+//applicaion/x-www-form-urlencoded -> 이런 데이터분석해서 가져올수있게해줌
+app.use(bodyParser.urlencoded({extended: true}));
+//applicaion/json타입으로 된걸 분석해서 가져올수있게 해줌
+app.use(bodyParser.json());
+//쿠키파써 사용
+app.use(cookieParser());
+
+const mongoose = require('mongoose');
+mongoose.connect(config.mongoURI, {
+    useNewUrlParser: true, useUnifiedTopology: true
+}).then(() => console.log('mogodb connected'))
+  .catch(err => console.log(err))  
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+});
+
+//request 받는 라우터만듬
+//초기test용 client쪽 LandingPag.js
+app.get('/api/hello',(req,res)=>{
+
+    res.send("안녕하세요~")//메시지를 프론트에 전달함
+});
+
+//라우터 endpoint /register
+app.post('api/users/register',(req, res) => {
+    //회원가입할때 필요한 정보들을 client에서 가져오면
+    //그것들을 데이터베이스에 넣어줌 -> models/User.js를 가져와야함
+
+    //회원가입창에 있는 정보들 데이터베이스에 넣기위한 작업
+    /*
+    req.body 안에는 json형식으로
+    {
+        id: "jinkim",
+        password: "1234"
+    }   
+    이런식으로 req.body에 들어있는것이다.
+    이렇게 req.body에 들어있을수 있게해주는게 bodyParser가 있어서 가능함
+    */    
+    const user = new User(req.body);
+
+    //mongodb에서 오는 메소드
+    //req.body에서 온 정보가 user모델에 저장이 됨
+    //저장할때 에러가 있다고 하면, 클라이언트에 에러있다고 전달해줘야함
+    //전달할때 json형식으로 전달해주고, err 메시지도 전달
+    //성공을 할경우 status200을 json형식으로 전달
+    user.save((err, userInfo) => {
+        if(err) return res.json({ success: false, err})
+        return res.status(200).json({ 
+            sucess: true 
+        })
+    })
+
+})
+
+//로그인라우터
+app.post('api/users/login',(req, res) => {
+    //요청된 이메일을 데이터베이스에 있는지 찾는다
+    User.findOne({ email: req.body.email }, (err, user) => {
+        if(!user) {
+            return res.json({
+                loginSuccess: false,
+                message: "제공된 이메일에 해당하는 유저가 없습니다"
+            })
+        }
+        //요청된 이메일이 데이터베이스에 있다면 비밀번호가 맞는 비밀번호 인지 확인
+        //comparPassword라는 메소드를 만듬
+        user.comparePassword(req.body.password, (err, isMatch) => {
+            if(!isMatch)
+                return res.json({ loginSuccess: false, message: "비밀번호가 틀렸습니다"})
+            //비밀번호 까지 맞다면 토큰을 생성하기
+            //generateToken 매소드를 만들어줌 -> models/User.js에 만들어줘야함
+            user.generateToken((err, user) => {
+                if (err) return res.status(400).send(err);
+                    //토큰을 저장한다. 어디에? 쿠키, 로컬스토리지 등등
+                    //쿠키에 저장을할거다 npm install cookie-parser --save 패키지설치
+                    res.cookie("x_auth", user.token)
+                    .status(200)
+                    .json({ loginSuccess: true, userId: user._id })
+
+
+            })    
+
+        })
+    })
+})
+
+//Auth라우터생성
+//auth라는 미들웨어 추가
+//미들웨어란 엔드포인트에서(/api/users/auth) request를 받은다음에
+//(req, res)콜백function 하기 전에 중간에서 해주는역할
+app.get('/api/users/auth',auth,(req, res) => {
+    //여기까지 미들웨어를 통과해 왔다는 이야기는 Authentication이 True 라는 말
+    res.status(200).json({
+        _id: req.user._id,
+        //role 0 -> 일반유저 , role 0이 아니면 관리자
+        isAdmin: req.user.role === 0 ? false : true,
+        isAuth: true,
+        email: req.user.email,
+        name: req.user.name,
+        lastname: req.user.lastname,
+        role: req.user.role,
+        image:req.user.image
+    })    
+
+})
+
+//로그아웃 라우터
+//로그아웃 전에는 로그인된 상태니까 auth미들웨어 넣어줌
+app.get("/api/users/logout", auth, (req, res) => {
+    User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).send({
+      success: true,
+    });
+  });
+});
+    
+
+
+const port = 5000;
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+});
+```
+
+### 22.3 서버쪽 npm start, cleint 쪽 npm start
+
+
+### 22.4 오류발생
+
+![image](https://user-images.githubusercontent.com/82345970/178130249-2d4cd037-f279-421c-bbf1-3d46ae4c69fb.png)
+
+### 22.4 오류발생이유(CORS이슈)
+- 현재 설정으로 server는 포트 5000번, client는 포트 3000번 이다.
+- client가 요청을 보내도, 서로 포트가 달라서, server는 받지 못하고 있음
+- 사진에서 보는 origin는 server, client 각각 origin이다
+- proxy 사용으로 해결가능
+
+![image](https://user-images.githubusercontent.com/82345970/178130377-f3ff2c47-b9e3-4841-9a3f-b657b5bbafb4.png)
+
+### 22.4 오류해결(proxy이용하자)
+- react 공식문서 읽어보기 -> proxy관련
+- npm install http-proxy-middleware --save 설치
+- client폴더에 있는 src/setupProxy.js파일 생성하자
+
+### src/setupProxy.js파일 소스코드
+- 강의에서 하는대로 그대로 따라하면 안됨.
+
+
+![image](https://user-images.githubusercontent.com/82345970/178130492-d6f94c4c-ac9f-480a-8818-97d4a3235d3f.png)
+
+```js
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = function(app) {
+ app.use(
+ '/api',
+ createProxyMiddleware({
+ //프론트 3000번에서 데이터 줄때, target을 5000번으로 주겠다
+ target: 'http://localhost:5000',
+ changeOrigin: true,
+ }) );
+};
+```
+
+### 22.4 이슈해결 후, 클라이언트에서 요청 받으면 res.send로 잘 보내진게 보인다
+
+![image](https://user-images.githubusercontent.com/82345970/178130602-7c058c20-98e2-40cb-a8c7-812617fe62da.png)
+
+### 23. proxy서버란
+
+![image](https://user-images.githubusercontent.com/82345970/178130650-b076ab45-7480-4903-bb1f-cc734fc7b2ba.png)
+
+### 24. concurrently 이용해서, back,front 서버 한번에 켜기
+- 백,프론트 폴더 있는 최상위에서 npm install concurrently --save 패키지 설치
+
+![image](https://user-images.githubusercontent.com/82345970/178131035-b2beed4a-0507-40f8-aaba-260278b48a32.png)
+
+- 프로젝트구조가 boiler폴더/client/boiler2(서버) 이렇게 되있음
+- boiler로 디렉토리 이동 후 패키지설치, 그다음 package.json에서도 상기사진처럼 수정
+
+### 25. CSS Framwork사용하기(antd 사용하기)
+- client 디렉토리 이동 후 
+- 패키지 설치 npm install antd --save
+- https://ant.design/docs/react/introduce 공식사이트
+
+### 25.2 client폴더/src/index.js
+- antd 관련 모듈 import 
+
+![image](https://user-images.githubusercontent.com/82345970/178131174-3ba8c445-a3cd-4386-a3cc-a29d8b442135.png)
+
+### 26. redux란?
+- 상태 관리라이브러리
+- redux is a predictable state container for JavaScript apps
+- redux는 state를 관리해주는 tool라고 생각!!
+
+### 26. state란?
+
+![image](https://user-images.githubusercontent.com/82345970/178131213-9f6dee3e-9678-4b5c-b86b-b6abcec261f2.png)
+
+- props 처럼, 부모컴포넌트에서 자식컴포넌트한테 주는게 아니다.
+- 그냥 컴포넌트 안에서 이뤄짐
+- 데이터를 교환, 전달 할려면 state를 사용해야함
+- state은 컴포넌트에 안에서 value를 1에서 2로 변하게 할수 있다.
+- state이 1에서 2로 변하면 re-render 된다
+
+### 26. Props란?
+
+![image](https://user-images.githubusercontent.com/82345970/178131240-4da55426-f0d0-44a3-be8e-0a6341a2879f.png)
+
+- 하나의 부모컴포넌트가 있고, 자식컴포넌트가 부모 컴포넌트에 들어갈수 있다 
+- 컴포넌트간 무엇인가 주고받을때에는 prop을 이용해줘야함
+- prop은 소통하는 방식이, 부모 -> 자식, 위에서 아래로만 소통이 가능하다
+- 부모컴포넌트에서, 자식컴포넌트한테 1이라는 value를 주었을때, 자식컴포넌트안에 있는 value 1은 변할수가 없다(불변 -> immutable)
+- 변경을 할려면, 부모컴포넌트에서 값을 다시 내려줘야지 변경할수 있다. 
+
+
+### 27. redux 패키지설치(client 디렉토리)
+- npm install redux react-redux redux-promise redux-thunk --save
+- redux-promise, redux-thunk는 react에서 redux를 잘 사용할수있게 해주는 미들웨어다
+
+### 28. redux 모듈 추가 및 시작하기(client폴더하위/src/index.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178131932-9c9442f6-56e6-4d58-b2c4-67fa9a50bf1c.png)
+
+### 28.2 src폴더하위/_reducers폴더하위에 index.js파일생성
+- 현재 작성 기준에서 user는 없어서 주석처리 해줌
+
+![image](https://user-images.githubusercontent.com/82345970/178132007-c99a6c8e-49a4-458b-887c-9be49160b247.png)
+
+
+### 28.3 상기에 작성한 코드 import해주기(client폴더하위/src/index.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178132108-e47c536d-6f9a-4fe6-94fc-fba9c34d20d6.png)
+
+
+### 28.4 reudx extension 다운로드
+- 크롬에서 redux extension 검색 후 다운로드
+
+### 28.5 redux extension 쓰기 위해서 소스코드 추가(client폴더하위/src/index.js) 어플리케이션에 redux 연결
+
+![image](https://user-images.githubusercontent.com/82345970/178132162-3f6d638f-dd81-42e9-82f3-3b70f0cf6f59.png)
+
+
+### 로그인페이지 만들기
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
