@@ -509,6 +509,13 @@ ReactDOM.render(
 //serviceWorker.unregister();
 ```
 
+### 오류해결된 소스코드 /src/index.js
+- 표시한 부분 문제
+
+![image](https://user-images.githubusercontent.com/82345970/178133827-c63904e1-65f7-403d-9bcf-6a66bf12449d.png)
+
+
+
 
 
 
