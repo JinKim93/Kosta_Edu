@@ -413,7 +413,102 @@ module.exports = function(app) {
 ![image](https://user-images.githubusercontent.com/82345970/178132162-3f6d638f-dd81-42e9-82f3-3b70f0cf6f59.png)
 
 
-### 로그인페이지 만들기
+### 28.6 28.5까지 진행했을때 오류 생성
+
+![image](https://user-images.githubusercontent.com/82345970/178133372-bb8e71cd-2c96-4a34-8230-15559840d9b4.png)
+
+- 처음코드로 하면 안됨 -> 버전이 달라서 ??? createStore도 사진처럼 나옴
+
+![image](https://user-images.githubusercontent.com/82345970/178133412-258098b4-d550-48ec-b079-7c351cb5d33e.png)
+
+- 처음코드로 해서 실행하면 오류는 안나옴 하지만 localhost에 아무것도 안나옴 
+
+![image](https://user-images.githubusercontent.com/82345970/178133441-6ea5b1ea-71a0-47d0-bc47-eb31bec7030d.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178133467-3f8ad994-8ecb-45c4-9ab2-6a22558fd866.png)
+
+
+- 두번째 코드로 실행시 나오는 화면 
+
+![image](https://user-images.githubusercontent.com/82345970/178133455-276bbc0a-aaa1-4928-841e-a298c03e02a1.png)
+
+
+
+- 두번째코드는 됨 
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import 'antd/dist/antd.min.css';
+//import 'antd/dist/antd.css';
+import { applyMiddleware, createStore} from 'redux';
+import promiseMiddleware from 'redux-promise';
+import ReduxThunk from 'redux-thunk';
+import Reducer from './_reducers';
+
+
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,ReduxThunk)(createStore)
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+   <React.StrictMode>
+     <Provider>
+       store={createStoreWithMiddleware(Reducer,
+           window.__REDUX_DEVTOOLS_EXTENSION__ &&
+           window.__REDUX_DEVTOOLS_EXTENSION__()
+
+         )}
+    
+
+    <App />
+    </Provider>
+    
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+```
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+//import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+//import 'antd/dist/antd.css'; 이걸로 쓰면 안됨 
+import 'antd/dist/antd.min.css';
+import { applyMiddleware, createStore } from 'redux';
+import promiseMiddleware from 'redux-promise';
+import ReduxThunk from 'redux-thunk';
+import Reducer from './_reducers';
+
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore)
+
+ReactDOM.render(
+    <Provider
+        store={createStoreWithMiddleware(Reducer,
+            window.__REDUX_DEVTOOLS_EXTENSION__ &&
+            window.__REDUX_DEVTOOLS_EXTENSION__()
+        )}
+    >
+        <App />
+    </Provider>
+    , document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+//serviceWorker.unregister();
+```
+
 
 
 
