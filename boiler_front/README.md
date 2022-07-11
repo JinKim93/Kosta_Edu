@@ -732,7 +732,7 @@ export default LoginPage
 
 ![image](https://user-images.githubusercontent.com/82345970/178196192-b1760710-f218-4431-8fac-e8c989a8dec7.png)
 
-- props을 Loginpage()인자에 넣어줘야함
+- props을 Loginpage()매개변수에 넣어줘야함
 
 ![image](https://user-images.githubusercontent.com/82345970/178196255-c26e2330-e3fa-4e56-9bd9-26d1a9de1948.png)
 
