@@ -715,6 +715,31 @@ export default LoginPage
 
 ![image](https://user-images.githubusercontent.com/82345970/178193975-0df935b3-f850-4981-bab1-4f07887bba61.png)
 
+### 31.11 오류발생
+
+![image](https://user-images.githubusercontent.com/82345970/178195225-460b442c-57a4-4a17-9aa1-83c13e1ac8c6.png)
+
+### 31.12 오류원인 및 해결
+- \_reducers/index.js 보면 user에 대해서 선언을 안해줌 -> 주석해제해야함
+
+![image](https://user-images.githubusercontent.com/82345970/178195356-6999ba8f-ecea-45f0-9b72-12eceac4feb2.png)
+
+### 31.13 user_reducer.js 코드수정
+
+![image](https://user-images.githubusercontent.com/82345970/178195553-4a9e9329-d598-4901-857f-2821d1642488.png)
+
+### 31.14 로그인 후 처음메인페이지(Landingpage.js)로 이동시켜주기 -> Loginpage.js 소스코드수정
+
+![image](https://user-images.githubusercontent.com/82345970/178196192-b1760710-f218-4431-8fac-e8c989a8dec7.png)
+
+- props을 Loginpage()인자에 넣어줘야함
+
+![image](https://user-images.githubusercontent.com/82345970/178196255-c26e2330-e3fa-4e56-9bd9-26d1a9de1948.png)
+
+
+
+
+
 
 
 
