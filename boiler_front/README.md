@@ -514,6 +514,239 @@ ReactDOM.render(
 
 ![image](https://user-images.githubusercontent.com/82345970/178133827-c63904e1-65f7-403d-9bcf-6a66bf12449d.png)
 
+### 29. 로그인페이지구현(Landingpage.js)코드수정 -> 메인페이지변경
+- 하기부분 수정했음
+
+![image](https://user-images.githubusercontent.com/82345970/178175720-bb80189e-ddb6-4eb2-b44f-aa27396f8e6e.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178175804-f1b32460-2043-49da-bdda-2d1880188079.png)
+
+
+```js
+import React, { useEffect } from 'react';
+import axios from 'axios';
+
+
+function LandingPage() {
+
+    useEffect(() =>{
+        axios.get('/api/hello')//get request 서버에 보냄, endpoint/api.hello
+        //서버쪽 index.js에서 cleint에서 보낸거 받아줌
+        .then(response => console.log(response.data))//서버에서 response오는거 콘솔창으로 띄움
+    }, []) 
+
+  return (
+    <div style={{ display:'flex', justifyContent: 'center', alignItems: 'center'
+                  , width: '100%', height: '100vh'
+    }}>
+        <h2>시작 페이지</h2>
+    </div>
+  )
+}
+
+export default LandingPage
+```
+
+
+### 30. 로그인페이지구현(LoginPage.js)
+- 아직까지 메인페이지(LandingPage)에서 login페이지로 넘어가는게 구현 안되있어서,
+- url에서 localhost:3000/login으로 들어가자
+
+![image](https://user-images.githubusercontent.com/82345970/178176328-ab357af9-7804-4e34-949a-4c395ac8ec6d.png)
+
+### 30.2 로그인페이지구현 초반부분(LoginPage.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178176465-0ea011fa-6d67-4d7e-b64e-288f4420735e.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178176507-42068878-3ead-4cd2-b390-bd77daaf62e0.png)
+
+
+### 30.3 로그인페이지구현 초반부분(LoginPage.js)
+- 현재까지 만든창에 타이핑을해도 입력 안됨
+
+![image](https://user-images.githubusercontent.com/82345970/178176747-c1885a9d-e4cb-4b99-b40b-c9234ed49d19.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178176799-408c0501-a180-4d8f-a231-6394776c8457.png)
+
+### 30.4 로그인페이지구현 초반부분(LoginPage.js) 
+
+![image](https://user-images.githubusercontent.com/82345970/178178638-15cb0cc5-41e2-4aaa-91bb-13ea1d44fde9.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178178731-e855e654-8dc1-4bed-baab-d9c248928dfb.png)
+
+```js
+import React, { useState } from 'react'
+
+function LoginPage() {
+
+  //onChange변화주기 위해 state 구성
+  //처음에는 빈칸이므로("")로 표현해줌
+  const [Email, setEmail] = useState("")
+  const [Password, setPassword] = useState("")
+
+  const onEmailHandler = (event) => {
+
+    setEmail(event.currentTarget.value)
+
+  }
+
+  const onPasswordHandler = (event) => {
+    setPassword(event.currentTarget.value)
+  }
+
+  return (
+    <div style={{ display:'flex', justifyContent: 'center', alignItems: 'center'
+                  , width: '100%', height: '100vh'
+    }}>
+
+        <form style = {{ display:'flex', flexDirection:'column'}}>
+            <label>Email</label>
+            <input type="email" value = {Email} onChange = {onEmailHandler} />
+            <label>Password</label>
+            <input type="password" value = {Password} onChange = {onPasswordHandler} />
+            <br />
+            <button>
+                Login
+            </button>
+        </form>
+    </div>
+
+      
+  )
+}
+
+export default LoginPage
+```
+
+### 30.4 로그인페이지구현 초반부분(LoginPage.js) 
+
+![image](https://user-images.githubusercontent.com/82345970/178180090-c44e7d4c-65a8-4fc3-976c-d1d9754871b8.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178180430-3f5bf9c2-b0e2-4a58-b0af-9c802156bbc9.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178180694-3cbad497-02d1-4305-a63f-3261a3ed2382.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178180649-517b406b-e26a-46d9-b72a-766740aefa29.png)
+
+
+### 30.4 로그인페이지구현 -> 서버쪽에 데이터보내기
+
+
+### 30.5 로그인페이지 로직
+- 서버로 보낼대는 Axios를 이용 -> post라는 http메소드를이용 Axios.post('/api/users/login',Email,Password) -> 이런식으로 넣어줌
+
+![image](https://user-images.githubusercontent.com/82345970/178181788-e6c2403d-d2bc-4588-90b5-6f4ac8751326.png)
+
+- 서버쪽 index.js를 보면, 로그인을위한 api 등등 만들어 놓음 -> 여기다 보내는거다(하기사진 서버쪽 index.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178181428-3b8588f7-efe5-4825-ac9c-88d702754df8.png)
+
+- 이메일을 받은걸 찾을것이다(하기사진 서버쪽 index.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178181547-834175df-2ef6-464a-98b5-655ea34c211b.png)
+
+- 이메일이 있으면, 비밀번호가 맞는지 확인(하기사진 서버쪽 index.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178181607-7b06ce3a-bfc0-474c-9dc8-b64b003b5c12.png)
+
+- 맞으면, 토큰생성 후 cookiel에 저장을 한 후, 클라이언트에 로그인성공 전달
+
+![image](https://user-images.githubusercontent.com/82345970/178181683-5e5a283b-f05a-4b6d-953a-4c9957530c2c.png)
+
+- 전해진걸 response로 받은 다음, 함수 안에서 처리할거 처리하면 됨(LoginPage.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178181859-b74ccd4d-2893-41eb-b68b-8c45e1be59c3.png)
+
+### 하지만 필자는 redux를 사용할 것이다
+
+### 31. 로그인페이지(LoginPage.js)
+- Dispatch 모듈 import
+
+![image](https://user-images.githubusercontent.com/82345970/178189578-18dcecca-c5a3-4e2f-84fd-951ddfaa979d.png)
+
+
+### 31.2 Redux 데이터 Flow
+
+![image](https://user-images.githubusercontent.com/82345970/178189514-796f491d-d731-4336-9b14-f26a0db9c784.png)
+
+### 31.3 Redux사용하는 과정(Loginpage.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178190137-655b4880-0b5f-4fff-9a7a-002a00b35b46.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178190442-5780cd7a-bdd2-4d7c-a76e-cd802a146c46.png)
+
+- loginUser만들지 않았는대, _actions폴더 안에 user_action.js 파일생성
+
+### 31.4 user_action.js 설정
+- 사진에 보면 오타 있음 reponse -> response로 바꿔야함
+
+![image](https://user-images.githubusercontent.com/82345970/178191405-a8e3d7be-6f5b-4349-abb2-e9f9c7e7036b.png)
+
+
+### 31.5 user_action.js Reducer로 보내는 방법 
+- _reducers/user_action.js파일로 이동
+
+- Reducer는 전 state하고, action(현재)을 nextstate
+![image](https://user-images.githubusercontent.com/82345970/178191735-f2504c83-48a1-4144-8860-3cc6b9e0c239.png)
+
+### 31.6 _actions/types.js파일생성
+- type: "LOGIN_USER" 이런 type을 관리하기 위한 파일생성
+- type을 따로 지정해줌(types.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178192825-0145a2b9-d40d-41c6-aaa5-97413981c54b.png)
+
+- user_action.js 코드 수정
+
+![image](https://user-images.githubusercontent.com/82345970/178192662-a8c2f653-1750-45d1-93ff-0a59239027f7.png)
+
+### 31.7 _reducers/user_reducer.js에서도 type을 types.js에서 가져오게 import
+
+![image](https://user-images.githubusercontent.com/82345970/178192988-749b4e53-d7c4-44cf-b4a4-d5e389cd9379.png)
+
+### 31.8 user_reducer.js 코드수정
+
+![image](https://user-images.githubusercontent.com/82345970/178193447-a5db7932-e7bf-4cf1-8059-a6a14f6a68ac.png)
+
+### 31.9 Login[age.js 코드수정
+
+![image](https://user-images.githubusercontent.com/82345970/178193702-7958763f-12e7-448b-815d-f41e210127d7.png)
+
+### 31.10 user_action.js 코드수정
+
+![image](https://user-images.githubusercontent.com/82345970/178193975-0df935b3-f850-4981-bab1-4f07887bba61.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
