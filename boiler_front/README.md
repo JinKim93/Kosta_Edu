@@ -737,6 +737,7 @@ export default LoginPage
 ![image](https://user-images.githubusercontent.com/82345970/178196255-c26e2330-e3fa-4e56-9bd9-26d1a9de1948.png)
 
 
+### 32.1 회원가입페이지 만들기(RegisterPage.js)
 
 
 
