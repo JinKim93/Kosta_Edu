@@ -740,6 +740,115 @@ export default LoginPage
 ### 32.1 회원가입페이지 만들기(RegisterPage.js)
 
 
+### 33. 로그아웃 기능(LandingPage.js)
+
+![image](https://user-images.githubusercontent.com/82345970/178386389-5f9e35ab-5188-42ab-8dd0-c40e9baaa9e7.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178386584-efcf0810-e6d3-40f7-b5de-2b7f4c442e3a.png)
+
+### 33.2 로그아웃 성공하면 로그인페이지 창으로 넘어가게 설정
+
+![image](https://user-images.githubusercontent.com/82345970/178387016-b3a609e7-fab8-45d0-b71c-385e59bbb9f5.png)
+
+
+### 34. 인증체크
+
+![image](https://user-images.githubusercontent.com/82345970/178387144-06a7e46d-31a5-464c-8e94-3ad8f504e317.png)
+
+###  34.2 HOC란(Higher Order Compoent)?
+- function
+- 다른 컴포넌트를 받은 다음에, 새로운 컴포넌트를 리턴하는 함수이다.
+
+![image](https://user-images.githubusercontent.com/82345970/178387312-c91ead03-6f8c-49df-85e5-3c77dc8e6ae0.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178387839-e354a07a-c046-42ac-beba-9fd8c5f8b299.png)
+
+![image](https://user-images.githubusercontent.com/82345970/178388047-e8c25c3a-730f-4839-b4b9-d77c42f2333c.png)
+
+
+### 34.3 HOC 로직
+- client폴더에 APP.js를 가보면, 페이지가 3개가 있다
+
+![image](https://user-images.githubusercontent.com/82345970/178388258-3c0e015a-1fc6-4b85-bc25-42dc118a5a90.png)
+
+- Landing Page를 Auth(HOC)에 넣으면, Auth(HOC)는 백엔드에 request를 날린다
+- 현재 Landing Page에 들어와있는 상태정보를 Auth(HOC)로 가지고 온다 ->상태정보: 로그인 되있는유저인지, admin유저인지, 로그인 안되있는지 등등
+- 즉 Auth(HOC)에서 상태정보를 가지고 왔으니까, Landingpage 같은경우 아무나들어갈수 있으니까, 이사람들어와도 좋다라고 인지함
+- 근데 만약 Admin페이지라고 하면, Auth(HOC)에서 요청을 날리고, 상태를 가지고옴, admin이 아닐경우 판단을 해서 다른대로 페이지로 돌림
+
+![image](https://user-images.githubusercontent.com/82345970/178389079-f8e643f9-f985-4c99-a224-f6ff1f9e30a9.png)
+
+### 34.4 client/hoc/auth/js 파일생성 및 코드작성
+- 사진에서 표시한 부분 _actions/user_atcion.js에서 만들어줄거다 34.5에서
+
+![image](https://user-images.githubusercontent.com/82345970/178392535-e7cfed27-9f2a-4fbc-854c-a49ac08be1f2.png)
+
+
+```js
+import Axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { auth } from "../_actions/user_action";
+
+export default function (SpecificComponet, option, adminRoute = null) {
+  function AuthenticationCheck(props) {
+    //1. Auth(HOC) -> request -> Back end -> 상태정보 받아옴
+
+    useEffect(() => {
+      const dispatch = useDispatch();
+
+      dispatch(auth());
+
+      Axios.get("/api/users/auth");
+    });
+  }
+
+  return AuthenticationCheck;
+}
+```
+
+### 34.5 _actions/user_action.js 파일에 하기코드 추가
+
+![image](https://user-images.githubusercontent.com/82345970/178390432-2f090562-d171-4e92-9c8b-26721a466b65.png)
+
+- 추가한 AUTH_USER _actions/types.js에서 정의를 해줘야함 -> 34.6에서 진행
+
+![image](https://user-images.githubusercontent.com/82345970/178390537-c1f3f2d1-b08b-4ae7-9a30-ff6df5274b1d.png)
+
+### 34.6 _actions/types.js 코드추가
+
+![image](https://user-images.githubusercontent.com/82345970/178390779-3f556d36-2337-4976-afcd-d8be9d2b14c9.png)
+
+### 34.7 34.6에서 추가한 AUTH_USER -> _reducers/user_reducer.js에 import하기
+
+![image](https://user-images.githubusercontent.com/82345970/178391022-8422556c-3dca-4e10-a7d6-da937cf72912.png)
+
+### 34.8 _actions/user_action.js
+- 하기부분 변경
+
+![image](https://user-images.githubusercontent.com/82345970/178391510-82ef510b-3012-4aed-877a-02493a2c7f03.png)
+
+### 34.9 _reducers/user_reducer.js
+
+![image](https://user-images.githubusercontent.com/82345970/178391785-80be09b2-9ac8-459c-b838-239f4741f86b.png)
+
+- userdata로 명시를 한 이유는 노드서버(index.js)가보면, app.get('api/users/auth') 부분에
+
+![image](https://user-images.githubusercontent.com/82345970/178391958-0bcf1850-ef7d-4622-b779-30691d1ebd1d.png)
+
+- user정보를 클라이언트에 전달을 해주고 있다. 클라이언트(user_reducer.js)에 있는 action.payload에 서버에서 전달받은 user의 모든정보 들어있음
+- 그래서 userdata로 이름을 해주었음
+
+
+### 35. AUTH(HOC)에 다른컴포넌트 넣어주는 방법 
+- 클라이언트 폴더 -> App.js로 이동
+
+
+
+
+
+
+
 
 
 
