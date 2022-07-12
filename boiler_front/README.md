@@ -841,7 +841,37 @@ export default function (SpecificComponet, option, adminRoute = null) {
 
 
 ### 35. AUTH(HOC)에 다른컴포넌트 넣어주는 방법 
-- 클라이언트 폴더 -> App.js로 이동
+- 클라이언트 폴더 -> App.js로 이동 
+- React버전 달라서, 강의랑은 다르게 작성 함 
+
+![image](https://user-images.githubusercontent.com/82345970/178396757-3112bfd3-50d0-43a2-a7a4-1e1054adff7c.png)
+
+```js
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import LandingPage from "./components/views/LandingPage/LandingPage";
+import LoginPage from "./components/views/LoginPage/LoginPage";
+import RegisterPage from "./components/views/RegisterPage/RegisterPage";
+import Auth from "./hoc/auth";
+
+function App() {
+  const NewLandingPage = Auth(LandingPage, null);
+  const NewLoginPage = Auth(LoginPage, false);
+  const NewRegisterPage = Auth(RegisterPage, false);
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<LandingPage />} />
+
+        <Route exact path="/login" element={<LoginPage />} />
+
+        <Route exact path="/register" element={<RegisterPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+```
 
 
 
