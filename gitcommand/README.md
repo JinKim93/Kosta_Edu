@@ -36,3 +36,48 @@
 
 ![image](https://user-images.githubusercontent.com/82345970/179450778-fd340d76-a85a-43e2-9452-485f4c3a2627.png)
 
+### jinkim branch 생성
+- git branch jinkim
+
+### branch 목록확인
+- git branch
+
+### branch jinkim -> main으로 이동하기
+- git switch main
+
+### branch main -> jinkim으로 이동하기
+- git switch jinkim
+
+### branch 삭제하기
+- git branch -d (삭제할 브랜치명)
+
+### branch 이름바꾸기
+- git branch -m (기존 브랜치명) (새 브랜치명)
+
+## merge VS rebase
+
+### merge
+
+![image](https://user-images.githubusercontent.com/82345970/179452518-429d2df2-6f57-4803-8b37-418c093e8295.png)
+
+### rebase
+
+![image](https://user-images.githubusercontent.com/82345970/179452689-fa6d0841-a223-41e2-a28b-64af45cc15e6.png)
+
+### jinkim 브랜치를 main브랜치로 merge
+1. main브랜치도 이동
+2. git merge jinkim
+
+### merge는 reset으로 되돌리기 가능 
+
+### 병합된 브랜치삭제
+- git branch -d jinkim
+
+### merge 중단하기
+- git merge --abort
+
+
+
+
+
+
