@@ -18,3 +18,61 @@
 
 ![image](https://user-images.githubusercontent.com/82345970/182526037-5b2f463c-23e5-4846-a44c-f09c5ac045cd.png)
 
+## 함수정의호출
+```java
+package ch03;
+
+public class FunctionTest {
+	
+	//반환해줄 데이터타입 int
+	//매개변수 int num1, int num2 -> 매개변수 2개 받음
+	//함수이름 addNum 
+	public static int addNum(int num1, int num2 ) {
+		
+		int result;
+		result = num1 + num2;
+		return result;
+		
+	}
+	//반환해줄값없음 -> void
+	//매개변수 String greeting
+	//함수이름 sayHello
+	
+	public static void sayHello(String greeting) {
+		
+		System.out.println(greeting);
+		
+	}
+	//반환해줄 데이터타입 int
+	//배개변수 없음
+	//함수이름 calcSum
+	public static int calcSum() {
+		
+		int sum = 0;
+		int i;
+		for(i = 0; i <=100; i++) {
+			
+			sum+= i;
+			
+		}
+		return sum;
+		
+		
+	}
+
+	public static void main(String[] args) {
+		
+		int n1 = 10;
+		int n2 = 20;
+		
+		int total = addNum(n1, n2); //addNum함수는 반환해줄값 있어서 total로 받아줌
+		System.out.println(total);
+		
+		sayHello("안녕하세요");
+		
+		total = calcSum();
+		System.out.println(total);
+		
+	}
+}
+```
