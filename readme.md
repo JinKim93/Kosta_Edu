@@ -139,4 +139,3 @@
 * [생성자](https://github.com/JinKim93/TIL/blob/master/JAVA/7.%EC%83%9D%EC%84%B1%EC%9E%90.md)
 * [오버로딩](https://github.com/JinKim93/TIL/blob/master/JAVA/8.%EC%98%A4%EB%B2%84%EB%A1%9C%EB%94%A9.md)
 * [함수정의호출](https://github.com/JinKim93/TIL/blob/master/JAVA/9.%ED%95%A8%EC%88%98%EC%A0%95%EC%9D%98%ED%98%B8%EC%B6%9C.md)
-* [함수 vs 메서드(method)](https://github.com/JinKim93/TIL/blob/master/JAVA/10.%ED%95%A8%EC%88%98%20vs%20%EB%A9%94%EC%84%9C%EB%93%9C(method).md)
