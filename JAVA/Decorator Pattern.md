@@ -124,5 +124,8 @@ public class Main {
 ### 출력결과
 ![image](https://user-images.githubusercontent.com/82345970/188341624-948cadc9-3b4e-44b8-8b4f-e065ef2dd8cf.png)
 
+# 결론
+#### 기본베이스를 두고, 등급이 올라갈때마다 가격이 올라가게끔, 데코레이팅을 함
+#### 기본뼈대는 건들지 않고, 부가적인 첨가를 하면서, 속성을 변하시키는것 -> 데코레이터패턴
 
 
