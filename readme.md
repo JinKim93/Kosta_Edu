@@ -202,3 +202,10 @@
 * [Proxy Pattern](https://github.com/JinKim93/TIL/blob/master/JAVA/Proxy%20Pattern.md)
 * [Strategy pattern](https://github.com/JinKim93/TIL/blob/master/JAVA/Strategy%20pattern.md)
 
+# WEB개발
+* [웹개발이란](https://github.com/JinKim93/TIL/blob/master/Web/%EC%9B%B9%EA%B0%9C%EB%B0%9C%EC%9D%B4%EB%9E%80.md)
+* [HTTP](https://github.com/JinKim93/TIL/blob/master/Web/HTTP%20Protocol.md)
+* [RESTAPI](https://github.com/JinKim93/TIL/blob/master/Web/REST.md)
+* [URI설계패턴](https://github.com/JinKim93/TIL/blob/master/Web/URI%EC%84%A4%EA%B3%84%ED%8C%A8%ED%84%B4.md)
+
+
