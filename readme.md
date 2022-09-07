@@ -186,7 +186,7 @@
 * [문자단위입출력스트림](https://github.com/JinKim93/TIL/blob/master/JAVA/56.%EB%AC%B8%EC%9E%90%EB%8B%A8%EC%9C%84%EC%9E%85%EC%B6%9C%EB%A0%A5%EC%8A%A4%ED%8A%B8%EB%A6%BC.md)
 * [보조스트림](https://github.com/JinKim93/TIL/blob/master/JAVA/57.%EB%B3%B4%EC%A1%B0%EC%8A%A4%ED%8A%B8%EB%A6%BC.md)
 * [보조스트림2](https://github.com/JinKim93/TIL/blob/master/JAVA/58.%EB%B3%B4%EC%A1%B0%EC%8A%A4%ED%8A%B8%EB%A6%BC2.md)
-* [직렬화](https://github.com/JinKim93/TIL/blob/master/JAVA/59.%EC%A7%81%EB%A0%AC%ED%99%94.md
+* [직렬화](https://github.com/JinKim93/TIL/blob/master/JAVA/59.%EC%A7%81%EB%A0%AC%ED%99%94.md)
 * [여러가지 입출력클래스들](https://github.com/JinKim93/TIL/blob/master/JAVA/60.%EC%97%AC%EB%9F%AC%EA%B0%80%EC%A7%80%20%EC%9E%85%EC%B6%9C%EB%A0%A5%ED%81%B4%EB%9E%98%EC%8A%A4%EB%93%A4.md)
 * [데코레이터패턴](https://github.com/JinKim93/TIL/blob/master/JAVA/61.%EB%8D%B0%EC%BD%94%EB%A0%88%EC%9D%B4%ED%84%B0%ED%8C%A8%ED%84%B4.md)
 * [Thread만들기](https://github.com/JinKim93/TIL/blob/master/JAVA/62.Thread%EB%A7%8C%EB%93%A4%EA%B8%B0.md)
