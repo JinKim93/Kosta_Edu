@@ -1,0 +1,286 @@
+## AOP(Aspect Oriented Programming) 관점지향프로그램
+#### 스프링 어플리케이션은 대부분 특별한 경우를 제외하고는 MVC 웹어플리케이션에서는 Web Layer, Business Layer, Data Layer로 정의
+#### 메서드, 특정구역 반복되는로직, 한곳으로 몰아서 코딩하게 해줌<br></br>
+
+### Web Layer : REST API를 제공하며, Client중심의 로직적용
+### Business Layer : 내부정책에 따른 logic를 개발하며, 주로 해당 부분을 개발
+### Data Layer : 데이터베이스 및 외부와의 연동을 처리<br></br>
+
+## 횡단관심
+### 로깅이나 예외, 트랜잭션 처리 같은 코드같이 비지니스 컴포넌트에 공통적으로 추가되고 실행되어야 하는 코드들
+![image](https://user-images.githubusercontent.com/82345970/189803945-01380cb8-2f36-4b82-b682-30d6e5bb9caa.png)<br></br>
+
+
+## 주요 Annotation
+![image](https://user-images.githubusercontent.com/82345970/189803599-dd29fc68-f060-4252-8657-abcbe489b4f2.png)<br></br>
+
+
+## MVC(모델-뷰-컨트롤러)
+#### 사용자 인터페이스, 데이터 및 논리 제어를 구현하는데 널리 사용되는 소프트웨어 디자인 패턴<br></br>
+
+## AOP예제
+### 메서드에 들어가는 parameter,argument의 로그를 찍어서, 이메서드가 실행될때, 어떠한 값이들어갔고, 메서드가 끝났을때
+### 어떠한 값이 리턴이 되는지 확인해보자<br></br>
+
+### 1.스프링프로젝트생성 -> dependencies추가
+![image](https://user-images.githubusercontent.com/82345970/189804580-175d1c9b-6084-4da1-8fc4-a9727ef794a1.png)
+
+### 2. controller패키지생성 -> RestApiController클래스생성
+### 2-1 dto패키지생성 -> User클래스생성
+```java
+package com.example.aop.controller;
+
+import com.example.aop.dto.User;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api")
+public class RestApiController {
+
+    @GetMapping("/get/{id}")
+    public void get(@PathVariable Long id, @RequestParam String name){
+        System.out.println("get method");
+        System.out.println("get method : "+id);
+        System.out.println("get method : "+name);
+
+    }
+
+    @PostMapping("/post")
+    //클래스객체없어서 dto패지키생성
+    public void post(@RequestBody User user){
+        System.out.println("post method : "+user);
+
+    }
+
+}
+```
+```java
+package com.example.aop.dto;
+
+public class User {
+    private String id;
+    private String pw;
+    private String email;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPw() {
+        return pw;
+    }
+
+    public void setPw(String pw) {
+        this.pw = pw;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", pw='" + pw + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+}
+```
+
+### 3. Telend API Tester(확장프로그램)확인해보기
+![image](https://user-images.githubusercontent.com/82345970/189806269-b8deb9eb-809c-4aa8-8213-8a8fb7e9ef8f.png)
+![image](https://user-images.githubusercontent.com/82345970/189806420-03b62068-9682-49a3-9017-f61e81b591e9.png)
+
+### 4.RestApiController클래스보면 메서드마다 API가 적던가, 엄청 많을수 있다 -> 각메서드 로그찍는부분 한곳으로 모아놓을거다
+![image](https://user-images.githubusercontent.com/82345970/189807711-c1bc22f0-7f04-4ace-aebf-4b58e01c62ae.png)
+
+### 4-2 aop패키지생성 -> ParameterAop클래스생성
+```java
+package com.example.aop.aop;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
+
+@Aspect //aop로 동작하기위해서
+@Component //스프링에서관리 하기위해
+public class ParameterAop {
+
+    //룰설정 -> 어디에적용시킬건지 -> com.example.aop프로젝트에 controller패키지 하위에 있는
+    //모든메서드를 aop로 보겠다 -> 인터넷검색해서 찾아보자
+    @Pointcut("execution(* com.example.aop.controller..*.*(..))")
+    private void cut(){}
+
+    //메서드가 실행되기전에 넘어가는 argument가 뭔지 확인
+    //언제실행을 시킬거냐?
+    @Before("cut()")
+    public void before(JoinPoint joinPoint){
+        Object[] args = joinPoint.getArgs();
+       
+
+        for(Object obj : args) {
+            System.out.println("type : " +obj.getClass().getSimpleName());
+            System.out.println("value : "+obj);
+        }
+
+    }
+
+    //받고싶은객체의 이름을 넣어주면 됨 -> returnObj
+    @AfterReturning(value = "cut()",returning = "returnObj")
+    public void afterReturn(JoinPoint joinPoint, Object returnObj) {
+        System.out.println("return obj");
+        System.out.println(returnObj);
+
+    }
+
+
+}
+```
+### 4-3 RestApiController클래스 수정
+#### return id+ " "+name; return user; 이부분 수정함
+```java
+package com.example.aop.controller;
+
+import com.example.aop.dto.User;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api")
+public class RestApiController {
+
+    @GetMapping("/get/{id}")
+    public String get(@PathVariable Long id, @RequestParam String name){
+        System.out.println("get method");
+        System.out.println("get method : "+id);
+        System.out.println("get method : "+name);
+        return id+ " "+name;
+
+    }
+
+    @PostMapping("/post")
+    //클래스객체없어서 dto패지키생성
+    public User post(@RequestBody User user){
+        System.out.println("post method : "+user);
+        return user;
+
+    }
+
+}
+```
+### 4-4 Talend에서 post부터 확인 -> 스프링시작 후 Telend에서 send눌러서 확인
+![image](https://user-images.githubusercontent.com/82345970/189810006-58c59668-7aca-4275-ac73-11a450f090a9.png)
+
+### 4-4 Talend에서 post부터 확인 -> 스프링시작 후 Telend에서 send눌러서 확인
+![image](https://user-images.githubusercontent.com/82345970/189810272-cd9d9e2d-e63f-4ced-b116-2dab6256b9df.png)
+
+
+### 4-4 Talend에서 post부터 확인 -> 스프링시작 후 Telend에서 send눌러서 확인
+![image](https://user-images.githubusercontent.com/82345970/189810427-3364a5e5-e6fb-4955-8ecf-93f6b9afa38a.png)
+
+## 결론
+### AOP에서 이러한프로그램(get,post 메서드 등, 서비스에 있는 메서드 등), 특정한값이 어떠한 값이 들어갔고,
+### 어떠한 값이 return이 됬는지 볼때 AOP를 상기방식으로 활용할수 있음<br></br>
+
+### 5. 메서드이름도 출력하기 ParameterAop클래스 수정
+```java
+package com.example.aop.aop;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Method;
+
+@Aspect //aop로 동작하기위해서
+@Component //스프링에서관리 하기위해
+public class ParameterAop {
+
+    //룰설정 -> 어디에적용시킬건지 -> com.example.aop프로젝트에 controller패키지 하위에 있는
+    //모든메서드를 aop로 보겠다 -> 인터넷검색해서 찾아보자
+    @Pointcut("execution(* com.example.aop.controller..*.*(..))")
+    private void cut(){}
+
+    //메서드가 실행되기전에 넘어가는 argument가 뭔지 확인
+    //언제실행을 시킬거냐?
+    @Before("cut()")
+    public void before(JoinPoint joinPoint){
+        //메서드이름호출
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Method method = methodSignature.getMethod();
+        System.out.println(method.getName());
+
+        Object[] args = joinPoint.getArgs();
+
+
+        for(Object obj : args) {
+            System.out.println("type : " +obj.getClass().getSimpleName());
+            System.out.println("value : "+obj);
+        }
+
+    }
+
+    //받고싶은객체의 이름을 넣어주면 됨 -> returnObj
+    @AfterReturning(value = "cut()",returning = "returnObj")
+    public void afterReturn(JoinPoint joinPoint, Object returnObj) {
+        System.out.println("return obj");
+        System.out.println(returnObj);
+
+    }
+
+
+}
+```
+### 5-2. 메서드이름도 출력하기 RestApiController클래스 수정
+```java
+package com.example.aop.controller;
+
+import com.example.aop.dto.User;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api")
+public class RestApiController {
+
+    @GetMapping("/get/{id}")
+    public String get(@PathVariable Long id, @RequestParam String name){
+
+        return id+ " "+name;
+
+    }
+
+    @PostMapping("/post")
+    //클래스객체없어서 dto패지키생성
+    public User post(@RequestBody User user){
+
+        return user;
+
+    }
+
+}
+```
+
+## AOP예제
+### 메서드실행시간을 가지고 서버의 
+
+
+
+
+
+
