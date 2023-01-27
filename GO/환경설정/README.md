@@ -12,3 +12,10 @@
 # go 환경변수
 GOPATH -> 나의 워크스페이스를 가리킴
 GOROOT -> 데이터 설치물을 가리킴 (golang.org)에서 다운로드 한것 
+
+# go모듈생성
+- go mod init 모듈이름(네임스페이스로 작성)
+- ex) go mod init example.com/test
+    - go mod init github.com/
+
+- go get -d github.com/GoesToEleven/go-programming
